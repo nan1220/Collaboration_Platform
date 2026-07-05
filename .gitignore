@@ -6,6 +6,9 @@
 **/dist/
 frontend/out/
 
+# git worktrees (nested repos; must not be tracked as gitlinks)
+.claude/worktrees/
+
 # python
 backend/.venv/
 backend/db.sqlite3
