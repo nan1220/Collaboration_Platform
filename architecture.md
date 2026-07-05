@@ -44,8 +44,11 @@ flowchart TB
         Company["Company (public, no login)<br/>submission form + status link"]
     end
 
-    subgraph Frontend["Frontend — Next.js (React + TypeScript), Tailwind CSS"]
-        FE["Role-gated SPA/SSR app"]
+    subgraph Frontend["Frontend — Next.js (React + TypeScript)"]
+        UI["Role-gated pages/routes<br/>(App Router)"]
+        Style["Tailwind CSS<br/>+ component library (shadcn/ui)"]
+        Query["Data fetching/cache<br/>(TanStack Query)"]
+        Forms["Forms + validation<br/>(React Hook Form + Zod)"]
     end
 
     subgraph Backend["Backend — Django + Django REST Framework (Python)"]
@@ -63,12 +66,16 @@ flowchart TB
 
     Mail["Email (SMTP)<br/>university mail or transactional provider"]
 
-    Student --> FE
-    Professor --> FE
-    Organizer --> FE
-    Company --> FE
+    Student --> UI
+    Professor --> UI
+    Organizer --> UI
+    Company --> UI
 
-    FE -- HTTPS/JSON --> API
+    UI --- Style
+    UI --- Forms
+    UI --> Query
+
+    Query -- HTTPS/JSON --> API
     API --> Auth
     API --> DB
     API --> Storage
@@ -85,7 +92,7 @@ One frontend app, role-gated views, rather than separate apps per role — the f
 
 | Layer | Choice | Why |
 |---|---|---|
-| Frontend | **Next.js (React + TypeScript)**, Tailwind CSS | Single codebase for all roles; SSR/SSG where useful for the public company-facing pages and guides; large ecosystem, easy to hand off/maintain |
+| Frontend | **Next.js (React + TypeScript)**, Tailwind CSS + shadcn/ui, TanStack Query, React Hook Form + Zod | Single codebase for all roles; SSR/SSG where useful for the public company-facing pages and guides; TanStack Query handles API caching/refetch, React Hook Form + Zod give typed client-side validation for the company/application forms; large ecosystem, easy to hand off/maintain |
 | Backend | **Django + Django REST Framework (Python)** | Built-in auth, permissions/groups, and an admin panel that gives organizers a working internal tool almost for free on day one, well before the custom frontend is done — high leverage for a 2-person non-technical admin team |
 | Database | **PostgreSQL** | Relational fits the project/status/audit model well; mature, free, easy to self-host or run managed |
 | Async/notifications | **Celery + Redis** | Decouples email sending and any batch/digest jobs from the request cycle |
