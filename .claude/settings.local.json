@@ -6,7 +6,19 @@
       "Bash(npm -v)",
       "PowerShell(node -v)",
       "PowerShell(npm -v)",
-      "PowerShell(python --version)"
+      "PowerShell(python --version)",
+      "Bash(npx --yes shadcn@latest init -d)",
+      "Bash(npx --yes shadcn@latest add card badge input label textarea select table tabs dialog dropdown-menu form separator avatar sonner)",
+      "Bash(npx --yes shadcn@latest add form)",
+      "Bash(npx --yes shadcn@latest add form --overwrite)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(npx --yes shadcn@latest add --help)",
+      "Bash(npx --yes shadcn@latest add form --dry-run)",
+      "Bash(mkdir -p \"c:\\\\Nan\\\\FUN\\\\projects_public\\\\Collaboration_Platform\\\\backend\\\\src\")",
+      "Bash(python -m pip --version)"
+    ],
+    "additionalDirectories": [
+      "c:\\Nan\\FUN\\projects_public\\Collaboration_Platform\\backend"
     ]
   }
 }
