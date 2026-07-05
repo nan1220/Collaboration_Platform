@@ -21,7 +21,8 @@
       "Bash(rm -f main.py README.md)",
       "Bash(uv add *)",
       "Bash(uv run *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "WebSearch"
     ],
     "additionalDirectories": [
       "c:\\Nan\\FUN\\projects_public\\Collaboration_Platform\\backend"

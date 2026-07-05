@@ -51,82 +51,83 @@
 }
 
 /*
- * TUM corporate design palette (Technical University of Munich):
- * TUM Blue #0065BD (primary), TUM Blue Dark #005293, TUM Blue Light #98C6EA,
- * TUM Ivory #DAD7CB (light neutral), TUM Green #A2AD00 (success accent).
- * https://www.tum.de/en/about-tum/working-at-tum/corporate-design
+ * TUM corporate design palette (Technical University of Munich), values
+ * verified against TUM's official/extended web palette rather than guessed:
+ * TUM Blue #0065BD (primary brand blue, Pantone 300C), TUM Blue Dark
+ * #072140/#0A2D57, TUM Blue Light #5E94D4 / #9ABCE4 / #F0F5FA, TUM Green
+ * accent #9FBA36, neutrals #20252A (dark) / #FBF9FA (near-white).
  */
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.24 0.02 255);
+  --foreground: #20252a;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.24 0.02 255);
+  --card-foreground: #20252a;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.24 0.02 255);
+  --popover-foreground: #20252a;
   --primary: #0065bd;
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: #e8f1fa;
-  --secondary-foreground: #005293;
-  --muted: #f3f4f1;
-  --muted-foreground: oklch(0.47 0.02 255);
-  --accent: #98c6ea;
-  --accent-foreground: #00335e;
-  --success: #a2ad00;
-  --success-foreground: oklch(0.99 0 0);
+  --primary-foreground: #ffffff;
+  --secondary: #f0f5fa;
+  --secondary-foreground: #0a2d57;
+  --muted: #fbf9fa;
+  --muted-foreground: #565d63;
+  --accent: #9abce4;
+  --accent-foreground: #072140;
+  --success: #9fba36;
+  --success-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.01 255);
-  --input: oklch(0.9 0.01 255);
-  --ring: #64a0c8;
+  --border: #e2e5e8;
+  --input: #e2e5e8;
+  --ring: #5e94d4;
   --chart-1: #0065bd;
-  --chart-2: #64a0c8;
-  --chart-3: #a2ad00;
-  --chart-4: #e37222;
-  --chart-5: oklch(0.439 0 0);
+  --chart-2: #5e94d4;
+  --chart-3: #9fba36;
+  --chart-4: #f7811e;
+  --chart-5: #20252a;
   --radius: 0.5rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.24 0.02 255);
+  --sidebar: #fbf9fa;
+  --sidebar-foreground: #20252a;
   --sidebar-primary: #0065bd;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #e8f1fa;
-  --sidebar-accent-foreground: #005293;
-  --sidebar-border: oklch(0.9 0.01 255);
-  --sidebar-ring: #64a0c8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0f5fa;
+  --sidebar-accent-foreground: #0a2d57;
+  --sidebar-border: #e2e5e8;
+  --sidebar-ring: #5e94d4;
 }
 
 .dark {
-  --background: oklch(0.19 0.02 255);
-  --foreground: oklch(0.97 0 0);
-  --card: oklch(0.24 0.02 255);
-  --card-foreground: oklch(0.97 0 0);
-  --popover: oklch(0.24 0.02 255);
-  --popover-foreground: oklch(0.97 0 0);
-  --primary: #3e8ed0;
-  --primary-foreground: oklch(0.15 0.02 255);
-  --secondary: oklch(0.3 0.03 255);
-  --secondary-foreground: #98c6ea;
-  --muted: oklch(0.28 0.02 255);
-  --muted-foreground: oklch(0.72 0.02 255);
-  --accent: oklch(0.33 0.05 250);
-  --accent-foreground: #cfe6f8;
-  --success: #b7c400;
-  --success-foreground: oklch(0.15 0.02 255);
+  --background: #072140;
+  --foreground: #fbf9fa;
+  --card: #0a2d57;
+  --card-foreground: #fbf9fa;
+  --popover: #0a2d57;
+  --popover-foreground: #fbf9fa;
+  --primary: #5e94d4;
+  --primary-foreground: #072140;
+  --secondary: #123566;
+  --secondary-foreground: #9abce4;
+  --muted: #0e2c52;
+  --muted-foreground: #9ab0c9;
+  --accent: #165db1;
+  --accent-foreground: #f0f5fa;
+  --success: #b3cc4f;
+  --success-foreground: #072140;
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: #64a0c8;
-  --chart-1: #64a0c8;
-  --chart-2: #98c6ea;
-  --chart-3: #a2ad00;
-  --chart-4: #e37222;
-  --chart-5: oklch(0.556 0 0);
-  --sidebar: oklch(0.22 0.02 255);
-  --sidebar-foreground: oklch(0.97 0 0);
-  --sidebar-primary: #3e8ed0;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.3 0.03 255);
-  --sidebar-accent-foreground: #98c6ea;
+  --ring: #5e94d4;
+  --chart-1: #5e94d4;
+  --chart-2: #9abce4;
+  --chart-3: #9fba36;
+  --chart-4: #f7811e;
+  --chart-5: #f0f5fa;
+  --sidebar: #0a2d57;
+  --sidebar-foreground: #fbf9fa;
+  --sidebar-primary: #5e94d4;
+  --sidebar-primary-foreground: #072140;
+  --sidebar-accent: #123566;
+  --sidebar-accent-foreground: #9abce4;
   --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: #64a0c8;
+  --sidebar-ring: #5e94d4;
 }
 
 @layer base {

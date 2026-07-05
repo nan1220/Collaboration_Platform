@@ -33,9 +33,12 @@ export function NavBar() {
   return (
     <header className="bg-primary text-primary-foreground">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex h-7 w-11 items-center justify-center rounded-sm bg-primary-foreground text-sm font-bold tracking-wide text-primary">
-            TUM
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <span className="flex flex-col items-start rounded-[2px] bg-white px-2 py-1 leading-none">
+            <span className="text-base font-extrabold tracking-tight text-primary">TUM</span>
+            <span className="mt-0.5 text-[8px] font-medium tracking-wide text-[#20252a]/70 uppercase">
+              Technical University of Munich
+            </span>
           </span>
           <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
         </Link>
