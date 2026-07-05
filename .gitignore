@@ -1,1 +1,17 @@
+# dependencies / build artifacts
 **/node_modules/
+**/__pycache__/
+**/*.pyc
+**/.next/
+**/dist/
+
+# python
+backend/.venv/
+backend/db.sqlite3
+
+# env files
+**/.env
+**/.env.local
+
+# editor/OS
+.DS_Store
