@@ -35,31 +35,66 @@ Every transition should write an `AuditLogEntry` — requirement #1 is explicitl
 
 ## 3. High-level architecture
 
-```
-                        ┌─────────────────────┐
-                        │   Company (public)   │
-                        │  submission form,     │
-                        │  status lookup link   │
-                        └──────────┬───────────┘
-                                   │ HTTPS
-┌───────────────┐         ┌───────▼────────┐         ┌──────────────┐
-│  Student Web   │◄───────►                │◄───────►│ Professor Web │
-│  (browser)     │  HTTPS │   Backend API   │  HTTPS  │  (browser)    │
-└───────────────┘         │  (REST, RBAC)   │         └──────────────┘
-                           └───────┬────────┘
-                        ┌──────────┼───────────┐
-                        │          │           │
-                 ┌──────▼───┐ ┌───▼────┐ ┌────▼─────┐
-                 │ Postgres  │ │ Email  │ │  File     │
-                 │ (system   │ │ notify │ │  storage  │
-                 │ of record)│ │ service│ │ (attachm.)│
-                 └───────────┘ └────────┘ └───────────┘
-                        ▲
-                        │  Organizer Admin Web (superset of above UI)
-                        └───────────────────────────────
+```mermaid
+flowchart TB
+    subgraph Clients["Clients (browser, one app, role-gated)"]
+        Student["Student view"]
+        Professor["Professor view"]
+        Organizer["Organizer / admin view"]
+        Company["Company (public, no login)<br/>submission form + status link"]
+    end
+
+    subgraph Frontend["Frontend — Next.js (React + TypeScript), Tailwind CSS"]
+        FE["Role-gated SPA/SSR app"]
+    end
+
+    subgraph Backend["Backend — Django + Django REST Framework (Python)"]
+        API["REST API + RBAC"]
+        Admin["Django Admin<br/>(fast internal tooling fallback)"]
+        Auth["Auth: Django auth,<br/>TUM SSO via SAML/OAuth2 (TBD)"]
+        Worker["Celery workers<br/>(async email, digests)"]
+    end
+
+    subgraph Data["Data layer"]
+        DB[("PostgreSQL<br/>system of record")]
+        Redis[("Redis<br/>Celery broker/cache")]
+        Storage[("File storage<br/>local disk / S3-compatible<br/>(attachments)")]
+    end
+
+    Mail["Email (SMTP)<br/>university mail or transactional provider"]
+
+    Student --> FE
+    Professor --> FE
+    Organizer --> FE
+    Company --> FE
+
+    FE -- HTTPS/JSON --> API
+    API --> Auth
+    API --> DB
+    API --> Storage
+    API --> Worker
+    Worker --> Redis
+    Worker --> Mail
+    Organizer -.->|"break-glass / bulk edits"| Admin
+    Admin --> DB
 ```
 
 One frontend app, role-gated views, rather than separate apps per role — the four user types share most of the same underlying data (projects), just with different permissions and default filters.
+
+### Tech stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Frontend | **Next.js (React + TypeScript)**, Tailwind CSS | Single codebase for all roles; SSR/SSG where useful for the public company-facing pages and guides; large ecosystem, easy to hand off/maintain |
+| Backend | **Django + Django REST Framework (Python)** | Built-in auth, permissions/groups, and an admin panel that gives organizers a working internal tool almost for free on day one, well before the custom frontend is done — high leverage for a 2-person non-technical admin team |
+| Database | **PostgreSQL** | Relational fits the project/status/audit model well; mature, free, easy to self-host or run managed |
+| Async/notifications | **Celery + Redis** | Decouples email sending and any batch/digest jobs from the request cycle |
+| Auth | Django auth to start; **SAML/OAuth2 to TUM SSO** if IT grants access (`django-allauth` / `djangosaml2`) | Avoids maintaining a parallel password store for students/professors if SSO is reachable |
+| File storage | Local disk (small scale) or **S3-compatible object storage** | For company-submitted attachments and any project documents |
+| Email | SMTP via university mail server or a transactional provider | Status-change notifications, company status-check links |
+| Hosting | Docker Compose on a university-managed server, or a small cloud VM | Keeps data protection story simple if kept on university infrastructure |
+
+This stack is a starting recommendation, not a hard requirement — the main constraint worth respecting is picking something a small team can maintain after handoff (both Next.js and Django are widely known, well-documented, and don't require exotic infra).
 
 ## 4. Backend requirements
 
