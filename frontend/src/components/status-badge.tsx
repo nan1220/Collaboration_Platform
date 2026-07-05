@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { STATUS_LABELS, type ProjectStatus } from "@/lib/types";
 
-const VARIANTS: Record<ProjectStatus, "default" | "secondary" | "destructive" | "outline"> = {
+const VARIANTS: Record<ProjectStatus, "default" | "secondary" | "success" | "destructive" | "outline"> = {
   submitted: "outline",
   under_review: "outline",
   approved: "secondary",
   assigned: "secondary",
   in_progress: "default",
-  completed: "default",
+  completed: "success",
   rejected: "destructive",
 };
 

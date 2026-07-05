@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCurrentUser } from "@/lib/current-user";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -32,19 +31,25 @@ export function NavBar() {
   );
 
   return (
-    <header className="border-b bg-background">
+    <header className="bg-primary text-primary-foreground">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
-        <Link href="/" className="text-sm font-semibold tracking-tight">
-          Collaboration Platform
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <span className="flex h-7 w-11 items-center justify-center rounded-sm bg-primary-foreground text-sm font-bold tracking-wide text-primary">
+            TUM
+          </span>
+          <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
         </Link>
 
-        <nav className="flex flex-1 flex-wrap items-center gap-1">
+        <nav className="flex flex-1 flex-wrap items-center gap-0.5">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                buttonVariants({ variant: pathname === link.href ? "secondary" : "ghost", size: "sm" })
+                "rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
+                pathname === link.href
+                  ? "bg-primary-foreground/15 text-primary-foreground"
+                  : "text-primary-foreground/75 hover:bg-primary-foreground/10 hover:text-primary-foreground"
               )}
             >
               {link.label}
@@ -52,7 +57,10 @@ export function NavBar() {
           ))}
         </nav>
 
-        <Link href="/submit" className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
+        <Link
+          href="/submit"
+          className="rounded-md border border-primary-foreground/40 px-2.5 py-1.5 text-sm font-medium text-primary-foreground/90 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
+        >
           Submit a project (company)
         </Link>
 
@@ -63,10 +71,13 @@ export function NavBar() {
             </Badge>
           )}
           <Select
-            value={currentUser ? String(currentUser.id) : undefined}
+            value={currentUser ? String(currentUser.id) : ""}
             onValueChange={(value) => setCurrentUserId(value ? Number(value) : null)}
           >
-            <SelectTrigger size="sm" className="min-w-40">
+            <SelectTrigger
+              size="sm"
+              className="min-w-40 border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground data-placeholder:text-primary-foreground/70 [&_svg]:text-primary-foreground/80"
+            >
               <SelectValue placeholder="Select demo user" />
             </SelectTrigger>
             <SelectContent>
