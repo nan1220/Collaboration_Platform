@@ -1,6 +1,7 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "@/lib/api";
@@ -13,8 +14,16 @@ import { Separator } from "@/components/ui/separator";
 import { ALLOWED_TRANSITIONS, STATUS_LABELS, type ProjectStatus } from "@/lib/types";
 
 export default function ProjectDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const projectId = Number(id);
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">Loading…</p>}>
+      <ProjectDetail />
+    </Suspense>
+  );
+}
+
+function ProjectDetail() {
+  const searchParams = useSearchParams();
+  const projectId = Number(searchParams.get("id"));
   const { currentUser } = useCurrentUser();
   const queryClient = useQueryClient();
 

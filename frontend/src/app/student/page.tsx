@@ -82,7 +82,7 @@ export default function StudentPage() {
           </p>
         )}
         {applications.map((a) => (
-          <Link key={a.id} href={`/projects/${a.project.id}`}>
+          <Link key={a.id} href={`/projects/detail?id=${a.project.id}`}>
             <Card className="transition-colors hover:border-primary/50">
               <CardHeader>
                 <div className="flex items-center gap-2">

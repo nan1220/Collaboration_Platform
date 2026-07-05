@@ -50,8 +50,8 @@ export default function SubmitProjectPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Link href={`/status/${result.statusToken}`} className="text-sm underline">
-            /status/{result.statusToken}
+          <Link href={`/status?token=${result.statusToken}`} className="text-sm underline">
+            /status?token={result.statusToken}
           </Link>
         </CardContent>
       </Card>

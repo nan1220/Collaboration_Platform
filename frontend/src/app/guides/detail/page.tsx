@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "@/lib/api";
@@ -12,7 +12,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function GuideDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">Loading…</p>}>
+      <GuideDetail />
+    </Suspense>
+  );
+}
+
+function GuideDetail() {
+  const searchParams = useSearchParams();
+  const slug = searchParams.get("slug") ?? "";
   const { currentUser } = useCurrentUser();
   const queryClient = useQueryClient();
   const router = useRouter();

@@ -1,67 +1,32 @@
-import type {
-  Application,
-  AuditLogEntry,
-  Guide,
-  Project,
-  StudentProfile,
-  User,
-  UserSummary,
-} from "./types";
+import { store } from "./mock-store";
+import type { Guide, ProjectStatus } from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
+export { ApiError } from "./api-error";
 
-export class ApiError extends Error {
-  status: number;
-  constructor(status: number, message: string) {
-    super(message);
-    this.status = status;
-  }
-}
-
-async function request<T>(
-  path: string,
-  options: { method?: string; body?: unknown; userId?: number | null } = {}
-): Promise<T> {
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (options.userId) headers["X-User-Id"] = String(options.userId);
-
-  const res = await fetch(`${API_BASE}${path}`, {
-    method: options.method ?? "GET",
-    headers,
-    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-  });
-
-  if (res.status === 204) return undefined as T;
-
-  const data = await res.json().catch(() => undefined);
-  if (!res.ok) {
-    throw new ApiError(res.status, data?.error ?? res.statusText);
-  }
-  return data as T;
+/**
+ * This used to be a fetch()-based client for the Django mock backend. The
+ * app now ships as a static export (GitHub Pages, no server), so every call
+ * here is routed to mock-store.ts — an in-browser stand-in that keeps the
+ * exact same shape/errors so no calling code had to change.
+ */
+async function run<T>(fn: () => T): Promise<T> {
+  return fn();
 }
 
 export const api = {
-  demoUsers: () => request<UserSummary[]>("/demo-users"),
-  users: (userId: number) => request<User[]>("/users", { userId }),
+  demoUsers: () => run(() => store.demoUsers()),
+  users: (userId: number) => run(() => store.users(userId)),
 
-  projects: (
-    userId: number | null,
-    params: Record<string, string | undefined> = {}
-  ) => {
-    const qs = new URLSearchParams(
-      Object.entries(params).filter(([, v]) => v) as [string, string][]
-    ).toString();
-    return request<Project[]>(`/projects${qs ? `?${qs}` : ""}`, { userId });
-  },
-  project: (id: number) => request<Project>(`/projects/${id}`),
+  projects: (userId: number | null, params: Record<string, string | undefined> = {}) =>
+    run(() => store.projects(userId, params)),
+  project: (id: number) => run(() => store.project(id)),
   createProject: (
     userId: number,
     body: { title: string; description: string; required_department: string }
-  ) => request<Project>("/projects", { method: "POST", body, userId }),
+  ) => run(() => store.createProject(userId, body)),
   transitionStatus: (userId: number, id: number, status: string) =>
-    request<Project>(`/projects/${id}/status`, { method: "PATCH", body: { status }, userId }),
-  claimProject: (userId: number, id: number) =>
-    request<Project>(`/projects/${id}/claim`, { method: "POST", userId }),
+    run(() => store.transitionStatus(userId, id, status as ProjectStatus)),
+  claimProject: (userId: number, id: number) => run(() => store.claimProject(userId, id)),
 
   submitCompanyProject: (body: {
     companyName: string;
@@ -69,43 +34,29 @@ export const api = {
     contactEmail: string;
     title: string;
     description: string;
-  }) =>
-    request<{ statusToken: string; projectId: number }>("/companies/submit", {
-      method: "POST",
-      body,
-    }),
-  publicStatus: (token: string) =>
-    request<{ title: string; status: string; updatedAt: string }>(`/public/status/${token}`),
+  }) => run(() => store.submitCompanyProject(body)),
+  publicStatus: (token: string) => run(() => store.publicStatus(token)),
 
-  guides: () => request<Guide[]>("/guides"),
-  guide: (slug: string) => request<Guide>(`/guides/${slug}`),
+  guides: () => run(() => store.guides()),
+  guide: (slug: string) => run(() => store.guide(slug)),
   createGuide: (
     userId: number,
     body: { slug: string; title: string; category: string; audience: string; body: string }
-  ) => request<Guide>("/guides", { method: "POST", body, userId }),
+  ) => run(() => store.createGuide(userId, { ...body, audience: body.audience as Guide["audience"] })),
   updateGuide: (userId: number, slug: string, body: Partial<Guide>) =>
-    request<Guide>(`/guides/${slug}`, { method: "PATCH", body, userId }),
-  deleteGuide: (userId: number, slug: string) =>
-    request<void>(`/guides/${slug}`, { method: "DELETE", userId }),
+    run(() => store.updateGuide(userId, slug, body)),
+  deleteGuide: (userId: number, slug: string) => run(() => store.deleteGuide(userId, slug)),
 
   applications: (userId: number, projectId?: number) =>
-    request<Application[]>(
-      `/applications${projectId ? `?projectId=${projectId}` : ""}`,
-      { userId }
-    ),
+    run(() => store.applications(userId, projectId)),
   applyToProject: (userId: number, projectId: number) =>
-    request<Application>("/applications", { method: "POST", body: { projectId }, userId }),
+    run(() => store.applyToProject(userId, projectId)),
 
-  studentsLookingForTeam: () =>
-    request<StudentProfile[]>("/students?lookingForTeam=true"),
+  studentsLookingForTeam: () => run(() => store.studentsLookingForTeam()),
   updateStudentProfile: (
     userId: number,
     body: { lookingForTeam: boolean; interests: string; bio: string }
-  ) => request<StudentProfile>(`/students/${userId}/profile`, { method: "PUT", body, userId }),
+  ) => run(() => store.updateStudentProfile(userId, userId, body)),
 
-  auditLog: (userId: number, projectId?: number) =>
-    request<AuditLogEntry[]>(
-      `/audit-log${projectId ? `?projectId=${projectId}` : ""}`,
-      { userId }
-    ),
+  auditLog: (userId: number, projectId?: number) => run(() => store.auditLog(userId, projectId)),
 };

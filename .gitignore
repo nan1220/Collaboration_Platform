@@ -4,6 +4,7 @@
 **/*.pyc
 **/.next/
 **/dist/
+frontend/out/
 
 # python
 backend/.venv/

@@ -1,6 +1,7 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
@@ -8,11 +9,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProjectStatus } from "@/lib/types";
 
 export default function PublicStatusPage() {
-  const { token } = useParams<{ token: string }>();
+  return (
+    <Suspense fallback={<p className="text-muted-foreground">Loading…</p>}>
+      <PublicStatus />
+    </Suspense>
+  );
+}
+
+function PublicStatus() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") ?? "";
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["public-status", token],
     queryFn: () => api.publicStatus(token),
+    enabled: !!token,
   });
 
   return (
@@ -21,6 +32,7 @@ export default function PublicStatusPage() {
         <CardTitle>Submission status</CardTitle>
       </CardHeader>
       <CardContent>
+        {!token && <p className="text-muted-foreground">No status link token provided.</p>}
         {isLoading && <p className="text-muted-foreground">Loading…</p>}
         {isError && <p className="text-muted-foreground">No submission found for this link.</p>}
         {data && (
