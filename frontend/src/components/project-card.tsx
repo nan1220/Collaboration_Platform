@@ -2,12 +2,28 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
-import type { Project } from "@/lib/types";
+import { cn } from "@/lib/utils";
+import type { Project, ProjectStatus } from "@/lib/types";
+
+const ACCENT_BORDER: Record<ProjectStatus, string> = {
+  submitted: "border-l-border",
+  under_review: "border-l-border",
+  approved: "border-l-accent",
+  assigned: "border-l-accent",
+  in_progress: "border-l-primary",
+  completed: "border-l-success",
+  rejected: "border-l-destructive",
+};
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link href={`/projects/detail?id=${project.id}`}>
-      <Card className="transition-colors hover:border-primary/50">
+    <Link href={`/projects/detail?id=${project.id}`} className="block h-full">
+      <Card
+        className={cn(
+          "h-full border-l-4 transition-all hover:-translate-y-0.5 hover:shadow-md",
+          ACCENT_BORDER[project.status]
+        )}
+      >
         <CardHeader>
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={project.status} />

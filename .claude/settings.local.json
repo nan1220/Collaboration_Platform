@@ -22,7 +22,8 @@
       "Bash(uv add *)",
       "Bash(uv run *)",
       "Bash(git commit -m ' *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)"
     ],
     "additionalDirectories": [
       "c:\\Nan\\FUN\\projects_public\\Collaboration_Platform\\backend"

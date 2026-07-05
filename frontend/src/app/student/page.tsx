@@ -82,8 +82,8 @@ export default function StudentPage() {
           </p>
         )}
         {applications.map((a) => (
-          <Link key={a.id} href={`/projects/detail?id=${a.project.id}`}>
-            <Card className="transition-colors hover:border-primary/50">
+          <Link key={a.id} href={`/projects/detail?id=${a.project.id}`} className="block">
+            <Card className="border-l-4 border-l-primary transition-all hover:-translate-y-0.5 hover:shadow-md">
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <StatusBadge status={a.project.status} />
