@@ -112,8 +112,8 @@ export default function GuidesPage() {
       {isLoading && <p className="text-muted-foreground">Loading…</p>}
       <div className="grid gap-4 sm:grid-cols-2">
         {visibleGuides.map((guide) => (
-          <Link key={guide.slug} href={`/guides/detail?slug=${guide.slug}`}>
-            <Card className="h-full transition-colors hover:border-primary/50">
+          <Link key={guide.slug} href={`/guides/detail?slug=${guide.slug}`} className="block h-full">
+            <Card className="h-full border-l-4 border-l-accent transition-all hover:-translate-y-0.5 hover:shadow-md">
               <CardHeader>
                 <Badge variant="outline" className="w-fit capitalize">
                   {guide.category}
