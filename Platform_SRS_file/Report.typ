@@ -103,7 +103,8 @@
 	Chair of Entrepreneurship and Family Enterprise
 
 	*Supervisor*\
-	#supervisor_name
+	#supervisor_name\
+	Ph.D. Candidate and Research Associate
 
 	*Submission date*\
 	#submited_date
