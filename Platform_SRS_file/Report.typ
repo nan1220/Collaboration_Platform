@@ -27,7 +27,7 @@
 #let essay_subtitle = "Report for Project Study"
 #let author_name = "Nan Jiang"
 #let examiner_name = "Prof. Dr. Miriam Bird"
-#let supervisor_name="Dr. Lorenz Tidow"
+#let supervisor_name="Lorenz Tidow"
 #let submited_date="16.08.2026"
 
 // --- Header ---
