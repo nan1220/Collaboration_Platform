@@ -23,7 +23,7 @@
 #let tum_blue = rgb("0065BD")
 
 // --- Content placeholders ---
-#let essay_title = "Design and Prototyping of a Platform for Academic-Industry Project Collaboration"
+#let essay_title = "Software Requirements Specification for a Collaboration Platform for Project Studies"
 #let essay_subtitle = "Report for Project Study"
 #let author_name = "Nan Jiang"
 #let examiner_name = "Prof. Dr. Miriam Bird"
