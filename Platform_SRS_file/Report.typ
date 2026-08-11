@@ -132,15 +132,33 @@
 )
 
 // --- new page ---
-#set page(
-	paper: "a4",
-	margin: (top: 20mm, bottom: 20mm, left: 25mm, right: 20mm),
-)
-#set text(size: 12pt)
-#set page(numbering: "1", number-align: center)
+// #set page(
+// 	paper: "a4",
+// 	margin: (top: 20mm, bottom: 20mm, left: 25mm, right: 20mm),
+// )
+// #set text(size: 12pt)
+// #set page(numbering: "1", number-align: center)
 
-#set par(leading: 0.95em,
-		  spacing: 1.5em)  // 1.5 line spacing, with extra space between paragraphs, global for the essay after the title page
+// #set par(leading: 0.95em,
+// 		  spacing: 1.5em)  // 1.5 line spacing, with extra space between paragraphs, global for the essay after the title page
+
+#set page(
+  paper: "a4",
+  margin: (left: 2.5cm, right: 3cm, top: 2.5cm, bottom: 2.5cm),
+)
+
+#set text(font: ("Times New Roman"), size: 12pt, lang: "en")
+#set par(justify: true, leading: 1em, spacing: 1.5em)
+
+// Footnotes: 10 pt, single spacing, justified
+#show footnote.entry: it => {
+  set text(size: 10pt)
+  set par(leading: 0.65em, justify: true)
+  it
+}
+
+
+
 
 #set heading(numbering: "1.")
 #show heading: fakebold
@@ -170,7 +188,24 @@
 
 = Introduction
 
+
+== Purpose of this Document 
+== Project Background and Motivation 
+== Scope of the Platform 
+== Definitions, Acronyms, and Abbreviations 
+== Document Overview
+
+
 = Literature review
+
+
+== Requirements Engineering Grounding
+== Academia-Industry Collaboration
+== Positioning This Project Relative to the Literature
+
+
+
+
 
 = Research Approach and Limitations 
 
