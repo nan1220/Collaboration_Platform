@@ -83,14 +83,14 @@
 	at TUM School of Management of the Technical University of Munich
 ]
 
-#text(size: 16pt, fill: tum_blue, fakebold(text[Ahmet Akpunar]))
+// #text(size: 16pt, fill: tum_blue, fakebold(text[Ahmet Akpunar]))
 
-#block[
-	#set text(size: 13pt)
-	#set par(leading: 0.6em)
-	*B.Sc. Management and Data Science* \
-	at TUM School of Management of the Technical University of Munich
-]
+// #block[
+// 	#set text(size: 13pt)
+// 	#set par(leading: 0.6em)
+// 	*B.Sc. Management and Data Science* \
+// 	at TUM School of Management of the Technical University of Munich
+// ]
 
 #v(20mm)
 
@@ -209,20 +209,73 @@
 
 = Research Approach and Limitations 
 
+== Interview Methodology (stakeholder groups, question design) 
+
+== Sample Overview and Limitations (explicit note on data thinness, especially company-side) 
+
+== From Interview Insights to Requirements (how findings were translated, requirements framed as informed proposals, not validated findings)
+
+
+
+
+
 = Overall Description 
 
+
+== Product Perspective 
+== Stakeholder Groups and Their Roles (students, professors/supervisors, companies) 
+== Assumptions and Constraints 
+== Scope Boundary: TUM-Specific Focus (explicit justification: administrative/collaboration processes differ significantly across universities, so single-institution depth was prioritized over shallow generality) 
+== Transferability to Other Institutions (brief discussion of what would need to adapt for other universities) 
+== Out-of-Scope Items (e.g. backend functionality not prototyped)
+
+
+
+
 = Stakeholder Needs (Pain Points) 
+== Overview by Stakeholder Group 
+== Student Pain Points 
+== Professor/University Pain Points 
+== Company Pain Points
+== Cross-Cutting Findings (pain points recurring across all three groups)
+
+
+
 
 
 = Functional Requirements 
 
 
+== Prioritization Scheme (MoSCoW, criteria defined here. Requirements grounded in cross-cutting pain points and structurally independent of TUM-specific administration are prioritized higher)
+== [Functional Area 1] 
+== [Functional Area 2] 
+== [Functional Area 3] 
+== [Functional Area 4] 
+
+
+
+
+
 = Non-Functional Requirements 
+== Usability 
+== Security and Data Privacy 
+== Maintainability / Extensibility
+
+
 
 
 = System Models 
 
+== Use Case Diagram(s) 
+== Key User Flows
+
+
+
 = Traceability and Prototype Alignment 
+
+== Traceability Table: Interview Insight → Pain Point → Requirement ID
+== Prototype Coverage Table: Screen → Requirement ID 
+== Requirements Without Prototype Coverage (brief justification)
 
 
 
