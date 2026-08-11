@@ -146,11 +146,59 @@
 #show heading: fakebold
 #outline()
 
+
+// #set page(
+// 	paper: "a4",
+// 	margin: (top: 20mm, bottom: 20mm, left: 25mm, right: 20mm),
+// )
+// #set text(size: 12pt)
+
+#set page(
+  paper: "a4",
+  margin: (left: 2.5cm, right: 3cm, top: 2.5cm, bottom: 2.5cm),
+)
+
+#set text(font: ("Times New Roman"), size: 12pt, lang: "en")
+#set par(justify: true, leading: 1em, spacing: 1.5em)
+
+// Footnotes: 10 pt, single spacing, justified
+#show footnote.entry: it => {
+  set text(size: 10pt)
+  set par(leading: 0.65em, justify: true)
+  it
+}
+
 = Introduction
 
+= Literature review
+
+= Research Approach and Limitations 
+
+= Overall Description 
+
+= Stakeholder Needs (Pain Points) 
 
 
-= Conclusion
+= Functional Requirements 
+
+
+= Non-Functional Requirements 
+
+
+= System Models 
+
+= Traceability and Prototype Alignment 
+
+
+
+= Assumptions, Risks, and Open Issues
+
+
+
+= Appendices 
+
+
+= Declaration of authorship
 
 
 
