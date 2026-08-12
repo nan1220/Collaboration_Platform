@@ -200,6 +200,21 @@
 
 
 == Requirements Engineering Grounding
+
+
+- *Choice of standard (29148 over 830):* 
+This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
+
+- *Interview-based elicitation as a method:* you used semi-structured interviews to elicit requirements — RE literature on qualitative elicitation techniques would justify why interviews are a legitimate elicitation method in the first place, not just describe what you did.
+- *Small-sample / saturation literature:* this is probably your most useful citation. There's a body of work on thematic saturation (how many interviews are "enough" to start seeing repeated patterns) — citing this lets you say your sample, while small, isn't arbitrary; it lets you argue "we observed convergence on X pain point by interview 5" with a methodological backing, rather than just apologizing for n.
+- *Traceability practices:* Section 9 assumes traceability matters — a citation on why requirements traceability is standard RE practice (and what goes wrong without it) turns that section from "our professor asked for this" into "this is recognized best practice, here's why."
+- *Prioritization schemes:* you're choosing MoSCoW for Section 6.0 — citing why MoSCoW (vs. Kano, cost-value analysis, AHP) fits a small-team, exploratory, resource-constrained context justifies the choice rather than treating it as arbitrary/default.https://www.researchgate.net/publication/220630837_Time_boxing_planning_buffered_moscow_rules
+
+
+
+
+
+
 == Academia-Industry Collaboration
 == Positioning This Project Relative to the Literature
 
