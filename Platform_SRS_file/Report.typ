@@ -142,8 +142,11 @@
 // #set par(leading: 0.95em,
 // 		  spacing: 1.5em)  // 1.5 line spacing, with extra space between paragraphs, global for the essay after the title page
 
+
 #set page(
   paper: "a4",
+  numbering: "1",
+  number-align: center,
   margin: (left: 2.5cm, right: 3cm, top: 2.5cm, bottom: 2.5cm),
 )
 
