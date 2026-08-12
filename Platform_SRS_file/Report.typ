@@ -205,11 +205,13 @@
 == Requirements Engineering Grounding
 
 
-- *Choice of standard (29148 over 830):* This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
+- *Choice of standard:* This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
 
 - *Interview-based elicitation as a method:* Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. Ferrari et al. (2022) @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
 
-- *Small-sample / saturation literature:* this is probably your most useful citation. There's a body of work on thematic saturation (how many interviews are "enough" to start seeing repeated patterns) — citing this lets you say your sample, while small, isn't arbitrary; it lets you argue "we observed convergence on X pain point by interview 5" with a methodological backing, rather than just apologizing for n.
+- *Small-sample / saturation literature:* How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. Guest, Bunce and Johnson (2006) found that little new information emerged after the first twelve of their sixty interviews. Hennink, Kaiser and Marconi (2017) argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after nine interviews, but arriving at a rich understanding of those codes took between sixteen and twenty-four. These figures come from fairly uniform groups of participants. Hagaman and Wutich (2017) worked across four sites and found that sixteen interviews or fewer sufficed within a single group, while themes running across groups needed twenty to forty.
+
+These thresholds provide a basis for assessing the twenty-six interviews conducted for this study rather than merely reporting their number. The student group, at thirteen interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in Section 5.2 can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at five, five and three interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in Section 5.5, which draw on the full sample of twenty-six, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
 - *Traceability practices:* Section 9 assumes traceability matters — a citation on why requirements traceability is standard RE practice (and what goes wrong without it) turns that section from "our professor asked for this" into "this is recognized best practice, here's why."
@@ -221,6 +223,22 @@
 
 
 == Academia-Industry Collaboration
+- *The core premise of your whole project:* that project-study-type collaborations between students, professors, and companies suffer from coordination/communication friction — this needs to be an established phenomenon in the literature, not just something your interviews happened to find. Otherwise your findings look like isolated anecdotes rather than an instance of a known pattern.
+- *Information asymmetry between stakeholder groups specifically:* since this is your central design idea, literature on knowledge transfer barriers or boundary-spanning roles in university-industry projects would directly support why "who do I contact" and "what expertise is needed" are recurring failure points, not TUM-specific quirks.
+- *Differing motivations of academic vs. industry partners:* this is worth citing given your own framing — BirdVision wanting insights, your supervisor wanting a concrete deliverable is itself a small instance of the "divergent goals in academia-industry collaboration" pattern the literature discusses. Citing this gives you academic cover to explicitly name that tension in Section 1 or 2, rather than leaving it implicit.
+- *Platform/intermediary-based solutions:* since your output is a platform, literature on digital intermediaries or matching platforms reducing coordination costs in institutional collaboration would support the category of solution you chose, not just its specific features.
+
+
+
+
+
+
+
+
+
+
+
+
 == Positioning This Project Relative to the Literature
 
 
