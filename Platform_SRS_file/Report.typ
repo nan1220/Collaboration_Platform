@@ -219,25 +219,31 @@
 #pagebreak()
 = Literature review
 
-In this section, the document reviews the industry and academic practices of requirements engineering, focusing on the elicitation of requirements from stakeholders. It describes the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. It also discusses traceability practices and prioritization schemes relevant to this project.
+In this section we provide a review of industry and academic practices in requirements engineering, focusing on the elicitation of requirements from stakeholders. We describe the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. We also discuss traceability practices and prioritization schemes relevant to this project.
 
 
 == Requirements Engineering Grounding
 
 
-=== Choice of standard (29148 over 830)
-This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
+=== Selection and Adaptation of the Requirements Engineering Standard
+This specification follows ISO/IEC/IEEE 29148:2018 #cite(<IEEE29148_2018>, form: "normal") -- the current international standard for requirements engineering, which supersedes IEEE 830-1998 #cite(<IEEE830_1998>, form: "normal"). The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. Consequently, such a form is more appropriate for this project, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
 
-=== Interview-based elicitation as a method
+=== Interview-Based Requirements Elicitation
 Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
 
-=== Small sample / thematic saturation
-How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. @guest2006many found that little new information emerged after the first 12 of their 60 interviews. @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
+=== Sample Adequacy and Thematic Saturation
+@macqueen1998codebook defined thematic saturation as the point at which no new codes emerge from additional interviews. And, the number of interviews required to reach the point of saturation is a recurring question in qualitative research. 
+
+@guest2006many found that little new information emerged after the first 12 of their 60 interviews.
+
+@hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. 
+
+@hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
 
 These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 5 and 3 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
-=== Traceability practices
+=== Requirements Traceability
 
 Requirements traceability is the ability to follow a requirement forward into design and implementation and backward to the source it came from. @traceability1994, drawing on interviews and questionnaires with over 100 practitioners, distinguish these two directions and argue that the backward one is where projects usually fail.
 
@@ -253,7 +259,7 @@ Post-specification traceability, linking requirements to what was built from the
 
 
 
-=== Prioritization schemes
+=== Requirements Prioritization
 Prioritization techniques differ mainly in how much they demand of the team using them. Reviewing the field, @achimugu2014systematic find that pairwise methods such as the Analytic Hierarchy Process become impractical as requirement counts grow, and that cost-value approaches depend on effort and benefit estimates unavailable at this stage of a project. MoSCoW asks for neither, sorting requirements into four ordinal classes on judgement alone, which suits a small team working to a fixed deadline on requirements that have not been validated. The criteria used for that sorting are set out in @prioritization-scheme.
 
 
