@@ -167,12 +167,14 @@
 
 
 
-#set heading(numbering: "1.")
-#show heading: it => [*#it*]
+#set heading(
+	numbering: "1.",
+
+)
 
 #[
 	#set par(leading: 0.7em)
-	#outline(title: [
+	#outline(depth: 2, title: [
 		Contents
 		#v(4mm)
 	])
@@ -212,40 +214,43 @@
 
 = Literature review
 
-In this section, the document reviews the industry and academic practices of requirements engineering, focusing on the elicitation of requirements from stakeholders. It will describe the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. It will also discuss traceability practices and prioritization schemes relevant to this project.
+In this section, the document reviews the industry and academic practices of requirements engineering, focusing on the elicitation of requirements from stakeholders. It describes the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. It also discusses traceability practices and prioritization schemes relevant to this project.
 
 
 == Requirements Engineering Grounding
 
 
-- *Choice of standard (29148 over 830):* This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
+=== Choice of standard (29148 over 830)
+This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
 
-- *Interview-based elicitation as a method:* Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. Ferrari et al. (2022) @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
+=== Interview-based elicitation as a method
+Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. Ferrari et al. (2022) @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
 
-- *Small sample / thematic saturation:* How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. Guest, Bunce and Johnson (2006) @guest2006many found that little new information emerged after the first 12 of their 60 interviews. Hennink, Kaiser and Marconi (2017) @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. Hagaman and Wutich (2017) @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
+=== Small sample / thematic saturation
+How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. Guest, Bunce and Johnson (2006) @guest2006many found that little new information emerged after the first 12 of their 60 interviews. Hennink, Kaiser and Marconi (2017) @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. Hagaman and Wutich (2017) @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
 
-These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in Section 5.2 can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 5 and 3 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in Section 5.5, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
+These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 5 and 3 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
-- *Traceability practices:* 
+=== Traceability practices
 
 Requirements traceability is the ability to follow a requirement forward into design and implementation and backward to the source it came from. Gotel and Finkelstein (1994) @traceability1994, drawing on interviews and questionnaires with over 100 practitioners, distinguish these two directions and argue that the backward one is where projects usually fail. Post-specification traceability, linking requirements to what was built from them, is comparatively well supported by tools. Pre-specification traceability, linking a requirement back to the stakeholder statement and rationale that produced it, tends to be neglected, and most of the problems attributed to poor traceability turn out to originate there. //Section 9 is structured around this backward direction, recording for each requirement the pain point and interview material it derives from, before mapping it forward to the prototype.
 
-Section 9 is organised along both directions: Section 9.1 provides the pre-specification record, tracing each requirement back to its pain point and interview material, while Sections 9.2 and 9.3 provide the post-specification record, mapping requirements forward to prototype screens and accounting for those left unimplemented.
+@traceability-prototype-alignment is organised along both directions: @traceability-table provides the pre-specification record, tracing each requirement back to its pain point and interview material, while @coverage-table @requirements-without-prototype-coverage[and] provide the post-specification record, mapping requirements forward to prototype screens and accounting for those left unimplemented.
 
 
 
-- *Prioritization schemes:* you're choosing MoSCoW for Section 6.0 — citing why MoSCoW (vs. Kano, cost-value analysis, AHP) fits a small-team, exploratory, resource-constrained context justifies the choice rather than treating it as arbitrary/default.https://www.researchgate.net/publication/220630837_Time_boxing_planning_buffered_moscow_rules
-
+=== Prioritization schemes
+Prioritisation techniques differ mainly in how much they demand of the team using them. Reviewing the field, Achimugu et al. (2014) @achimugu2014systematic find that pairwise methods such as the Analytic Hierarchy Process become impractical as requirement counts grow, and that cost-value approaches depend on effort and benefit estimates unavailable at this stage of a project. MoSCoW asks for neither, sorting requirements into four ordinal classes on judgement alone, which suits a small team working to a fixed deadline on requirements that have not been validated. The criteria used for that sorting are set out in @prioritization-scheme.
 
 
 
 
 
 == Academia-Industry Collaboration
-- *The core premise of your whole project:* that project-study-type collaborations between students, professors, and companies suffer from coordination/communication friction — this needs to be an established phenomenon in the literature, not just something your interviews happened to find. Otherwise your findings look like isolated anecdotes rather than an instance of a known pattern.
+- *The core premise of your whole project:* that project-study-type collaborations between students, professors, and companies suffer from coordination/communication friction -- this needs to be an established phenomenon in the literature, not just something your interviews happened to find. Otherwise your findings look like isolated anecdotes rather than an instance of a known pattern.
 - *Information asymmetry between stakeholder groups specifically:* since this is your central design idea, literature on knowledge transfer barriers or boundary-spanning roles in university-industry projects would directly support why "who do I contact" and "what expertise is needed" are recurring failure points, not TUM-specific quirks.
-- *Differing motivations of academic vs. industry partners:* this is worth citing given your own framing — BirdVision wanting insights, your supervisor wanting a concrete deliverable is itself a small instance of the "divergent goals in academia-industry collaboration" pattern the literature discusses. Citing this gives you academic cover to explicitly name that tension in Section 1 or 2, rather than leaving it implicit.
+- *Differing motivations of academic vs. industry partners:* this is worth citing given your own framing -- BirdVision wanting insights, your supervisor wanting a concrete deliverable is itself a small instance of the "divergent goals in academia-industry collaboration" pattern the literature discusses. Citing this gives you academic cover to explicitly name that tension in Section 1 or 2, rather than leaving it implicit.
 - *Platform/intermediary-based solutions:* since your output is a platform, literature on digital intermediaries or matching platforms reducing coordination costs in institutional collaboration would support the category of solution you chose, not just its specific features.
 
 
@@ -278,19 +283,19 @@ Section 9 is organised along both directions: Section 9.1 provides the pre-speci
 
 = Stakeholder Needs (Pain Points) 
 == Overview by Stakeholder Group 
-== Student Pain Points 
+== Student Pain Points <student-pain-points>
 == Professor/University Pain Points 
 == Company Pain Points
-== Cross-Cutting Findings (pain points recurring across all three groups)
+== Cross-Cutting Findings (pain points recurring across all three groups) <cross-cutting-findings>
 
 
 
 
 
-= Functional Requirements 
+= Functional Requirements <functional-requirements>
 
 
-== Prioritization Scheme (MoSCoW, criteria defined here. Requirements grounded in cross-cutting pain points and structurally independent of TUM-specific administration are prioritized higher)
+== Prioritization Scheme (MoSCoW, criteria defined here. Requirements grounded in cross-cutting pain points and structurally independent of TUM-specific administration are prioritized higher) <prioritization-scheme>
 == [Functional Area 1] 
 == [Functional Area 2] 
 == [Functional Area 3] 
@@ -315,11 +320,11 @@ Section 9 is organised along both directions: Section 9.1 provides the pre-speci
 
 
 
-= Traceability and Prototype Alignment 
+= Traceability and Prototype Alignment <traceability-prototype-alignment>
 
-== Traceability Table: Interview Insight → Pain Point → Requirement ID
-== Prototype Coverage Table: Screen → Requirement ID 
-== Requirements Without Prototype Coverage (brief justification)
+== Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
+== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
+== Requirements Without Prototype Coverage (brief justification) <requirements-without-prototype-coverage>
 
 
 
