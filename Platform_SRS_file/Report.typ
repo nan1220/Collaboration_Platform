@@ -164,7 +164,11 @@
   it
 }
 
+#show figure.caption: c => [
+  *#c.supplement #c.counter.display(c.numbering)*#c.separator#c.body
+]
 
+#set cite(form: "prose")
 
 
 #set heading(
@@ -212,6 +216,7 @@
 == Document Overview
 
 
+#pagebreak()
 = Literature review
 
 In this section, the document reviews the industry and academic practices of requirements engineering, focusing on the elicitation of requirements from stakeholders. It describes the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. It also discusses traceability practices and prioritization schemes relevant to this project.
@@ -224,38 +229,56 @@ In this section, the document reviews the industry and academic practices of req
 This specification follows ISO/IEC/IEEE 29148:2018 @IEEE29148_2018, the current international standard for requirements engineering, which supersedes IEEE 830-1998 @IEEE830_1998. The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. This is the more suitable frame here, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
 
 === Interview-based elicitation as a method
-Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. Ferrari et al. (2022) @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
+Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
 
 === Small sample / thematic saturation
-How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. Guest, Bunce and Johnson (2006) @guest2006many found that little new information emerged after the first 12 of their 60 interviews. Hennink, Kaiser and Marconi (2017) @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. Hagaman and Wutich (2017) @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
+How many interviews are enough is a recurring question in qualitative research, and it is usually answered by reference to saturation. @guest2006many found that little new information emerged after the first 12 of their 60 interviews. @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
 
 These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 5 and 3 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
 === Traceability practices
 
-Requirements traceability is the ability to follow a requirement forward into design and implementation and backward to the source it came from. Gotel and Finkelstein (1994) @traceability1994, drawing on interviews and questionnaires with over 100 practitioners, distinguish these two directions and argue that the backward one is where projects usually fail. Post-specification traceability, linking requirements to what was built from them, is comparatively well supported by tools. Pre-specification traceability, linking a requirement back to the stakeholder statement and rationale that produced it, tends to be neglected, and most of the problems attributed to poor traceability turn out to originate there. //Section 9 is structured around this backward direction, recording for each requirement the pain point and interview material it derives from, before mapping it forward to the prototype.
+Requirements traceability is the ability to follow a requirement forward into design and implementation and backward to the source it came from. @traceability1994, drawing on interviews and questionnaires with over 100 practitioners, distinguish these two directions and argue that the backward one is where projects usually fail.
+
+#figure(
+  caption: [Illustration of the two directions of requirements traceability from @traceability1994],
+)[
+  #image("Two basic types of requirements traceability.pdf", width: 80%)
+]
+
+Post-specification traceability, linking requirements to what was built from them, is comparatively well supported by tools. Pre-specification traceability, linking a requirement back to the stakeholder statement and rationale that produced it, tends to be neglected, and most of the problems attributed to poor traceability turn out to originate there. //Section 9 is structured around this backward direction, recording for each requirement the pain point and interview material it derives from, before mapping it forward to the prototype.
 
 @traceability-prototype-alignment is organised along both directions: @traceability-table provides the pre-specification record, tracing each requirement back to its pain point and interview material, while @coverage-table @requirements-without-prototype-coverage[and] provide the post-specification record, mapping requirements forward to prototype screens and accounting for those left unimplemented.
 
 
 
 === Prioritization schemes
-Prioritisation techniques differ mainly in how much they demand of the team using them. Reviewing the field, Achimugu et al. (2014) @achimugu2014systematic find that pairwise methods such as the Analytic Hierarchy Process become impractical as requirement counts grow, and that cost-value approaches depend on effort and benefit estimates unavailable at this stage of a project. MoSCoW asks for neither, sorting requirements into four ordinal classes on judgement alone, which suits a small team working to a fixed deadline on requirements that have not been validated. The criteria used for that sorting are set out in @prioritization-scheme.
+Prioritization techniques differ mainly in how much they demand of the team using them. Reviewing the field, @achimugu2014systematic find that pairwise methods such as the Analytic Hierarchy Process become impractical as requirement counts grow, and that cost-value approaches depend on effort and benefit estimates unavailable at this stage of a project. MoSCoW asks for neither, sorting requirements into four ordinal classes on judgement alone, which suits a small team working to a fixed deadline on requirements that have not been validated. The criteria used for that sorting are set out in @prioritization-scheme.
 
 
 
 
 
 == Academia-Industry Collaboration
-- *The core premise of your whole project:* that project-study-type collaborations between students, professors, and companies suffer from coordination/communication friction -- this needs to be an established phenomenon in the literature, not just something your interviews happened to find. Otherwise your findings look like isolated anecdotes rather than an instance of a known pattern.
-- *Information asymmetry between stakeholder groups specifically:* since this is your central design idea, literature on knowledge transfer barriers or boundary-spanning roles in university-industry projects would directly support why "who do I contact" and "what expertise is needed" are recurring failure points, not TUM-specific quirks.
-- *Differing motivations of academic vs. industry partners:* this is worth citing given your own framing -- BirdVision wanting insights, your supervisor wanting a concrete deliverable is itself a small instance of the "divergent goals in academia-industry collaboration" pattern the literature discusses. Citing this gives you academic cover to explicitly name that tension in Section 1 or 2, rather than leaving it implicit.
-- *Platform/intermediary-based solutions:* since your output is a platform, literature on digital intermediaries or matching platforms reducing coordination costs in institutional collaboration would support the category of solution you chose, not just its specific features.
+
+=== Collaboration friction as an established phenomenon
+Collaboration between universities and companies has been studied extensively, and the difficulties it produces are documented rather than incidental.  @uniindustry2015systematic synthesise a fragmented body of work into a process framework covering why the two sides collaborate, the forms collaboration takes, and the organisational obstacles that recur across national contexts. Coordination and communication problems appear throughout that literature, independent of country, discipline and collaboration format. Since this problem is documented across many institutions, the difficulties reported in @stakeholder-needs are treated as a specific case of it rather than as a local peculiarity.
 
 
+=== Barriers and information asymmetry between stakeholder groups
+@barriers2010universityindustry separate two kinds of barrier to university-industry collaboration. Orientation-related barriers arise from differences in what each side is trying to achieve and on what timescale. Transaction-related barriers arise from the mechanics of working together, including administration and intellectual property. Prior collaboration experience reduces the first kind, while trust between the parties reduces both. Difficulties such as identifying the right contact person or establishing what expertise is available fall into the second category, which is where a platform can plausibly intervene. This distinction is used in @cross-cutting-findings to organise the pain points that recur across stakeholder groups.
 
 
+=== Divergent motivations of academic and industry partners
+The two sides enter collaboration for different reasons. @academicengagement2013 show that academic engagement is driven largely by research-related motives, including access to data, funding and problems worth studying, while firms pursue capability, talent and commercial application. Neither set of motives is illegitimate, but they are not automatically aligned, and the semester rhythm that governs university work rarely matches company project timelines. A platform mediating between the two therefore cannot assume a shared objective; it has to make each side's constraints legible to the other. @cross-cutting-findings returns to this point where the mismatch surfaced in the interview data.
+
+
+=== Platforms and intermediaries as a category of solution
+Where two parties struggle to find and evaluate each other, a third party can lower the cost of doing so. @intermediation2006 develops a typology of innovation intermediaries and defines them as bodies acting as brokers between parties in the innovation process, performing functions such as scanning, matchmaking and coordination. The platform specified in this document sits in that category, with the difference that it serves three groups rather than two.
+
+
+#pagebreak()
 = Research Approach and Limitations 
 
 == Interview Methodology (stakeholder groups, question design) 
@@ -267,7 +290,7 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
-
+#pagebreak()
 = Overall Description 
 
 
@@ -280,8 +303,8 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
-
-= Stakeholder Needs (Pain Points) 
+#pagebreak()
+= Stakeholder Needs (Pain Points) <stakeholder-needs>
 == Overview by Stakeholder Group 
 == Student Pain Points <student-pain-points>
 == Professor/University Pain Points 
@@ -291,7 +314,7 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
-
+#pagebreak()
 = Functional Requirements <functional-requirements>
 
 
@@ -304,7 +327,7 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
-
+#pagebreak()
 = Non-Functional Requirements 
 == Usability 
 == Security and Data Privacy 
@@ -312,14 +335,14 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
-
+#pagebreak()
 = System Models 
 
 == Use Case Diagram(s) 
 == Key User Flows
 
 
-
+#pagebreak()
 = Traceability and Prototype Alignment <traceability-prototype-alignment>
 
 == Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
@@ -328,6 +351,8 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 
 
+
+#pagebreak()
 = Assumptions, Risks, and Open Issues
 
 
@@ -356,4 +381,4 @@ Prioritisation techniques differ mainly in how much they demand of the team usin
 
 // // #bibliography("works.bib")
 
-#bibliography("works.bib", title: "References")
+#bibliography("works.bib", title: "References", style: "apa")
