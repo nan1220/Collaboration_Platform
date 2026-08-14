@@ -301,7 +301,7 @@ Where two parties struggle to find and evaluate each other, a third party can lo
 
 
 == Product Perspective 
-== Stakeholder Groups and Their Roles (students, professors/supervisors, companies) 
+== Stakeholder Groups, Roles and Motivations (students, professors/supervisors, companies) 
 == Assumptions and Constraints 
 == Scope Boundary: TUM-Specific Focus (explicit justification: administrative/collaboration processes differ significantly across universities, so single-institution depth was prioritized over shallow generality) 
 == Transferability to Other Institutions (brief discussion of what would need to adapt for other universities) 
@@ -353,7 +353,7 @@ Where two parties struggle to find and evaluate each other, a third party can lo
 
 == Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
 == Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
-== Requirements Without Prototype Coverage (brief justification) <requirements-without-prototype-coverage>
+== Pain Points Without Requirements and Requirements Without Prototype Coverage (brief justification)<requirements-without-prototype-coverage>
 
 
 
