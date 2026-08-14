@@ -289,7 +289,68 @@ Where two parties struggle to find and evaluate each other, a third party can lo
 
 == Interview Methodology (stakeholder groups, question design) 
 
-== Sample Overview and Limitations (explicit note on data thinness, especially company-side) 
+== Sample Composition and Limitations
+
+Twenty-six semi-structured interviews were conducted across four stakeholder
+groups. Appendix B lists all participants; the distribution is summarised below.
+
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, center, left),
+    stroke: 0.5pt,
+    [*Group*], [*n*], [*Institutional background*],
+    [Students], [13], [9 TUM Heilbronn, 2 TUM Garching, 1 RWTH Aachen,
+                       1 Reutlingen],
+    [Companies], [5], [Startup, industrial manufacturing, software,
+                       energy management, IT services],
+    [Professors], [5], [2 TUM Heilbronn, 1 TUM Munich, 1 RWTH Aachen,
+                        1 Koblenz],
+    [University staff], [3], [2 TUM Heilbronn, 1 Passau],
+  ),
+  caption: [Interview sample by stakeholder group],
+)
+
+The sample spans six universities. Eight of the 21 university-affiliated
+participants are based outside TUM Campus Heilbronn, so where the same
+difficulties recur across institutions, they are unlikely to be local artefacts.
+
+Two limitations shape how the company findings should be read. Most company
+representatives were recruited at Career Factory, a university--company event on
+the Bildungscampus, so the sample includes no firms that have never collaborated
+with a university or have stopped doing so. More importantly, four of the five
+hold roles in human resources, apprenticeship management or campus relations.
+Their interest in the university is oriented towards recruiting, and the
+requirements derived from this group reflect that. Needs around research
+cooperation, confidentiality and intellectual property are under-represented.
+The founder interviewed as C1 offers a partial counterweight, having neither a
+recruiting function nor an employer-branding budget, and is treated in Section 6
+as a contrasting case rather than as one observation among five.
+
+The company, professor and staff groups are small, and findings specific to them
+are treated as indicative. The staff group is smallest at three, though two of
+these are the administrators who currently run the project-study process at TUM
+Campus Heilbronn, so the group covers most of the relevant population rather
+than a sample of it.
+
+// Finally, all interviews took place in a setting where university--industry
+// collaboration is already well resourced and organisationally supported.
+// Participants describe their needs in a context where university-industry engagement already exists. Therefore, the data does not provide enough evidence to identify requirements for settings where such engagement has not yet been established.
+
+This background of existing engagement is unevenly distributed across the
+sample. Several students and professors interviewed had no established route
+into university--industry collaboration, so their accounts include the
+perspective of those outside it. All five company representatives, by contrast,
+were already engaged with universities at the time of the interview. The
+company data therefore describes how engagement works for firms that have
+already committed to it, and says little about what would bring in a firm that
+has not.
+
+
+
+
+
+
 
 == From Interview Insights to Requirements (how findings were translated, requirements framed as informed proposals, not validated findings)
 
