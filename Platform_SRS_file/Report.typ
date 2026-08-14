@@ -240,7 +240,7 @@ Semi-structured interviews were used to explore stakeholder needs without assumi
 
 @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
 
-These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 5 and 3 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
+These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 6 and 2 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
 === Requirements Traceability
@@ -287,7 +287,48 @@ Where two parties struggle to find and evaluate each other, a third party can lo
 #pagebreak()
 = Research Approach and Limitations 
 
-== Interview Methodology (stakeholder groups, question design) 
+== Interview Methodology
+
+The study followed a sequential design. The requirements engineering literature
+reviewed in Section 2.1 informed the interview guide, and a scoping discussion
+with BirdVision fixed what the client needed from the study. Stakeholder groups
+were then defined, participants recruited and interviews conducted. Responses
+were consolidated into a single matrix, analysed by group, and translated into
+requirements, from which the prototype, the traceability table, the use case
+diagrams and the key user flows were produced.
+
+Interviews were semi-structured, using a common guide across all groups so that
+responses stayed comparable, with follow-up questions free to depart from it
+wherever a participant raised something unanticipated. The guide covered four
+areas:
+
++ *Current collaboration experience* --- what forms of collaboration the
+  participant had taken part in, and how they found them.
++ *Motivation* --- what makes collaboration worth entering, and what makes a
+  project attractive.
++ *Problems and barriers* --- what goes wrong during collaboration, and what
+  prevents people from engaging at all.
++ *Platform and solution needs* --- asked last, so that earlier answers were not
+  framed around a software solution.
+
+Only the last area concerns the platform directly. The first three establish how
+collaboration currently works and why it is difficult, and are reported in
+Section 5 independently of the specification.
+
+Four stakeholder groups were distinguished: students, companies, professors and
+university staff. Staff were separated from professors because their role is
+administrative rather than academic, and their pain points proved to differ
+accordingly. Participants were recruited through campus contacts and, for most
+company representatives, at Career Factory; Section 3.2 discusses the resulting
+composition and limitations.
+
+
+Responses were recorded in a matrix with participants as columns and the four
+areas as rows, allowing each theme to be read across all participants and across
+groups. Section 3.3 describes how the requirements were derived from it.
+
+
+
 
 == Sample Composition and Limitations
 
@@ -304,14 +345,14 @@ groups. Appendix B lists all participants; the distribution is summarised below.
                        1 Reutlingen],
     [Companies], [5], [Startup, industrial manufacturing, software,
                        energy management, IT services],
-    [Professors], [5], [2 TUM Heilbronn, 1 TUM Munich, 1 RWTH Aachen,
-                        1 Koblenz],
-    [University staff], [3], [2 TUM Heilbronn, 1 Passau],
+    [Professors and \ researchers], [6], [2 TUM Heilbronn, 1 TUM Munich, 1 RWTH Aachen,
+                        1 Koblenz, 1 Passau],
+    [University staff], [2], [2 TUM Heilbronn],
   ),
   caption: [Interview sample by stakeholder group],
 )
 
-The sample spans six universities. Eight of the 21 university-affiliated
+The sample spans five universities. Eight of the 21 university-affiliated
 participants are based outside TUM Campus Heilbronn, so where the same
 difficulties recur across institutions, they are unlikely to be local artefacts.
 
@@ -328,10 +369,10 @@ recruiting function nor an employer-branding budget, and is treated in Section 6
 as a contrasting case rather than as one observation among five.
 
 The company, professor and staff groups are small, and findings specific to them
-are treated as indicative. The staff group is smallest at three, though two of
-these are the administrators who currently run the project-study process at TUM
-Campus Heilbronn, so the group covers most of the relevant population rather
-than a sample of it.
+are treated as indicative. The staff group is smallest at two, though both are
+the administrators who currently run the project-study process at TUM Campus
+Heilbronn, so the group covers the relevant population rather than a sample of
+it.
 
 // Finally, all interviews took place in a setting where university--industry
 // collaboration is already well resourced and organisationally supported.
