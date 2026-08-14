@@ -466,19 +466,83 @@ from.
 = Stakeholder Needs (Pain Points) <stakeholder-needs>
 
 == Student Pain Points <student-pain-points>
+=== Discoverability
+Students consistently report that there is no clear, centralized listing for company projects. Project opportunities are described as scattered across fragmented institute websites or buried in static job boards (S6, S7, S8).
+
+=== Missing or insufficient listing information
+Project information about workload, technical requirements, deliverables, and whether the company genuinely prioritizes the project's outcome is frequently unavailable before applying (S8, S9). Company name, expected outcomes, and required skills were independently named as the minimum information needed to make an informed decision (S7, S9). 
+
+=== Communication and responsiveness
+Slow communication loops and vague project scope were named as reasons a student would abandon an application outright (S8). Separately, students report response delays during the application process and a lack of feedback following rejection (S12, S13).
+
+=== Language barrier
+German-language requirements were named as a disadvantage for international students on multiple, independent occasions (S5, S7, S10).
+
+=== Team formation
+A student named the inability to find a team as something that would stop them from applying altogether, and separately requested an automated team-matching feature (S10).
+
+=== Application process friction
+One student described having to repeatedly re-enter the same information across each company's own application platform, alongside generic, under-informed initial screening and a lack of feedback after rejection (S1). A separate student reported that project details were withheld pre-NDA, leading to a fundamentally different understanding of the task once disclosed (S9)
+
+=== Value and goal alignment
+Several students indicated they would disengage from a project perceived as serving only the company's commercial interest without genuine educational or research value (S6, S8). This pattern recurs across other stakeholder groups and is developed further in Section 5.4. 
+
+
+
 
 
 == Professor/University Pain Points 
+=== Information standardization
+Professors report that companies frequently fail to provide sufficiently detailed project briefs, desired area of expertise, objective, and data availability, leaving task scope unclear for both supervisor and student (P3, P4, P6). 
 
+=== Contact and coordination burden
+Locating appropriate contacts and coordinating a collaboration was named as time-consuming and requiring substantial advance planning (P1). On the administrative side, obtaining a timely response from professorships regarding supervision requests was named as the primary obstacle encountered by university staff coordinating intake (U1, U2).
+
+=== Students' engagement with supervisors during the project
+One professor observed that students frequently under-communicate with their academic supervisor once a company relationship is underway, directly linking this to reduced outcome quality, and has introduced mandatory monthly check-ins as an informal mitigation (P4).
+
+=== Outcome measurement
+Two different professors reported that there is no formal mechanism for assessing whether the effort invested in a project study was proportionate to its value. One describes this as entirely unmeasured, the other as narrative rather than KPI-based (P1, P5). This pattern recurs in Section 5.4. 
+
+=== Resource pressure
+Time and financial resources dedicated to these collaborations were named as the first budget item companies tend to cut, constraining the professor's ability to sustain partnerships (P5).
 
 
 == Company Pain Points
+
+=== Contact identification and structural complexity
+Identifying the correct contact person and aligning expectations, timelines, and available resources was the most frequently cited difficulty (C3, C4). University structures were separately described as complex and inconsistent between institutions (C4), directly reinforcing the transferability discussion in Section 4.4-4.5.
+=== Missing information when searching for partners
+Companies report a lack of visibility into contact details, areas of expertise, ongoing projects, and collaboration opportunities (C4), as well as the absence of a clear overview of available posting/collaboration options (C5).
+
+=== Output quality and delivery friction
+For one company, the central concern was not access to universities but the practical usability of delivered outcomes, compounded by software-tooling mismatches between student and company environments (C2). A second company reported an inability to assess student or study quality in advance, which discourages deeper engagement. (C5).
+
+=== Need for trust and verification
+Companies want assurance that student and professor profiles are genuinely affiliated with their stated institution, citing existing third-party verification services elsewhere as a reasonable precedent (C4).
+
+=== Screening signal degradation
+One company noted that student CVs are increasingly perceived as AI-generated and therefore less reliable as a screening tool, expressing a preference for more direct channels, including contact with student clubs, over formal university structures (C3).
 
 
 
 
 == Cross-Cutting Findings (pain points recurring across all three groups) <cross-cutting-findings>
 
+=== Contact-person and reachability breakdown
+Identifying and reaching the correct person was named independently by professors (P1), companies (C3, C4), and university staff (U2, U3). It is the most broadly and heavily evidenced finding in the dataset, spanning three stakeholder groups.
+
+=== Bidirectional information insufficiency
+Every stakeholder group reports the same underlying gap directed at a different counterpart: students want more complete project information from companies and professors (S7, S9); professors want companies to provide more structured project detail (P3); companies want more visibility into student and professor profiles, expertise, and ongoing activity (C4). The specific direction differs but the pattern recurs across all three groups.
+
+=== Academia-industry goal misalignment
+This is the most substantively supported cross-cutting finding. The university research staff perspective names it directly (U1), one company frames it as their central complaint about output usability (C2), a second names it explicitly as a reason to disengage (C4), and it recurs independently across multiple students, either as a disengagement trigger (S6) or as lived experience (S8, S11).
+
+=== Outcome quality
+Two professors report no formal mechanism for evaluating whether a project study delivered proportionate value (P1, P5); this connects directly to one company's independent complaint that project studies deliver limited usable insight (C2) and another professor's complaint that outcome quality is highly dependent on student engagement (P4).
+
+=== Slow or unresponsive communication
+Named as an application-ending concern by students (S8, S12, S13) and, from the opposite side of the same process, as staff's core administrative obstacle in obtaining professor responses (U2, U3).
 
 
 
