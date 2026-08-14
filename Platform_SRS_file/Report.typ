@@ -454,16 +454,123 @@ from.
 
 
 == Product Perspective 
+
+The platform is a new, self-contained system rather than an extension of
+existing university software. It acts as an intermediary among parties who
+currently find one another through scattered institute pages, personal contacts,
+job boards and events, and its purpose is to reduce the cost of that search and
+standardise the information exchanged once contact is made.
+
+What exists at the end of this project study is a prototype. It demonstrates the
+interfaces and flows specified here, but implements no persistent storage, no
+authentication against university identity systems and no integration with
+existing institutional processes. 
+
+
 == Stakeholder Groups, Roles and Motivations (students, professors/supervisors, companies) 
+
+*Students:* search for projects, apply and carry out the work, motivated by
+practical experience, industry contact and, in several cases, employment
+prospects. Their engagement is conditional: several said they would withdraw
+from a project seen as serving only a commercial interest.
+
+*Professors and academic supervisors:* supervise and assess projects, motivated
+by access to real problems and by teaching value. Their constraint is time.
+
+*University staff:* administer the process, matching requests to supervisors and
+tracking progress. Their main obstacle is obtaining timely responses from
+professorships.
+
+*Companies:* post projects and receive results, motivated by talent contact,
+access to expertise and usable outcomes. As Section 3.2 sets out, the companies
+interviewed were oriented mainly towards recruiting, and the requirements
+derived from them reflect that.
+
+These motivations are not aligned by default. The platform does not assume they
+are; its function is to make each group's constraints visible to the others.
+
+
 == Assumptions and Constraints 
+
+The specification assumes a university runs the platform, not a commercial third
+party. This matters because several requirements depend on the operator being
+able to confirm that a profile really does belong to a member of the university,
+and only the university itself holds that information. We further assume that
+every user has an affiliation which can be verified, and that each project study
+runs to a timeline agreed between the supervising professor and the company
+rather than to a fixed institutional calendar.
+
+There is one more assumption, about how selection currently works. Students at
+the TUM Global Center for Family Enterprise are chosen by the university alone,
+with no involvement from the companies whose projects they apply to. Section 6
+contains a requirement that would change this. We have flagged it there as a
+proposed change to the process rather than presenting it as something the
+platform merely automates.
+
+Our constraints were those of a single-semester project study, with no budget
+and a small team. Everything here rests on interview data. We could not consult
+institutional process documentation beyond what participants described to us,
+and nobody with legal expertise reviewed the data-protection and confidentiality
+questions that operating such a platform would raise.
+
+
+
 == Scope Boundary: TUM-Specific Focus (explicit justification: administrative/collaboration processes differ significantly across universities, so single-institution depth was prioritized over shallow generality) 
+
+The platform is specified against one process in particular: the project study
+process at TUM Campus Heilbronn. Administrative arrangements vary a great deal
+between universities, and a specification broad enough to fit all of them would
+be too vague to build from. We chose depth against a process we could examine
+closely.
+
+The problems it addresses are another matter. We modeled a local workflow, but
+the difficulties it responds to came up at every university in our sample.
+
+
+
 == Transferability to Other Institutions (brief discussion of what would need to adapt for other universities) 
+
+Each requirement is tagged according to how far it depends on local
+arrangements:
+
+#figure(
+  table(
+    columns: (auto, 1fr),
+    align: (left + top, left + top),
+    stroke: 0.5pt,
+    inset: 7pt,
+    [*Tag*], [*Meaning*],
+    [Generalizable], [Would apply at any university.],
+    [Adaptable], [Depends on an arrangement other institutions also have in some
+      form; needs reconfiguring rather than redesigning.],
+    [Institution-specific], [Tied to how TUM Campus Heilbronn organises the
+      process; would require rework elsewhere.],
+  ),
+  caption: [Transferability tags applied to requirements],
+)
+
+These tags feed the prioritization scheme in Section 6.1: requirements that are
+generalizable and grounded in cross-cutting pain points rank above those that
+are institution-specific or supported by a single group.
+
+
+
+
 == Out-of-Scope Items (e.g. backend functionality not prototyped)
-
-
+Outside the scope of this specification and the prototype: persistent storage
+and backend services, authentication against university identity providers,
+automated student--project matching, contract and intellectual-property
+handling, integration with university administration systems, and how the
+platform would acquire its first users on each of the three sides.
 
 #pagebreak()
 = Stakeholder Needs (Pain Points) <stakeholder-needs>
+
+The pain points in this chapter are derived from semi-structured interviews conducted across three primary stakeholder groups relevant to the project study process. Each pain point is presented with the interview ID it was sourced from. See appendix 11.B for anonymized interview counts per stakeholder group and matching interview IDs.
+BirdVision's primary interest with this project study was gaining insight into industry-academia collaborations as a whole, particularly the stakeholders' motivations and the problems they encounter. The interviews were accordingly conducted on the broader premise of industry-academia collaborations, in order to gather as wide a range of insights as possible. However, as the stated aim of the project is a platform supporting project studies specifically, and the scope of the platform is limited, not every pain point identified applies directly to the project study process, or to TUM in particular. These findings are nonetheless documented in full below.
+
+
+
 
 == Student Pain Points <student-pain-points>
 === Discoverability
