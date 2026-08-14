@@ -467,24 +467,45 @@ authentication against university identity systems and no integration with
 existing institutional processes. 
 
 
-== Stakeholder Groups, Roles and Motivations (students, professors/supervisors, companies) 
+== Stakeholder Groups, Roles and Motivations
 
-*Students:* search for projects, apply and carry out the work, motivated by
-practical experience, industry contact and, in several cases, employment
-prospects. Their engagement is conditional: several said they would withdraw
-from a project seen as serving only a commercial interest.
 
-*Professors and academic supervisors:* supervise and assess projects, motivated
-by access to real problems and by teaching value. Their constraint is time.
+- *Students:* search for projects, apply and carry out the work, motivated by
+  practical experience, industry contact and, in several cases, employment
+  prospects. Their engagement is conditional --- several said they would
+  withdraw from a project seen as serving only a commercial interest.
 
-*University staff:* administer the process, matching requests to supervisors and
-tracking progress. Their main obstacle is obtaining timely responses from
-professorships.
+- *Companies:* post projects and receive results, motivated by talent contact,
+  access to expertise and usable outcomes. The companies interviewed were
+  oriented mainly towards recruiting, and the requirements derived from them
+  reflect that.
 
-*Companies:* post projects and receive results, motivated by talent contact,
-access to expertise and usable outcomes. As Section 3.2 sets out, the companies
-interviewed were oriented mainly towards recruiting, and the requirements
-derived from them reflect that.
+- *Professors and academic researchers:* supervise and assess projects, motivated
+  by access to real problems and by teaching value. Their constraint is time.
+
+- *University staff:* administer the process, matching requests to supervisors and
+  tracking progress. Their main obstacle is obtaining timely responses from
+  professorships.
+
+// #set terms(hanging-indent: 1.5em, spacing: 0.9em)
+// / Students: search for projects, apply and carry out the work, motivated by
+//   practical experience, industry contact and, in several cases, employment
+//   prospects. Their engagement is conditional --- several said they would
+//   withdraw from a project seen as serving only a commercial interest.
+
+// / Companies: post projects and receive results, motivated by talent contact,
+//   access to expertise and usable outcomes. The companies interviewed were
+//   oriented mainly towards recruiting, and the requirements derived from them
+//   reflect that.
+
+// / Professors and academic researchers: supervise and assess projects, motivated
+//   by access to real problems and by teaching value. Their constraint is time.
+
+// / University staff: administer the process, matching requests to supervisors and
+//   tracking progress. Their main obstacle is obtaining timely responses from
+//   professorships.
+
+
 
 These motivations are not aligned by default. The platform does not assume they
 are; its function is to make each group's constraints visible to the others.
