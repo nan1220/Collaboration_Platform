@@ -219,8 +219,9 @@
 #pagebreak()
 = Literature review
 
-In this section we provide a review of industry and academic practices in requirements engineering, focusing on the elicitation of requirements from stakeholders. We describe the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. We also discuss traceability practices and prioritization schemes relevant to this project.
+// In this section we provide a review of industry and academic practices in requirements engineering, focusing on the elicitation of requirements from stakeholders. We describe the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. We also discuss traceability practices and prioritization schemes relevant to this project.
 
+In this section we review the academic grounding for the project’s methodological choices. In particular, the requirements engineering approach and the broader phenomenon of academia-industry collaboration that the platform aims to address.
 
 == Requirements Engineering Grounding
 
@@ -388,14 +389,64 @@ already committed to it, and says little about what would bring in a firm that
 has not.
 
 
-
-
-
-
-
 == From Interview Insights to Requirements (how findings were translated, requirements framed as informed proposals, not validated findings)
 
+The analysis started from the response matrix described above. Each theme was
+read across all 26 participants, first within a stakeholder group and then
+across groups, and recurring statements were grouped into pain points. Pain
+points named by only one group are reported under that group in Section 5, while
+those raised by more than one group are reported once among the cross-cutting
+findings at the end of that section. Each pain point lists the participants who
+raised it, so a reader can see how many independent sources stand behind it.
 
+Requirements were then derived from these pain points. The two sets do not match
+one to one. Some pain points lie outside what a platform can fix, and those are
+accounted for in Section 9. Some requirements, in turn, come from elsewhere.
+Each requirement therefore states what kind of evidence it rests on:
+
+#figure(
+  table(
+    columns: (auto, 1fr),
+    align: (left + top, left + top),
+    stroke: 0.5pt,
+    inset: 7pt,
+    [*Basis*], [*Meaning*],
+    [Interview],
+    [Taken from one or more interview statements, cited by participant ID.],
+    [Process documentation],
+    [Taken from how the project-study process currently works at TUM Campus
+     Heilbronn, rather than from interview data.],
+    [Design decision],
+    [A choice made by the authors, where neither source supplied a requirement.
+     Listed individually, with reasons, in Section 10.],
+  ),
+  caption: [Evidence basis recorded for each requirement],
+)
+
+
+// / Interview: taken from one or more interview statements, cited by participant
+//   ID.
+// / Process documentation: taken from how the project-study process currently
+//   works at TUM Campus Heilbronn, rather than from interview data.
+// / Design decision: a choice made by the authors, where neither source supplied a
+//   requirement. These are listed individually, with reasons, in Section 10.
+
+Two further attributes are recorded and feed the prioritization scheme in
+Section 6: whether the underlying pain point recurs across groups, and whether
+the requirement depends on TUM's administrative arrangements or would apply at
+any university.
+
+The prototype was built from the requirement set as a whole rather than
+requirement by requirement. The mapping from requirement to screen in Section 9
+was therefore drawn up after implementation, not before it.
+
+Two limits follow. The requirements were never taken back to participants for
+confirmation, and the step from interview statement to pain point rests on the
+authors' reading of the material. Together with the sample limitations described
+above, this is why the requirements in Sections 6 and 7 are presented as
+informed proposals. Each one can be traced to its evidence, and the strength of
+that evidence is recorded, but none has been checked against the people it came
+from.
 
 
 #pagebreak()
@@ -413,10 +464,19 @@ has not.
 
 #pagebreak()
 = Stakeholder Needs (Pain Points) <stakeholder-needs>
-== Overview by Stakeholder Group 
+
 == Student Pain Points <student-pain-points>
+
+
 == Professor/University Pain Points 
+
+
+
 == Company Pain Points
+
+
+
+
 == Cross-Cutting Findings (pain points recurring across all three groups) <cross-cutting-findings>
 
 
