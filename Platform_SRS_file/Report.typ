@@ -845,25 +845,25 @@ Source: Process Documentation (legal/regulatory constraint)
 #figure(
   caption: [Platform access Use Case diagram],
 )[
-  #image("diagrams/uc_access.drawio.svg", width: 90%)
+  #image("diagrams/uc_access.drawio.pdf", width: 91%)
 ]
 
 #figure(
   caption: [Application and Selection Use Case diagram],
 )[
-  #image("diagrams/uc_application.drawio.svg", width: 100%)
+  #image("diagrams/uc_application.drawio.pdf", width: 100%)
 ]
 
 #figure(
   caption: [Project Intake Use Case diagram],
 )[
-  #image("diagrams/uc_intake.drawio.svg", width: 93%)
+  #image("diagrams/uc_intake.drawio.pdf", width: 93%)
 ]
 
 #figure(
   caption: [Profiles and Topics Use Case diagram],
 )[
-  #image("diagrams/uc_profiles.drawio.svg", width: 93%)
+  #image("diagrams/uc_profiles.drawio.pdf", width: 93%)
 ]
 
 
