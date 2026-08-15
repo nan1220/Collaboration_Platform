@@ -48,6 +48,7 @@ interface DbState {
   checkIns: RawCheckIn[];
   guides: Guide[];
   auditLog: RawAuditLogEntry[];
+  nextUserId: number;
   nextProjectId: number;
   nextApplicationId: number;
   nextCompanyId: number;
@@ -70,6 +71,7 @@ function freshState(): DbState {
     checkIns: structuredClone(SEED_CHECKINS),
     guides: structuredClone(SEED_GUIDES),
     auditLog: structuredClone(SEED_AUDIT_LOG),
+    nextUserId: Math.max(...SEED_USERS.map((u) => u.id)) + 1,
     nextProjectId: Math.max(...SEED_PROJECTS.map((p) => p.id)) + 1,
     nextApplicationId: Math.max(...SEED_APPLICATIONS.map((a) => a.id)) + 1,
     nextCompanyId: Math.max(...SEED_COMPANIES.map((c) => c.id)) + 1,
@@ -232,6 +234,80 @@ export const store = {
   users(userId: number | null): User[] {
     requireRole(userId, "staff");
     return getState().users.slice();
+  },
+
+  // Access use case (FR-1/NFR-1): TUM members authenticate via Shibboleth,
+  // which we can't actually call from a static site — this simulates the
+  // round trip. The account is created just-in-time on first "login"
+  // (mirroring how real Shibboleth-backed SPs provision accounts from IdP
+  // attributes the first time they see a given identity).
+  signInInstitutional(body: {
+    name: string;
+    role: "student" | "professor" | "staff";
+    department: string;
+    program: string;
+  }): User {
+    if (!body.name.trim()) throw new ApiError(400, "Name is required");
+    const db = getState();
+    const user: User = {
+      id: db.nextUserId++,
+      role: body.role,
+      name: body.name.trim(),
+      email: "",
+      department: body.role === "professor" ? body.department : "",
+      program: body.role === "student" ? body.program : "",
+    };
+    db.users.push(user);
+    persist();
+    return user;
+  },
+
+  // FR-2's actor precondition: a company needs an account before it can
+  // submit anything. Self-registration + email-domain check stand in for the
+  // "verified company email domain" half of NFR-1; the "confirmed by staff"
+  // half is verifyCompany() below.
+  registerCompany(body: { name: string; contact_name: string; contact_email: string }): { user: User; company: Company } {
+    if (!body.name.trim() || !body.contact_name.trim() || !body.contact_email.trim()) {
+      throw new ApiError(400, "Company name, contact person and contact email are required");
+    }
+    const db = getState();
+    const user: User = {
+      id: db.nextUserId++,
+      role: "company",
+      name: body.name.trim(),
+      email: body.contact_email.trim(),
+      department: "",
+      program: "",
+    };
+    db.users.push(user);
+    const company: Company = {
+      id: db.nextCompanyId++,
+      user_id: user.id,
+      name: body.name.trim(),
+      contact_name: body.contact_name.trim(),
+      contact_email: body.contact_email.trim(),
+      verified: false,
+    };
+    db.companies.push(company);
+    recordAudit(user.id, "company", String(company.id), "registered");
+    persist();
+    return { user, company };
+  },
+
+  // A returning company signs back in with the email they registered with —
+  // there's no password in this mock, so the email itself is the lookup key
+  // (still more realistic than just picking your company off a public list).
+  signInCompany(contactEmail: string): { user: User; company: Company } {
+    const email = contactEmail.trim().toLowerCase();
+    if (!email) throw new ApiError(400, "Enter the email you registered with");
+    const db = getState();
+    const company = db.companies.find((c) => c.contact_email.toLowerCase() === email);
+    if (!company) {
+      throw new ApiError(404, "No company registered with that email — register instead");
+    }
+    const user = db.users.find((u) => u.id === company.user_id);
+    if (!user) throw new ApiError(404, "No company registered with that email — register instead");
+    return { user, company };
   },
 
   // FR-11/FR-17: role-based visibility. Students/companies only ever see

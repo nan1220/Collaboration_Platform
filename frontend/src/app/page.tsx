@@ -112,12 +112,16 @@ export default function Home() {
       {!currentUser && (
         <Card className="border-l-4 border-l-accent">
           <CardHeader>
-            <CardTitle>Pick a demo user to get started</CardTitle>
+            <CardTitle>You&apos;re not signed in</CardTitle>
             <CardDescription>
-              This is a mock: there is no real login yet. Use the selector in the top right to view
-              the platform as staff, a professor, a company or a student.
+              TUM members sign in with Shibboleth; companies register with a work email (FR-1/NFR-1).
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <Link href="/login" className={cn(buttonVariants({ variant: "default" }))}>
+              Sign in
+            </Link>
+          </CardContent>
         </Card>
       )}
 

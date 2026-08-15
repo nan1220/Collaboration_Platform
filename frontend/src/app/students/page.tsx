@@ -7,6 +7,7 @@ import { useCurrentUser } from "@/lib/current-user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { SignInPrompt } from "@/components/sign-in-prompt";
 
 export default function StudentDirectoryPage() {
   const { currentUser } = useCurrentUser();
@@ -22,9 +23,9 @@ export default function StudentDirectoryPage() {
 
   if (!allowed) {
     return (
-      <p className="text-muted-foreground">
-        Select a professor, company or staff demo user (top right) to browse student topics and profiles.
-      </p>
+      <SignInPrompt>
+        Sign in as a professor, company or staff account to browse student topics and profiles.
+      </SignInPrompt>
     );
   }
 

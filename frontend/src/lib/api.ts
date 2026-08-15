@@ -16,6 +16,16 @@ export const api = {
   demoUsers: () => run(() => store.demoUsers()),
   users: (userId: number) => run(() => store.users(userId)),
 
+  signInInstitutional: (body: {
+    name: string;
+    role: "student" | "professor" | "staff";
+    department: string;
+    program: string;
+  }) => run(() => store.signInInstitutional(body)),
+  registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
+    run(() => store.registerCompany(body)),
+  signInCompany: (contactEmail: string) => run(() => store.signInCompany(contactEmail)),
+
   projects: (userId: number | null, params: Record<string, string | undefined> = {}) =>
     run(() => store.projects(userId, params)),
   project: (id: number) => run(() => store.project(id)),

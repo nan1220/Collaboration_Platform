@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   FolderKanban,
   BookOpen,
@@ -12,16 +12,10 @@ import {
   ClipboardList,
   Building2,
   UserRound,
+  LogOut,
   type LucideIcon,
 } from "lucide-react";
 import { useCurrentUser } from "@/lib/current-user";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Popover,
   PopoverContent,
@@ -30,7 +24,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
@@ -53,10 +47,11 @@ function normalize(path: string) {
 }
 
 export function NavBar() {
-  const { users, currentUser, setCurrentUserId } = useCurrentUser();
+  const { currentUser, setCurrentUserId } = useCurrentUser();
   const pathname = usePathname();
+  const router = useRouter();
   const currentPath = normalize(pathname);
-  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = NAV_LINKS.filter(
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
@@ -96,50 +91,47 @@ export function NavBar() {
           })}
         </nav>
 
-        <Popover open={switcherOpen} onOpenChange={setSwitcherOpen}>
-          <PopoverTrigger
-            render={
-              <Button
-                variant="secondary"
-                size="sm"
-                className="gap-1.5 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground shadow-none hover:bg-primary-foreground/20"
-              >
-                <UserRound className="size-4" />
-                {currentUser ? currentUser.name : "Demo user"}
-              </Button>
-            }
-          />
-          <PopoverContent align="end">
-            <PopoverTitle>Switch demo user</PopoverTitle>
-            <PopoverDescription>
-              This is a mock — there is no real login. Pick who you&apos;re viewing the platform as.
-            </PopoverDescription>
-            {currentUser && (
+        {currentUser ? (
+          <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+            <PopoverTrigger
+              render={
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="gap-1.5 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground shadow-none hover:bg-primary-foreground/20"
+                >
+                  <UserRound className="size-4" />
+                  {currentUser.name}
+                </Button>
+              }
+            />
+            <PopoverContent align="end">
+              <PopoverTitle>{currentUser.name}</PopoverTitle>
+              <PopoverDescription>Signed in for this demo session.</PopoverDescription>
               <Badge variant="secondary" className="w-fit capitalize">
                 {currentUser.role}
               </Badge>
-            )}
-            <Select
-              items={users.map((user) => ({ value: String(user.id), label: `${user.name} (${user.role})` }))}
-              value={currentUser ? String(currentUser.id) : ""}
-              onValueChange={(value) => {
-                setCurrentUserId(value ? Number(value) : null);
-                setSwitcherOpen(false);
-              }}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select demo user" />
-              </SelectTrigger>
-              <SelectContent>
-                {users.map((user) => (
-                  <SelectItem key={user.id} value={String(user.id)}>
-                    {user.name} ({user.role})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </PopoverContent>
-        </Popover>
+              <Button
+                variant="outline"
+                size="sm"
+                className="justify-start gap-1.5"
+                onClick={() => {
+                  setCurrentUserId(null);
+                  setMenuOpen(false);
+                  router.push("/");
+                }}
+              >
+                <LogOut className="size-4" />
+                Sign out
+              </Button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Link href="/login" className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "gap-1.5")}>
+            <UserRound className="size-4" />
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   );

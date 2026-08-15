@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { SignInPrompt } from "@/components/sign-in-prompt";
 
 const EMPTY_DIRECT_FORM = {
   title: "",
@@ -66,11 +67,7 @@ export default function ProfessorPage() {
   });
 
   if (!currentUser || currentUser.role !== "professor") {
-    return (
-      <p className="text-muted-foreground">
-        Select a professor demo user (top right) to see this dashboard.
-      </p>
-    );
+    return <SignInPrompt>Sign in with a professor account to see this dashboard.</SignInPrompt>;
   }
 
   const myProjects = allProjects.filter((p) => p.assigned_professor?.id === currentUser.id);

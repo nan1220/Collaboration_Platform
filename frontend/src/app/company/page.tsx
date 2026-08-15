@@ -18,6 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { SignInPrompt } from "@/components/sign-in-prompt";
 
 const EMPTY_FORM = {
   title: "",
@@ -60,7 +61,7 @@ export default function CompanyPage() {
   });
 
   if (!currentUser || currentUser.role !== "company") {
-    return <p className="text-muted-foreground">Select a company demo user (top right) to see this dashboard.</p>;
+    return <SignInPrompt>Sign in with a company account (or register one) to see this dashboard.</SignInPrompt>;
   }
 
   return (

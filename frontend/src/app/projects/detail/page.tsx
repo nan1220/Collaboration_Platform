@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -232,7 +233,10 @@ function ProjectDetail() {
 
       {!currentUser && (
         <p className="text-sm text-muted-foreground">
-          Select a demo user in the top right to apply, take on supervision or manage this project.
+          <Link href="/login" className="underline">
+            Sign in
+          </Link>{" "}
+          to apply, take on supervision or manage this project.
         </p>
       )}
 

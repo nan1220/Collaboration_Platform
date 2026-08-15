@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { SignInPrompt } from "@/components/sign-in-prompt";
 import { applicationStatus, APPLICATION_STATUS_LABELS } from "@/lib/types";
 
 const EMPTY_PROFILE = {
@@ -69,7 +70,7 @@ export default function StudentPage() {
   });
 
   if (!currentUser || currentUser.role !== "student") {
-    return <p className="text-muted-foreground">Select a student demo user (top right) to see this page.</p>;
+    return <SignInPrompt>Sign in with a student account to see this page.</SignInPrompt>;
   }
 
   const acceptedOffers = applications.filter(

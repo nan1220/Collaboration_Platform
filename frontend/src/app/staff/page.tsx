@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SignInPrompt } from "@/components/sign-in-prompt";
 import { isNotYetSupervised } from "@/lib/types";
 
 const MONITOR_TABS = [
@@ -68,7 +69,7 @@ export default function StaffPage() {
   }, [allProjects]);
 
   if (!currentUser || currentUser.role !== "staff") {
-    return <p className="text-muted-foreground">Select the staff demo user (top right) to see this dashboard.</p>;
+    return <SignInPrompt>Sign in with a staff account to see this dashboard.</SignInPrompt>;
   }
 
   return (
