@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string[] }[] = [
@@ -65,11 +66,9 @@ export function NavBar() {
     <header className="sticky top-0 z-40 bg-primary text-primary-foreground shadow-md shadow-black/10">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <span className="flex flex-col items-start rounded-[2px] bg-white px-2 py-1 leading-none shadow-sm">
-            <span className="text-base font-extrabold tracking-tight text-primary">TUM</span>
-            <span className="mt-0.5 text-[8px] font-medium tracking-wide text-[#20252a]/70 uppercase">
-              Technical University of Munich
-            </span>
+          <span className="flex items-center rounded-[2px] bg-white px-2 py-1.5 shadow-sm">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
+            <img src={withBasePath("/tum-logo.svg")} alt="Technical University of Munich" className="h-5 w-auto" />
           </span>
           <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
         </Link>
