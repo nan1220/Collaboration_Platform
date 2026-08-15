@@ -29,7 +29,7 @@ export default function GuidesPage() {
   const { data: guides = [], isLoading } = useQuery({ queryKey: ["guides"], queryFn: api.guides });
 
   const visibleGuides = guides.filter(
-    (g) => g.audience === "all" || !currentUser || g.audience === currentUser.role || currentUser.role === "organizer"
+    (g) => g.audience === "all" || !currentUser || g.audience === currentUser.role || currentUser.role === "staff"
   );
 
   const createMutation = useMutation({
@@ -64,7 +64,7 @@ export default function GuidesPage() {
             company-submitted topic — instead of figuring it out through word of mouth.
           </p>
         </div>
-        {currentUser?.role === "organizer" && (
+        {currentUser?.role === "staff" && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger render={<Button>New guide</Button>} />
             <DialogContent>

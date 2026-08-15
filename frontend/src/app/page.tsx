@@ -8,29 +8,37 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const ROLE_COPY: Record<string, { title: string; description: string; links: { href: string; label: string }[] }> = {
-  organizer: {
-    title: "Organizer dashboard",
-    description: "Review company submissions, track every project's status, and manage guides.",
+  staff: {
+    title: "Staff dashboard",
+    description: "Review company submissions, monitor every project by status, and verify companies.",
     links: [
-      { href: "/organizer", label: "Open organizer dashboard" },
+      { href: "/staff", label: "Open staff dashboard" },
       { href: "/projects", label: "Browse all projects" },
     ],
   },
   professor: {
     title: "Supervision",
-    description: "Claim approved topics in your department and manage projects you supervise.",
+    description: "Take on topics matched to your expertise, or submit a project agreed directly with a company.",
     links: [
       { href: "/professor", label: "Open my supervision" },
-      { href: "/projects", label: "Browse projects" },
+      { href: "/students", label: "Browse the student directory" },
+    ],
+  },
+  company: {
+    title: "Company dashboard",
+    description: "Submit project proposals and browse student topics and profiles.",
+    links: [
+      { href: "/company", label: "Open my company dashboard" },
+      { href: "/students", label: "Browse the student directory" },
     ],
   },
   student: {
     title: "Student home",
-    description: "Browse projects, read guides, track your applications and find teammates.",
+    description: "Browse published projects, submit your topic and profile, and track your applications.",
     links: [
       { href: "/projects", label: "Browse projects" },
+      { href: "/student", label: "My applications and profile" },
       { href: "/guides", label: "Read guides" },
-      { href: "/student", label: "My applications" },
     ],
   },
 };
@@ -40,29 +48,29 @@ const FEATURES: { icon: LucideIcon; title: string; description: string; href: st
     icon: Database,
     title: "One shared database",
     description:
-      "Organizers, professors and students all see the same project data and status history — not a spreadsheet only two people can read.",
+      "Staff, professors, students and companies all see the same project data and status history — not a spreadsheet only two people can read.",
     href: "/projects",
   },
   {
     icon: Building2,
     title: "Company submissions",
     description:
-      "Companies submit a topic through a simple form. Organizers approve it, professors claim it — automatically tracked end to end.",
-    href: "/submit",
+      "Companies submit a topic through a portal (FR-2). Staff approve it, a matching professor takes it on and publishes it (FR-6).",
+    href: "/company",
+  },
+  {
+    icon: Users,
+    title: "Student topics & teammates",
+    description:
+      "Students submit a topic and profile that professors and companies can browse (FR-4/FR-8/FR-9), and can flag themselves as looking for a team (FR-10).",
+    href: "/students",
   },
   {
     icon: BookOpenCheck,
     title: "Guides that actually help",
     description:
-      "Concrete, TUM-specific guidance — like finding an eligible supervisor for a company topic — instead of word of mouth.",
+      "Concrete, TUM-specific guidance — like finding a professor whose expertise matches a topic — instead of word of mouth.",
     href: "/guides",
-  },
-  {
-    icon: Users,
-    title: "Find teammates",
-    description:
-      "Optional: students looking for a project group can be found by others, lowering the barrier to just getting started.",
-    href: "/teammates",
   },
 ];
 
@@ -84,15 +92,15 @@ export default function Home() {
         <div className="relative flex max-w-2xl flex-col gap-4">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Collaboration Platform</h1>
           <p className="text-primary-foreground/85 sm:text-lg">
-            One consistent database for company and internal project topics — shared by organizers,
-            professors and students, instead of a spreadsheet nobody else can see.
+            One consistent database for company and professor-submitted project topics — shared by
+            staff, professors, students and companies, instead of a spreadsheet nobody else can see.
           </p>
           <div className="mt-2 flex flex-wrap gap-3">
             <Link href="/projects" className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}>
               Browse projects
             </Link>
             <Link
-              href="/submit"
+              href="/company"
               className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-primary-foreground/40 px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
               Submit a project (company)
@@ -107,7 +115,7 @@ export default function Home() {
             <CardTitle>Pick a demo user to get started</CardTitle>
             <CardDescription>
               This is a mock: there is no real login yet. Use the selector in the top right to view
-              the platform as an organizer, professor or student.
+              the platform as staff, a professor, a company or a student.
             </CardDescription>
           </CardHeader>
         </Card>

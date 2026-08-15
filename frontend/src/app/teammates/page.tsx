@@ -33,9 +33,9 @@ export default function TeammatesPage() {
           <Card key={profile.student.id}>
             <CardHeader>
               <CardTitle>{profile.student.name}</CardTitle>
-              <CardDescription>{profile.interests || "No interests listed"}</CardDescription>
+              <CardDescription>{profile.research_interests || "No research interests listed"}</CardDescription>
             </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">{profile.bio}</CardContent>
+            <CardContent className="text-sm text-muted-foreground">{profile.team_message}</CardContent>
           </Card>
         ))}
       </div>

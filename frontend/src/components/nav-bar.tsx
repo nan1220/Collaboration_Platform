@@ -25,10 +25,12 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string[] }[] = [
   { href: "/projects", label: "Projects", icon: FolderKanban },
-  { href: "/guides", label: "Guides", icon: BookOpen },
+  { href: "/students", label: "Student directory", icon: Users, roles: ["professor", "company", "staff"] },
   { href: "/teammates", label: "Find teammates", icon: Users, roles: ["student"] },
-  { href: "/organizer", label: "Organizer", icon: LayoutDashboard, roles: ["organizer"] },
+  { href: "/guides", label: "Guides", icon: BookOpen },
+  { href: "/staff", label: "Staff dashboard", icon: LayoutDashboard, roles: ["staff"] },
   { href: "/professor", label: "My supervision", icon: GraduationCap, roles: ["professor"] },
+  { href: "/company", label: "My company", icon: Building2, roles: ["company"] },
   { href: "/student", label: "My applications", icon: ClipboardList, roles: ["student"] },
 ];
 
@@ -73,14 +75,6 @@ export function NavBar() {
             );
           })}
         </nav>
-
-        <Link
-          href="/submit"
-          className="flex items-center gap-1.5 rounded-md border border-primary-foreground/40 px-2.5 py-1.5 text-sm font-medium text-primary-foreground/90 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
-        >
-          <Building2 className="size-4" />
-          Submit a project (company)
-        </Link>
 
         <div className="flex items-center gap-2">
           {currentUser && (

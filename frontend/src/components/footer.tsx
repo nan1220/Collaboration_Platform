@@ -17,7 +17,7 @@ export function Footer() {
           <Link href="/guides" className="hover:text-foreground">
             Guides
           </Link>
-          <Link href="/submit" className="hover:text-foreground">
+          <Link href="/company" className="hover:text-foreground">
             Submit a project
           </Link>
         </div>
