@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DevShortcut } from "@/components/dev-shortcut";
 import type { Role } from "@/lib/types";
 
 const ROLE_OPTIONS: { value: "student" | "professor" | "staff"; label: string }[] = [
@@ -69,26 +70,6 @@ export default function ShibbolethLoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          {institutionalUsers.length > 0 && (
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium">Already have an account</p>
-              <div className="flex flex-col gap-1.5">
-                {institutionalUsers.map((user) => (
-                  <button
-                    key={user.id}
-                    onClick={() => quickSignIn(user.id)}
-                    className="flex items-center justify-between rounded-md border px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
-                  >
-                    <span>{user.name}</span>
-                    <span className="capitalize text-muted-foreground">{roleLabel(user.role)}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <Separator />
-
           <div className="flex flex-col gap-3">
             <p className="text-sm font-medium">First time signing in</p>
             <p className="text-xs text-muted-foreground">
@@ -148,6 +129,26 @@ export default function ShibbolethLoginPage() {
               Sign in via Shibboleth
             </Button>
           </div>
+
+          {institutionalUsers.length > 0 && (
+            <>
+              <Separator />
+              <DevShortcut title="Mock sign-in for testing">
+                <div className="flex flex-col gap-1.5">
+                  {institutionalUsers.map((user) => (
+                    <button
+                      key={user.id}
+                      onClick={() => quickSignIn(user.id)}
+                      className="flex items-center justify-between rounded-md border border-amber-500/30 bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+                    >
+                      <span>{user.name}</span>
+                      <span className="capitalize text-muted-foreground">{roleLabel(user.role)}</span>
+                    </button>
+                  ))}
+                </div>
+              </DevShortcut>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

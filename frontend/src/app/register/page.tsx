@@ -11,11 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { DevShortcut } from "@/components/dev-shortcut";
 
 export default function CompanyAccessPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { setCurrentUserId } = useCurrentUser();
+  const { users, setCurrentUserId } = useCurrentUser();
+  const existingCompanies = users.filter((u) => u.role === "company");
 
   const [loginEmail, setLoginEmail] = useState("");
   const [form, setForm] = useState({ name: "", contact_name: "", contact_email: "" });
@@ -24,6 +26,11 @@ export default function CompanyAccessPage() {
     toast.success(label);
     queryClient.invalidateQueries({ queryKey: ["demo-users"] });
     setCurrentUserId(user.id);
+    router.push("/company");
+  };
+
+  const quickSignIn = (id: number) => {
+    setCurrentUserId(id);
     router.push("/company");
   };
 
@@ -114,6 +121,22 @@ export default function CompanyAccessPage() {
             Register
           </Button>
         </form>
+
+        {existingCompanies.length > 0 && (
+          <DevShortcut title="Mock sign-in for testing">
+            <div className="flex flex-col gap-1.5">
+              {existingCompanies.map((company) => (
+                <button
+                  key={company.id}
+                  onClick={() => quickSignIn(company.id)}
+                  className="flex items-center justify-between rounded-md border border-amber-500/30 bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+                >
+                  {company.name}
+                </button>
+              ))}
+            </div>
+          </DevShortcut>
+        )}
       </CardContent>
     </Card>
   );
