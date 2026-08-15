@@ -688,7 +688,7 @@ Transferability (Section 4.5) is noted for each requirement, but it does not inf
 
 == Access Features
 === FR-1, Role-Based Access (Must)  
-There are four different login/user types: Student, Company, Professor, and Staff. Each type has a unique dashboard. Although no interview explicitly requested this, every stakeholder-specific feature depends on it. Without separate roles, the platform cannot display different information to different users. This makes it a necessary requirement rather than an optional addition.
+There are four different login/user types: Student, Company, Professor, and Staff. Each type has a unique dashboard. Although no interview explicitly requested this, every stakeholder-specific feature depends on it. Without separate roles, the platform cannot display different information to different users. This makes it a necessary requirement rather than an optional addition.\
 Source: Process Documentation (design decision, structural) 
 
 
@@ -696,15 +696,15 @@ Source: Process Documentation (design decision, structural)
 == Company Features
 
 === FR-2, Company Project Submission Portal (Must)  
-The following fields are required: Project Title, Required Area of Expertise, Project Background and Objective, Project Deliverable, Available Company Resources, Required Student Skills, Group Size, Company Contact Person. This is adapted from the current project proposal sheet.  
+The following fields are required: Project Title, Required Area of Expertise, Project Background and Objective, Project Deliverable, Available Company Resources, Required Student Skills, Group Size, Company Contact Person. This is adapted from the current project proposal sheet. \ 
 Source: S7, S8, S9, P3, P4, P6 
 
 === FR-3, Submission Review and Approval (Should)  
-New project submissions will be marked as 'pending'. Staff will approve them before professors can see them.  
+New project submissions will be marked as 'pending'. Staff will approve them before professors can see them.  \
 Source: Process Documentation  
 
 === FR-4, Company Browse Student Topics (Must)  
-Companies can browse topics submitted by students
+Companies can browse topics submitted by students\
 Source: C5  
 
 
@@ -713,54 +713,54 @@ Source: C5
 
 == Professor Features
 === FR-5, Professor Profiles and Expertise Matching (Should)  
-Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  
+Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
 Source: P3, P4, U1, U2  
 === FR-6, Professor Supervision Take-on (Must)  
-To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  
+To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
 Source: Process Documentation  
 === FR-7, Direct Project Submission (Should)  
-When a professor and a company agree directly on a project study, the professor will submit it with the required fields filled in for students to apply.  
+When a professor and a company agree directly on a project study, the professor will submit it with the required fields filled in for students to apply. \ 
 Source: Process Documentation  
 
 == Student Features
 
 === FR-8, Student Project Submission Portal (Must)  
-The mandatory fields include: Areas of Expertise, Research Interests, Skills, Previous Projects, Availability, and Contact Information.  
+The mandatory fields include: Areas of Expertise, Research Interests, Skills, Previous Projects, Availability, and Contact Information.  \
 Source: C2, C4, C5, S12  
 === FR-9, Student Profiles (Should)  
-Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  
+Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  \
 Source: Team Decision  
 === FR-10, Student Team Matching (Could)  
-A student can set their profile status to 'seeking teammates' and include a short message and contact information. Profiles can be filtered by this status.  
+A student can set their profile status to 'seeking teammates' and include a short message and contact information. Profiles can be filtered by this status.  \
 Source: S10  
 === FR-11, Student Browse Available Projects and Apply (Must)  
-Students can view available projects with complete information, including company details, expertise required, application deadlines, skills needed, and contact person. They can also apply for a given entry by submitting the required documents.
+Students can view available projects with complete information, including company details, expertise required, application deadlines, skills needed, and contact person. They can also apply for a given entry by submitting the required documents.\
 Source: S6, S7, S8, S9  
 === FR-12, Application Status Visibility (Should)
-Students will see a simple accepted/rejected status for each application.  
+Students will see a simple accepted/rejected status for each application.  \
 Source: S1  
 
 
 == General Features
 === FR-13, Status-Change Notifications (Should)  
-Automated notifications, such as emails, will be sent when an application's status changes or when a listing closes.  
+Automated notifications, such as emails, will be sent when an application's status changes or when a listing closes.\  
 Source: S8, U1, U2  
 === FR-14, Lightweight Progress Check-in (Could)  
-A simple check-in mechanism will allow interaction between students and supervisors during the project.  
+A simple check-in mechanism will allow interaction between students and supervisors during the project.  \
 Source: P4  
 === FR-15, Dual Approval (Professor + Company) (Could)  
-A student's application will require approval from both the professor and the company before it is finalized. At TUM Campus Heilbronn, the selection of students is currently handled solely by the university, with no formal role for companies in reviewing individual applicants. This proposed change aims to give companies input on who joins their projects, which could lead to higher satisfaction with the outcomes. However, this change may slow down the process and add a coordination step between professors and companies, which are recognized costs of the benefit.  
+A student's application will require approval from both the professor and the company before it is finalized. At TUM Campus Heilbronn, the selection of students is currently handled solely by the university, with no formal role for companies in reviewing individual applicants. This proposed change aims to give companies input on who joins their projects, which could lead to higher satisfaction with the outcomes. However, this change may slow down the process and add a coordination step between professors and companies, which are recognized costs of the benefit.  \
 Source: Team Decision  
 === FR-16, Manual Multi-Offer Decision (Should)  
-If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-13 and FR-16: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  
+If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-13 and FR-16: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  \
 Source: Process Documentation 
 
 == Administrative Staff Features
 === FR-17, Staff Master Dashboard (Should)  
-Staff will be able to view all project studies across every status: pending, approved, not yet supervised, ongoing, and filled.  
+Staff will be able to view all project studies across every status: pending, approved, not yet supervised, ongoing, and filled.  \
 Source: U1, U2  
 === FR-18, Filter Incoming Submissions (Should)  
-Staff will have the ability to filter and search incoming company submissions during reviews. The volume of submissions will scale with FR-3. Filtering will ensure that manual reviews do not become bottlenecks.  
+Staff will have the ability to filter and search incoming company submissions during reviews. The volume of submissions will scale with FR-3. Filtering will ensure that manual reviews do not become bottlenecks.  \
 Source: Process Documentation  
 
 
@@ -784,7 +784,18 @@ Source: Process Documentation
 #pagebreak()
 = Non-Functional Requirements 
 == Usability 
+Four groups use the platform: students, companies, professors, and university staff. Not all of them work with software every day, professors and administrative staff least of all. Each role sees only the functions it needs (FR-1, Role-Based Access), so no one has to learn the parts of the system that belong to someone else. Every listing shows the same fields in the same order. Users compare projects, then find the same information in the same place each time. Inconsistent listings would bring back the fragmented presentation that the platform replaces.
+
 == Security and Data Privacy 
+=== NFR-1, Identity Verification 
+Use of institutional logins for verifying student and staff identities. A verified company email domain serves as a simple check for companies, before being made available to administrative staff for a more in-depth check.\
+Source: C4
+=== NFR-2, Data Protection for Submitted Documents
+CVs, transcripts, and motivation letters uploaded through the platform (FR-8) count as personal data under the GDPR. Access is limited to the professor and the company that review the application. No other user can open these files or reach them through public listings. FR-4 (Company Browse and Accept Student Topics) keeps topic listings public, but the documents attached to an application stay private. How long these documents are stored, and when they are deleted once an application closes, lies outside the scope of this specification and the prototype (Section 4.6). \
+Source: Process Documentation (legal/regulatory constraint)
+
+
+
 == Maintainability / Extensibility
 
 
