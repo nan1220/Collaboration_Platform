@@ -10,6 +10,11 @@ import type {
 // Hardcoded seed data for the fully client-side mock backend (see mock-store.ts).
 // Reflects the SRS (Platform_SRS_file/Report.typ) and its four use-case
 // diagrams: Access, Project Intake, Application & Selection, Profiles & Topics.
+//
+// Demo accounts are anonymized (S = student, P = professor, C = company,
+// U = university staff), mirroring the anonymized interview IDs already used
+// in the SRS traceability table — no real names, to protect the privacy of
+// the people who actually gave interviews.
 
 export interface RawProject {
   id: number;
@@ -72,52 +77,52 @@ export interface RawAuditLogEntry {
 }
 
 export const SEED_USERS: User[] = [
-  { id: 1, role: "staff", name: "Petra Huber", email: "petra.huber@tum.de", department: "", program: "" },
+  { id: 1, role: "staff", name: "Staff U1", email: "u1@tum.de", department: "", program: "" },
   {
     id: 2,
     role: "professor",
-    name: "Prof. Dr. Reichert",
-    email: "reichert@tum.de",
+    name: "Professor P1",
+    email: "p1@tum.de",
     department: "School of Management",
     program: "",
   },
   {
     id: 3,
     role: "professor",
-    name: "Prof. Dr. Antz",
-    email: "antz@tum.de",
+    name: "Professor P2",
+    email: "p2@tum.de",
     department: "Informatics",
     program: "",
   },
   {
     id: 4,
     role: "student",
-    name: "Lea Fischer",
-    email: "lea.fischer@tum.de",
+    name: "Student S1",
+    email: "s1@tum.de",
     department: "",
     program: "B.Sc. Management and Data Science",
   },
   {
     id: 5,
     role: "student",
-    name: "Jonas Becker",
-    email: "jonas.becker@tum.de",
+    name: "Student S2",
+    email: "s2@tum.de",
     department: "",
     program: "B.Sc. Informatics",
   },
   {
     id: 6,
     role: "company",
-    name: "Bergpanorama Retail AG",
-    email: "julia.adler@bergpanorama.example",
+    name: "Company C1",
+    email: "contact@companyc1.example",
     department: "",
     program: "",
   },
   {
     id: 7,
     role: "company",
-    name: "Nordlicht Analytics GmbH",
-    email: "tim.reuter@nordlicht-analytics.example",
+    name: "Company C2",
+    email: "contact@companyc2.example",
     department: "",
     program: "",
   },
@@ -127,17 +132,17 @@ export const SEED_COMPANIES: Company[] = [
   {
     id: 1,
     user_id: 6,
-    name: "Bergpanorama Retail AG",
-    contact_name: "Julia Adler",
-    contact_email: "julia.adler@bergpanorama.example",
+    name: "Company C1",
+    contact_name: "Contact Person C1",
+    contact_email: "contact@companyc1.example",
     verified: true,
   },
   {
     id: 2,
     user_id: 7,
-    name: "Nordlicht Analytics GmbH",
-    contact_name: "Tim Reuter",
-    contact_email: "tim.reuter@nordlicht-analytics.example",
+    name: "Company C2",
+    contact_name: "Contact Person C2",
+    contact_email: "contact@companyc2.example",
     verified: false,
   },
 ];
@@ -148,7 +153,7 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Demand forecasting for regional retail chain",
     required_expertise: "School of Management",
     background_objective:
-      "Bergpanorama wants a forecasting model for weekly demand across 40 stores, using two years of POS data.",
+      "Company C1 wants a forecasting model for weekly demand across 40 stores, using two years of POS data.",
     deliverable: "A working forecasting model plus a short report on accuracy and rollout recommendations.",
     company_resources: "Access to two years of anonymized POS data, a technical contact for questions.",
     required_skills: "Python or R, basic time-series/statistics",
@@ -157,7 +162,7 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "company",
     company_id: 1,
     assigned_professor_id: 2,
-    chair_contact_info: "Chair of Entrepreneurship and Family Enterprise, reichert@tum.de",
+    chair_contact_info: "Chair contact: p1@tum.de",
     application_deadline: "2026-09-15",
     required_documents: "CV, transcript of records",
     created_at: "2026-03-01T09:00:00.000Z",
@@ -168,7 +173,7 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Customer churn analysis for SaaS product",
     required_expertise: "School of Management",
     background_objective:
-      "Nordlicht Analytics is losing customers after the trial period and wants a data-driven root cause analysis.",
+      "Company C2 is losing customers after the trial period and wants a data-driven root cause analysis.",
     deliverable: "A churn driver analysis with prioritized, actionable recommendations.",
     company_resources: "Anonymized usage and billing data, a product manager as point of contact.",
     required_skills: "SQL, basic statistics, comfort presenting to non-technical stakeholders",
@@ -188,7 +193,7 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Open-source contribution tracking dashboard",
     required_expertise: "Informatics",
     background_objective:
-      "Research topic proposed directly by Prof. Antz: build a dashboard summarizing contribution patterns across a set of OSS repositories.",
+      "Research topic proposed directly by Professor P2: build a dashboard summarizing contribution patterns across a set of OSS repositories.",
     deliverable: "A working dashboard and a short writeup of the methodology.",
     company_resources: "",
     required_skills: "TypeScript or Python, git/GitHub API familiarity",
@@ -197,7 +202,7 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
-    chair_contact_info: "Chair of Informatics, antz@tum.de",
+    chair_contact_info: "Chair contact: p2@tum.de",
     application_deadline: "2026-10-01",
     required_documents: "CV",
     created_at: "2026-05-10T09:00:00.000Z",
@@ -208,7 +213,7 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Predictive maintenance dashboard for manufacturing partner",
     required_expertise: "Informatics",
     background_objective:
-      "Direct agreement between Prof. Antz and a manufacturing partner: a dashboard flagging machines likely to need maintenance soon.",
+      "Direct agreement between Professor P2 and a manufacturing partner: a dashboard flagging machines likely to need maintenance soon.",
     deliverable: "A prototype dashboard with a documented model and evaluation.",
     company_resources: "Sample sensor data, one technical point of contact.",
     required_skills: "Python, basic ML, dashboarding (e.g. Streamlit/Dash)",
@@ -217,7 +222,7 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
-    chair_contact_info: "Chair of Informatics, antz@tum.de",
+    chair_contact_info: "Chair contact: p2@tum.de",
     application_deadline: "2026-10-15",
     required_documents: "CV, brief motivation paragraph",
     created_at: "2026-05-20T09:00:00.000Z",
@@ -254,7 +259,7 @@ export const SEED_APPLICATIONS: RawApplication[] = [
     company_decision: "accepted",
     confirmed: true,
     withdrawn: false,
-    documents_note: "cv_lea_fischer.pdf, transcript_lea_fischer.pdf",
+    documents_note: "cv_s1.pdf, transcript_s1.pdf",
     created_at: "2026-03-05T09:00:00.000Z",
   },
   {
@@ -265,7 +270,7 @@ export const SEED_APPLICATIONS: RawApplication[] = [
     company_decision: "accepted",
     confirmed: false,
     withdrawn: false,
-    documents_note: "cv_jonas_becker.pdf",
+    documents_note: "cv_s2.pdf",
     created_at: "2026-05-15T09:00:00.000Z",
   },
   {
@@ -276,7 +281,7 @@ export const SEED_APPLICATIONS: RawApplication[] = [
     company_decision: "accepted",
     confirmed: false,
     withdrawn: false,
-    documents_note: "cv_jonas_becker.pdf, motivation_jonas_becker.pdf",
+    documents_note: "cv_s2.pdf, motivation_s2.pdf",
     created_at: "2026-05-25T09:00:00.000Z",
   },
 ];
@@ -309,7 +314,7 @@ export const SEED_CHECKINS: RawCheckIn[] = [
     id: 1,
     project_id: 1,
     author_id: 2,
-    note: "Kickoff call done, Lea has data access and a first modeling approach in mind.",
+    note: "Kickoff call done, Student S1 has data access and a first modeling approach in mind.",
     created_at: "2026-04-10T09:00:00.000Z",
   },
 ];

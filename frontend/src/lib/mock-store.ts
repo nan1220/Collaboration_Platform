@@ -55,7 +55,10 @@ interface DbState {
   nextAuditId: number;
 }
 
-const STORAGE_KEY = "collab-platform-mock-db-v2";
+// Bumped whenever seed data shape or content changes meaningfully, so
+// anyone with older cached demo data (e.g. pre-anonymization names) gets a
+// fresh reseed instead of a stale localStorage copy.
+const STORAGE_KEY = "collab-platform-mock-db-v3";
 
 function freshState(): DbState {
   return {
