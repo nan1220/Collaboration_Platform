@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -10,6 +11,7 @@ import {
   GraduationCap,
   ClipboardList,
   Building2,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
 import { useCurrentUser } from "@/lib/current-user";
@@ -20,7 +22,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string[] }[] = [
@@ -45,6 +55,7 @@ export function NavBar() {
   const { users, currentUser, setCurrentUserId } = useCurrentUser();
   const pathname = usePathname();
   const currentPath = normalize(pathname);
+  const [switcherOpen, setSwitcherOpen] = useState(false);
 
   const links = NAV_LINKS.filter(
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
@@ -86,32 +97,50 @@ export function NavBar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          {currentUser && (
-            <Badge variant="secondary" className="capitalize shadow-xs">
-              {currentUser.role}
-            </Badge>
-          )}
-          <Select
-            items={users.map((user) => ({ value: String(user.id), label: `${user.name} (${user.role})` }))}
-            value={currentUser ? String(currentUser.id) : ""}
-            onValueChange={(value) => setCurrentUserId(value ? Number(value) : null)}
-          >
-            <SelectTrigger
-              size="sm"
-              className="min-w-40 border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground data-placeholder:text-primary-foreground/70 [&_svg]:text-primary-foreground/80"
+        <Popover open={switcherOpen} onOpenChange={setSwitcherOpen}>
+          <PopoverTrigger
+            render={
+              <Button
+                variant="secondary"
+                size="sm"
+                className="gap-1.5 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground shadow-none hover:bg-primary-foreground/20"
+              >
+                <UserRound className="size-4" />
+                {currentUser ? currentUser.name : "Demo user"}
+              </Button>
+            }
+          />
+          <PopoverContent align="end">
+            <PopoverTitle>Switch demo user</PopoverTitle>
+            <PopoverDescription>
+              This is a mock — there is no real login. Pick who you&apos;re viewing the platform as.
+            </PopoverDescription>
+            {currentUser && (
+              <Badge variant="secondary" className="w-fit capitalize">
+                {currentUser.role}
+              </Badge>
+            )}
+            <Select
+              items={users.map((user) => ({ value: String(user.id), label: `${user.name} (${user.role})` }))}
+              value={currentUser ? String(currentUser.id) : ""}
+              onValueChange={(value) => {
+                setCurrentUserId(value ? Number(value) : null);
+                setSwitcherOpen(false);
+              }}
             >
-              <SelectValue placeholder="Select demo user" />
-            </SelectTrigger>
-            <SelectContent>
-              {users.map((user) => (
-                <SelectItem key={user.id} value={String(user.id)}>
-                  {user.name} ({user.role})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select demo user" />
+              </SelectTrigger>
+              <SelectContent>
+                {users.map((user) => (
+                  <SelectItem key={user.id} value={String(user.id)}>
+                    {user.name} ({user.role})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </PopoverContent>
+        </Popover>
       </div>
     </header>
   );
