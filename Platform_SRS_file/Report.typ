@@ -610,7 +610,7 @@ German-language requirements were named as a disadvantage for international stud
 A student named the inability to find a team as something that would stop them from applying altogether, and separately requested an automated team-matching feature (S10).
 
 === Application process friction
-One student described having to repeatedly re-enter the same information across each company's own application platform, alongside generic, under-informed initial screening and a lack of feedback after rejection (S1). A separate student reported that project details were withheld pre-NDA, leading to a fundamentally different understanding of the task once disclosed (S9)
+One student described having to repeatedly re-enter the same information across each company's own application platform, alongside generic, under-informed initial screening and a lack of feedback after rejection (S1). A separate student reported that project details were withheld pre-NDA, leading to a fundamentally different understanding of the task once disclosed (S9). Yet another student described the challenges they faced in finding an academic supervisor for their company project (S12).
 
 === Value and goal alignment
 Several students indicated they would disengage from a project perceived as serving only the company's commercial interest without genuine educational or research value (S6, S8). This pattern recurs across other stakeholder groups and is developed further in Section 5.4. 
@@ -678,11 +678,105 @@ Named as an application-ending concern by students (S8, S12, S13) and, from the 
 = Functional Requirements <functional-requirements>
 
 
+
+
+
 == Prioritization Scheme (MoSCoW, criteria defined here. Requirements grounded in cross-cutting pain points and structurally independent of TUM-specific administration are prioritized higher) <prioritization-scheme>
-== [Functional Area 1] 
-== [Functional Area 2] 
-== [Functional Area 3] 
-== [Functional Area 4] 
+Requirements are prioritized using MoSCoW (Must, Should, Could, Won't), a judgement-based scheme, which is suited to the context of this project. Priority is assigned according to two criteria, applied in the following order: 1) Structural necessity. A requirement is Must-priority if the core application-to-supervision workflow cannot operate from start to finish without it. This holds true no matter how many interviews support it directly. 2) Strength of evidence. Among the requirements that are not structurally necessary, those founded on a cross-cutting finding or supported across multiple interviews are ranked as Should. Requirements based on a single citation, a team decision, or those that meet a narrower need are ranked as Could. Requirements that are clearly out of scope are marked as Won't in Section 4.6.
+
+Transferability (Section 4.5) is noted for each requirement, but it does not influence this prioritization. The two attributes address different questions, and a requirement can do well in one without doing well in the other.
+
+== Access Features
+=== FR-1, Role-Based Access (Must)  
+There are four different login/user types: Student, Company, Professor, and Staff. Each type has a unique dashboard. Although no interview explicitly requested this, every stakeholder-specific feature depends on it. Without separate roles, the platform cannot display different information to different users. This makes it a necessary requirement rather than an optional addition.
+Source: Process Documentation (design decision, structural) 
+
+
+
+== Company Features
+
+=== FR-2, Company Project Submission Portal (Must)  
+The following fields are required: Project Title, Required Area of Expertise, Project Background and Objective, Project Deliverable, Available Company Resources, Required Student Skills, Group Size, Company Contact Person. This is adapted from the current project proposal sheet.  
+Source: S7, S8, S9, P3, P4, P6 
+
+=== FR-3, Submission Review and Approval (Should)  
+New project submissions will be marked as 'pending'. Staff will approve them before professors can see them.  
+Source: Process Documentation  
+
+=== FR-4, Company Browse Student Topics (Must)  
+Companies can browse topics submitted by students
+Source: C5  
+
+
+
+
+
+== Professor Features
+=== FR-5, Professor Profiles and Expertise Matching (Should)  
+Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  
+Source: P3, P4, U1, U2  
+=== FR-6, Professor Supervision Take-on (Must)  
+To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  
+Source: Process Documentation  
+=== FR-7, Direct Project Submission (Should)  
+When a professor and a company agree directly on a project study, the professor will submit it with the required fields filled in for students to apply.  
+Source: Process Documentation  
+
+== Student Features
+
+=== FR-8, Student Project Submission Portal (Must)  
+The mandatory fields include: Areas of Expertise, Research Interests, Skills, Previous Projects, Availability, and Contact Information.  
+Source: C2, C4, C5, S12  
+=== FR-9, Student Profiles (Should)  
+Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  
+Source: Team Decision  
+=== FR-10, Student Team Matching (Could)  
+A student can set their profile status to 'seeking teammates' and include a short message and contact information. Profiles can be filtered by this status.  
+Source: S10  
+=== FR-11, Student Browse Available Projects and Apply (Must)  
+Students can view available projects with complete information, including company details, expertise required, application deadlines, skills needed, and contact person. They can also apply for a given entry by submitting the required documents.
+Source: S6, S7, S8, S9  
+=== FR-12, Application Status Visibility (Should)
+Students will see a simple accepted/rejected status for each application.  
+Source: S1  
+
+
+== General Features
+=== FR-13, Status-Change Notifications (Should)  
+Automated notifications, such as emails, will be sent when an application's status changes or when a listing closes.  
+Source: S8, U1, U2  
+=== FR-14, Lightweight Progress Check-in (Could)  
+A simple check-in mechanism will allow interaction between students and supervisors during the project.  
+Source: P4  
+=== FR-15, Dual Approval (Professor + Company) (Could)  
+A student's application will require approval from both the professor and the company before it is finalized. At TUM Campus Heilbronn, the selection of students is currently handled solely by the university, with no formal role for companies in reviewing individual applicants. This proposed change aims to give companies input on who joins their projects, which could lead to higher satisfaction with the outcomes. However, this change may slow down the process and add a coordination step between professors and companies, which are recognized costs of the benefit.  
+Source: Team Decision  
+=== FR-16, Manual Multi-Offer Decision (Should)  
+If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-13 and FR-16: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  
+Source: Process Documentation 
+
+== Administrative Staff Features
+=== FR-17, Staff Master Dashboard (Should)  
+Staff will be able to view all project studies across every status: pending, approved, not yet supervised, ongoing, and filled.  
+Source: U1, U2  
+=== FR-18, Filter Incoming Submissions (Should)  
+Staff will have the ability to filter and search incoming company submissions during reviews. The volume of submissions will scale with FR-3. Filtering will ensure that manual reviews do not become bottlenecks.  
+Source: Process Documentation  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
