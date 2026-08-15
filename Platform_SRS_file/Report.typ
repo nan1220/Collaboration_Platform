@@ -182,6 +182,22 @@
 		Contents
 		#v(4mm)
 	])
+
+	#v(8mm)
+
+	// List of figures
+	#outline(
+		title: [List of Figures #v(4mm)],
+		target: figure.where(kind: image),
+	)
+
+	#v(8mm)
+
+	// List of tables
+	#outline(
+		title: [List of Tables #v(4mm)],
+		target: figure.where(kind: table),
+	)
 ]
 
 
@@ -204,6 +220,27 @@
   set text(size: 10pt)
   set par(leading: 0.65em, justify: true)
   it
+}
+
+#show heading: it => {
+  // Clever trick to reduce spacing between consecutive headings
+  // See https://github.com/typst/typst/issues/2953
+  let next_headings = query(selector(heading).after(here(), inclusive: false))
+	let show_space = true
+  if next_headings.len() > 0 {
+    let nloc = next_headings.first().location().position()
+    let iloc = it.location().position()
+    if (iloc.page == nloc.page and iloc.x == nloc.x and nloc.y - iloc.y < 60pt) {
+      // threshold
+      // v(-10pt) // amount to reduce spacing, could make this dependent on it.level
+			show_space = false
+    }
+  }
+
+  it
+	if show_space {
+		v(5pt)
+	}
 }
 
 = Introduction
@@ -803,8 +840,34 @@ Source: Process Documentation (legal/regulatory constraint)
 #pagebreak()
 = System Models 
 
-== Use Case Diagram(s) 
-== Key User Flows
+== Use Case Diagram(s)
+
+#figure(
+  caption: [Platform access Use Case diagram],
+)[
+  #image("diagrams/uc_access.drawio.svg", width: 90%)
+]
+
+#figure(
+  caption: [Application and Selection Use Case diagram],
+)[
+  #image("diagrams/uc_application.drawio.svg", width: 100%)
+]
+
+#figure(
+  caption: [Project Intake Use Case diagram],
+)[
+  #image("diagrams/uc_intake.drawio.svg", width: 93%)
+]
+
+#figure(
+  caption: [Profiles and Topics Use Case diagram],
+)[
+  #image("diagrams/uc_profiles.drawio.svg", width: 93%)
+]
+
+
+// == Key User Flows
 
 
 #pagebreak()
@@ -819,13 +882,6 @@ Source: Process Documentation (legal/regulatory constraint)
 
 #pagebreak()
 = Assumptions, Risks, and Open Issues
-
-
-
-= Appendices 
-
-
-= Declaration of authorship
 
 
 
@@ -847,3 +903,15 @@ Source: Process Documentation (legal/regulatory constraint)
 // // #bibliography("works.bib")
 
 #bibliography("works.bib", title: "References", style: "apa")
+
+
+// https://forum.typst.app/t/how-to-have-headings-without-numbers-in-a-fluent-way/3457/2
+#let nonumber(body) = {
+  set heading(numbering: none)
+  body
+}
+
+#pagebreak()
+#nonumber[= Appendices]
+
+// #heading(numbering: none)[Hello]
