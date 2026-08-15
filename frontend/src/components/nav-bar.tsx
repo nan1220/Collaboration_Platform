@@ -34,9 +34,17 @@ const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string
   { href: "/student", label: "My applications", icon: ClipboardList, roles: ["student"] },
 ];
 
+// trailingSlash is enabled (next.config.ts), so usePathname() returns paths
+// like "/projects/" — normalize before comparing against hrefs, and treat a
+// nested route (e.g. "/projects/detail") as still under its parent tab.
+function normalize(path: string) {
+  return path.length > 1 ? path.replace(/\/$/, "") : path;
+}
+
 export function NavBar() {
   const { users, currentUser, setCurrentUserId } = useCurrentUser();
   const pathname = usePathname();
+  const currentPath = normalize(pathname);
 
   const links = NAV_LINKS.filter(
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
@@ -58,13 +66,15 @@ export function NavBar() {
         <nav className="flex flex-1 flex-wrap items-center gap-0.5">
           {links.map((link) => {
             const Icon = link.icon;
+            const active = currentPath === link.href || currentPath.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
-                  pathname === link.href
+                  active
                     ? "bg-primary-foreground/15 text-primary-foreground shadow-inner"
                     : "text-primary-foreground/75 hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 )}
