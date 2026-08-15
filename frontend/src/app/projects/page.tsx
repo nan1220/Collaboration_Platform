@@ -44,7 +44,14 @@ export default function ProjectsPage() {
           onChange={(e) => setQ(e.target.value)}
           className="max-w-xs"
         />
-        <Select value={status || "all"} onValueChange={(v) => setStatus(!v || v === "all" ? "" : v)}>
+        <Select
+          items={[
+            { value: "all", label: "All statuses" },
+            ...(Object.keys(STATUS_LABELS) as ProjectStatus[]).map((s) => ({ value: s, label: STATUS_LABELS[s] })),
+          ]}
+          value={status || "all"}
+          onValueChange={(v) => setStatus(!v || v === "all" ? "" : v)}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Status" />
           </SelectTrigger>

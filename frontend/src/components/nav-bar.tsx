@@ -83,6 +83,7 @@ export function NavBar() {
             </Badge>
           )}
           <Select
+            items={users.map((user) => ({ value: String(user.id), label: `${user.name} (${user.role})` }))}
             value={currentUser ? String(currentUser.id) : ""}
             onValueChange={(value) => setCurrentUserId(value ? Number(value) : null)}
           >
