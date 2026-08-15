@@ -14,21 +14,24 @@ class Command(BaseCommand):
         StudentProfile.objects.all().delete()
         User.objects.filter(is_superuser=False).delete()
 
-        organizer = User.objects.create_user("petra", role=User.Role.ORGANIZER, first_name="Petra", last_name="Huber")
+        # Demo accounts are anonymized (S = student, P = professor, C = company,
+        # U = university staff) — no real names, for the privacy of the people
+        # who actually gave interviews for the SRS this prototype is based on.
+        organizer = User.objects.create_user("u1", role=User.Role.ORGANIZER, first_name="Staff", last_name="U1")
         prof_mgmt = User.objects.create_user(
-            "reichert", role=User.Role.PROFESSOR, department="School of Management",
-            first_name="Prof. Dr.", last_name="Reichert",
+            "p1", role=User.Role.PROFESSOR, department="School of Management",
+            first_name="Professor", last_name="P1",
         )
         prof_cs = User.objects.create_user(
-            "antz", role=User.Role.PROFESSOR, department="Informatics",
-            first_name="Prof. Dr.", last_name="Antz",
+            "p2", role=User.Role.PROFESSOR, department="Informatics",
+            first_name="Professor", last_name="P2",
         )
-        student1 = User.objects.create_user("lea", role=User.Role.STUDENT, first_name="Lea", last_name="Fischer")
-        student2 = User.objects.create_user("jonas", role=User.Role.STUDENT, first_name="Jonas", last_name="Becker")
+        student1 = User.objects.create_user("s1", role=User.Role.STUDENT, first_name="Student", last_name="S1")
+        student2 = User.objects.create_user("s2", role=User.Role.STUDENT, first_name="Student", last_name="S2")
 
         company = Company.objects.create(
-            name="Bergpanorama Retail AG", contact_name="Julia Adler",
-            contact_email="julia.adler@bergpanorama.example",
+            name="Company C1", contact_name="Contact Person C1",
+            contact_email="contact@companyc1.example",
         )
         p1 = Project.objects.create(
             title="Demand forecasting for regional retail chain",

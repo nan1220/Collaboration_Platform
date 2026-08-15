@@ -19,3 +19,7 @@ backend/db.sqlite3
 
 # editor/OS
 .DS_Store
+
+# git worktrees (e.g. created by agent tooling)
+.claude/worktrees/
+**/worktrees/

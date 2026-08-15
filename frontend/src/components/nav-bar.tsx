@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   FolderKanban,
   BookOpen,
@@ -10,31 +11,47 @@ import {
   GraduationCap,
   ClipboardList,
   Building2,
+  UserRound,
+  LogOut,
   type LucideIcon,
 } from "lucide-react";
 import { useCurrentUser } from "@/lib/current-user";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string[] }[] = [
   { href: "/projects", label: "Projects", icon: FolderKanban },
-  { href: "/guides", label: "Guides", icon: BookOpen },
+  { href: "/students", label: "Student directory", icon: Users, roles: ["professor", "company", "staff"] },
   { href: "/teammates", label: "Find teammates", icon: Users, roles: ["student"] },
-  { href: "/organizer", label: "Organizer", icon: LayoutDashboard, roles: ["organizer"] },
+  { href: "/guides", label: "Guides", icon: BookOpen },
+  { href: "/staff", label: "Staff dashboard", icon: LayoutDashboard, roles: ["staff"] },
   { href: "/professor", label: "My supervision", icon: GraduationCap, roles: ["professor"] },
+  { href: "/company", label: "My company", icon: Building2, roles: ["company"] },
   { href: "/student", label: "My applications", icon: ClipboardList, roles: ["student"] },
 ];
 
+// trailingSlash is enabled (next.config.ts), so usePathname() returns paths
+// like "/projects/" — normalize before comparing against hrefs, and treat a
+// nested route (e.g. "/projects/detail") as still under its parent tab.
+function normalize(path: string) {
+  return path.length > 1 ? path.replace(/\/$/, "") : path;
+}
+
 export function NavBar() {
-  const { users, currentUser, setCurrentUserId } = useCurrentUser();
+  const { currentUser, setCurrentUserId } = useCurrentUser();
   const pathname = usePathname();
+  const router = useRouter();
+  const currentPath = normalize(pathname);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = NAV_LINKS.filter(
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
@@ -44,11 +61,9 @@ export function NavBar() {
     <header className="sticky top-0 z-40 bg-primary text-primary-foreground shadow-md shadow-black/10">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-3 shrink-0">
-          <span className="flex flex-col items-start rounded-[2px] bg-white px-2 py-1 leading-none shadow-sm">
-            <span className="text-base font-extrabold tracking-tight text-primary">TUM</span>
-            <span className="mt-0.5 text-[8px] font-medium tracking-wide text-[#20252a]/70 uppercase">
-              Technical University of Munich
-            </span>
+          <span className="flex items-center rounded-[2px] bg-white px-2 py-1.5 shadow-sm">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
+            <img src={withBasePath("/tum-logo.svg")} alt="Technical University of Munich" className="h-5 w-auto" />
           </span>
           <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
         </Link>
@@ -56,13 +71,15 @@ export function NavBar() {
         <nav className="flex flex-1 flex-wrap items-center gap-0.5">
           {links.map((link) => {
             const Icon = link.icon;
+            const active = currentPath === link.href || currentPath.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
-                  pathname === link.href
+                  active
                     ? "bg-primary-foreground/15 text-primary-foreground shadow-inner"
                     : "text-primary-foreground/75 hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 )}
@@ -74,39 +91,47 @@ export function NavBar() {
           })}
         </nav>
 
-        <Link
-          href="/submit"
-          className="flex items-center gap-1.5 rounded-md border border-primary-foreground/40 px-2.5 py-1.5 text-sm font-medium text-primary-foreground/90 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
-        >
-          <Building2 className="size-4" />
-          Submit a project (company)
-        </Link>
-
-        <div className="flex items-center gap-2">
-          {currentUser && (
-            <Badge variant="secondary" className="capitalize shadow-xs">
-              {currentUser.role}
-            </Badge>
-          )}
-          <Select
-            value={currentUser ? String(currentUser.id) : ""}
-            onValueChange={(value) => setCurrentUserId(value ? Number(value) : null)}
-          >
-            <SelectTrigger
-              size="sm"
-              className="min-w-40 border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground data-placeholder:text-primary-foreground/70 [&_svg]:text-primary-foreground/80"
-            >
-              <SelectValue placeholder="Select demo user" />
-            </SelectTrigger>
-            <SelectContent>
-              {users.map((user) => (
-                <SelectItem key={user.id} value={String(user.id)}>
-                  {user.name} ({user.role})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {currentUser ? (
+          <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+            <PopoverTrigger
+              render={
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="gap-1.5 border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground shadow-none hover:bg-primary-foreground/20"
+                >
+                  <UserRound className="size-4" />
+                  {currentUser.name}
+                </Button>
+              }
+            />
+            <PopoverContent align="end">
+              <PopoverTitle>{currentUser.name}</PopoverTitle>
+              <PopoverDescription>Signed in for this demo session.</PopoverDescription>
+              <Badge variant="secondary" className="w-fit capitalize">
+                {currentUser.role}
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                className="justify-start gap-1.5"
+                onClick={() => {
+                  setCurrentUserId(null);
+                  setMenuOpen(false);
+                  router.push("/");
+                }}
+              >
+                <LogOut className="size-4" />
+                Sign out
+              </Button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Link href="/login" className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "gap-1.5")}>
+            <UserRound className="size-4" />
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   );

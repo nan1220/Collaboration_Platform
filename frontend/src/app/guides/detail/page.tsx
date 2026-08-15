@@ -77,7 +77,7 @@ function GuideDetail() {
         </CardContent>
       </Card>
 
-      {currentUser?.role === "organizer" && (
+      {currentUser?.role === "staff" && (
         <div className="flex gap-2">
           {editing ? (
             <>

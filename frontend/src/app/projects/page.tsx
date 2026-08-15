@@ -19,12 +19,10 @@ export default function ProjectsPage() {
   const { currentUser } = useCurrentUser();
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<string>("");
-  const [source, setSource] = useState<string>("");
 
   const { data: projects = [], isLoading } = useQuery({
-    queryKey: ["projects", currentUser?.id, q, status, source],
-    queryFn: () =>
-      api.projects(currentUser?.id ?? null, { q: q || undefined, status: status || undefined, source: source || undefined }),
+    queryKey: ["projects", currentUser?.id, q, status],
+    queryFn: () => api.projects(currentUser?.id ?? null, { q: q || undefined, status: status || undefined }),
   });
 
   return (
@@ -32,20 +30,28 @@ export default function ProjectsPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
         <p className="mt-1 text-muted-foreground">
-          Browse company and internal project topics.
-          {currentUser?.role === "organizer" &&
-            " As an organizer you also see the incoming approval queue here — filter by status to find it."}
+          Published project studies, open for student applications.
+          {currentUser?.role === "professor" &&
+            " As a professor you also see approved topics here, ready to take on."}
+          {currentUser?.role === "staff" && " As staff you see every project regardless of status here."}
         </p>
       </div>
 
       <div className="flex flex-wrap gap-3">
         <Input
-          placeholder="Search title or description…"
+          placeholder="Search title or background…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           className="max-w-xs"
         />
-        <Select value={status || "all"} onValueChange={(v) => setStatus(!v || v === "all" ? "" : v)}>
+        <Select
+          items={[
+            { value: "all", label: "All statuses" },
+            ...(Object.keys(STATUS_LABELS) as ProjectStatus[]).map((s) => ({ value: s, label: STATUS_LABELS[s] })),
+          ]}
+          value={status || "all"}
+          onValueChange={(v) => setStatus(!v || v === "all" ? "" : v)}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Status" />
           </SelectTrigger>
@@ -56,16 +62,6 @@ export default function ProjectsPage() {
                 {STATUS_LABELS[s]}
               </SelectItem>
             ))}
-          </SelectContent>
-        </Select>
-        <Select value={source || "all"} onValueChange={(v) => setSource(!v || v === "all" ? "" : v)}>
-          <SelectTrigger>
-            <SelectValue placeholder="Source" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Company + internal</SelectItem>
-            <SelectItem value="company">Company</SelectItem>
-            <SelectItem value="internal">Internal</SelectItem>
           </SelectContent>
         </Select>
       </div>

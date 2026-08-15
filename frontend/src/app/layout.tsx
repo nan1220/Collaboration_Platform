@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Collaboration Platform",
-  description: "Project topics, guides and supervision for students, professors and organizers.",
+  description: "Project topics, guides and supervision for students, professors, companies and staff.",
 };
 
 export default function RootLayout({

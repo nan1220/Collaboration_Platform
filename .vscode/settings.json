@@ -1,0 +1,5 @@
+{
+    "tinymist.fontPaths": [
+        "${workspaceFolder}/Platform_SRS_file/fonts"
+    ]
+}
