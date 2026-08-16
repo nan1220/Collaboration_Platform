@@ -664,6 +664,7 @@ platform would acquire its first users on each of the three sides.
 = Stakeholder Needs (Pain Points) <stakeholder-needs>
 
 The pain points in this chapter are derived from semi-structured interviews conducted across three primary stakeholder groups relevant to the project study process. Each pain point is presented with the interview ID it was sourced from. See appendix 11.B for anonymized interview counts per stakeholder group and matching interview IDs.
+
 BirdVision's primary interest with this project study was gaining insight into industry-academia collaborations as a whole, particularly the stakeholders' motivations and the problems they encounter. The interviews were accordingly conducted on the broader premise of industry-academia collaborations, in order to gather as wide a range of insights as possible. However, as the stated aim of the project is a platform supporting project studies specifically, and the scope of the platform is limited, not every pain point identified applies directly to the project study process, or to TUM in particular. These findings are nonetheless documented in full below.
 
 
@@ -873,6 +874,7 @@ Source: Process Documentation (legal/regulatory constraint)
 
 
 == Maintainability / Extensibility
+The requirements are structured so that Could-priority and out-of-scope features can be added later without changing the core Must-priority workflow. Student Team Matching (FR-10) and Lightweight Progress Check-in (FR-14) are extensions to the platform’s functionality without requiring changes to it.
 
 
 
@@ -913,9 +915,45 @@ Source: Process Documentation (legal/regulatory constraint)
 = Traceability and Prototype Alignment <traceability-prototype-alignment>
 
 == Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
-== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
-== Pain Points Without Requirements and Requirements Without Prototype Coverage (brief justification)<requirements-without-prototype-coverage>
 
+The full traceability table, including prototype status, MoSCoW priority, and transferability tags for every requirement, is provided in Appendix C. The table below presents the abbreviated form for reference within the running text. 
+
+
+== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
+
+
+
+
+== Pain Points Without Requirements and Justifications<requirements-without-prototype-coverage>
+The following pain points were identified but deliberately left without a
+corresponding requirement.
+
+- *Language barrier* (S5, S7, S10): Cannot be addressed via a platform.
+
+- *Value and goal misalignment* (S6, S8, S11, U1, C2, C4): Dual Approval
+  (FR-15) addresses company satisfaction with the selection, but not the
+  underlying motivational mismatch, which cannot be addressed via a platform.
+
+- *Outcome measurement* (P1, P5, C2): Defining an accurate quality measurement
+  is highly complex.
+
+- *Time and financial resource pressure* (P5): External constraint, not
+  addressable via a platform.
+
+- *University structural complexity and inconsistency across institutions*
+  (C4): Acknowledged in the transferability discussion; not resolvable by a
+  feature.
+
+- *Output quality and software/tooling mismatches between student and company
+  environments* (C2): Structural, and therefore largely not addressable via a
+  platform. A further implementation of the light progress check (FR-14) could
+  improve outcome quality by supporting more effective communication.
+
+- *Screening signal degradation due to AI-generated CVs* (C3): Platform-side AI
+  checks are technically conceivable, but their accuracy is low and the
+  implementation effort is not proportionate to the value.
+
+== Requirements Without Prototype Coverage and Justifications
 
 
 
