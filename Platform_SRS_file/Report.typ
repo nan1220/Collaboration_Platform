@@ -247,10 +247,49 @@
 
 
 == Purpose of this Document 
+This specification defines the requirements for a project studies platform, developed as part of a bachelor's Project Study at TUM Campus Heilbronn in collaboration with BirdVision. It is adapted from ISO/IEC/IEEE 29148, scaled down and extended with a literature review section to meet the academic requirements of a project study report. Every requirement in Sections 6 and 7 is traceable back to its source and forward to its prototype coverage, per Section 9. That traceability, more than any single requirement, is what this document is meant to demonstrate. 
+
+
+
+
+
+
+
 == Project Background and Motivation 
+
+A project study for TUM School of Management students is a research or practical project, carried out by a student team in collaboration with a company and a supervising professorship. This project, “Project Studies Platform for BirdVision”, was assigned to build a platform supporting a project study process similar to this one, which this document itself is a product of.
+
+Companies, professors, and students currently coordinate project studies at TUM Campus Heilbronn in three ways: university staff sourcing companies directly and sending out given topics to professors, professors and companies agreeing between themselves, or students agreeing with a company and finding a supervising professor on their own. These processes are decentralized and realized via a variety of mediums. Recurring pain points arising from the status quo were identified through semi-structured interviews, which this document translates into a scoped set of requirements.
+
+
+
+
+
 == Scope of the Platform 
+The scope of the platform is limited to the project study process at TUM Campus Heilbronn, rather than industry-academia collaborations in general. The reasoning behind this scope and discussion on how this platform can be adapted for different institutions is written out in sections 4.4 and 4.5. Broader findings from the interviews are not excluded and presented in section 5.
+
+To deliver on the project goal of a testable MVP, this document is accompanied by a non-functional prototype.
+
+
+
+
 == Definitions, Acronyms, and Abbreviations 
+// SRS: Software Requirements Specification
+// FR/NFR: Functional Requirement / Non-Functional Requirement
+// MoSCoW: prioritization scheme: Must, Should, Could, Won't (Section 6.1)
+// NDA: Non-disclosure agreement
+// GDPR: General Data Protection Regulation
+
+/ SRS: Software Requirements Specification
+/ FR / NFR: Functional Requirement / Non-Functional Requirement
+/ MoSCoW: Prioritization scheme: Must, Should, Could, Won't (Section 6.1)
+/ NDA: Non-Disclosure Agreement
+/ GDPR: General Data Protection Regulation
+
 == Document Overview
+Section 2 reviews the literature behind the project's methodological choices. Section 3 goes over the interview methodology, sample, and its limitations. Section 4 describes the platform's overall scope and boundaries. Section 5 presents the pain points the requirements are derived from. Sections 6 and 7 specify the functional and non-functional requirements. Section 8 provides system models. Section 9 traces requirements back to their source and forward to prototype coverage. Section 10 discusses risks and conclusions.
+
+
 
 
 #pagebreak()
@@ -881,7 +920,17 @@ Source: Process Documentation (legal/regulatory constraint)
 
 
 #pagebreak()
-= Assumptions, Risks, and Open Issues
+= Risks, Discussion and Conclusion
+This document has translated a set of semi-structured interviews across stakeholder groups into scoped requirements, which can be traced back to the corresponding pain point and traced forward to the prototype coverage, for a project studies platform specific to TUM Campus Heilbronn. This traceability, rather than the completeness of any one requirement, is the main assertion of this document.
+
+Risks primarily rest on 26 interviews of uneven depth across groups, and especially since requirements were not checked back with the people they originated from. So the contents of this document are informed proposals, not validated findings. Two points follow from that directly. Company and professor findings come from smaller, less saturated samples than the student group, so they're less likely to hold up even within TUM Campus Heilbronn specifically. And Dual Approval (FR-15) is a proposed change, not something already happening. The reasoning behind it (companies having more of a say in the process improves satisfaction with outcomes) holds up logically, but nothing actually tests whether it would be effective or introduce further complications. One more risk is not related to the interviews at all: the platform handles personal application data (Section 7.2), and no one with legal expertise has reviewed what that would require.
+
+The transferability tags in the traceability table give pointers on how this work can be extended beyond TUM Campus Heilbronn, but that's discussed in principle in Section 4.5 and nothing more, it hasn't been tried. Closer to what's actually in hand are the broader industry-academia findings collected: experiences, motivations, barriers, what keeps people from collaborating in the first place.
+
+
+
+
+
 
 
 
