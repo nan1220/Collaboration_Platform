@@ -18,9 +18,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/i18n";
 import { stripMarkdown } from "@/components/markdown";
+import { MarkdownEditor } from "@/components/markdown-editor";
 
 export default function GuidesPage() {
   const { currentUser } = useCurrentUser();
@@ -67,37 +67,38 @@ export default function GuidesPage() {
         {currentUser?.role === "staff" && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger render={<Button>New guide</Button>} />
-            <DialogContent>
+            <DialogContent className="sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>New guide</DialogTitle>
               </DialogHeader>
               <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    value={form.title}
-                    onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="category">Category</Label>
-                  <Input
-                    id="category"
-                    value={form.category}
-                    onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                  />
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="title">Title</Label>
+                    <Input
+                      id="title"
+                      value={form.title}
+                      onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="category">Category</Label>
+                    <Input
+                      id="category"
+                      className="sm:w-40"
+                      value={form.category}
+                      onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="body">Body</Label>
-                  <Textarea
+                  <MarkdownEditor
                     id="body"
                     rows={8}
-                    className="font-mono text-sm"
                     value={form.body}
-                    onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
+                    onChange={(v) => setForm((f) => ({ ...f, body: v }))}
                   />
-                  <p className="text-xs text-muted-foreground">Markdown supported (headings, lists, bold, links, tables).</p>
                 </div>
                 <Button
                   onClick={() => createMutation.mutate()}

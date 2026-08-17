@@ -8,9 +8,9 @@ import { api, ApiError } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Markdown } from "@/components/markdown";
+import { MarkdownEditor } from "@/components/markdown-editor";
 
 export default function GuideDetailPage() {
   return (
@@ -71,10 +71,7 @@ function GuideDetail() {
       <Card>
         <CardContent className="pt-6">
           {editing ? (
-            <div className="flex flex-col gap-1.5">
-              <Textarea rows={12} value={body} onChange={(e) => setBody(e.target.value)} className="font-mono text-sm" />
-              <p className="text-xs text-muted-foreground">Markdown supported (headings, lists, bold, links, tables).</p>
-            </div>
+            <MarkdownEditor rows={12} value={body} onChange={setBody} />
           ) : (
             <Markdown content={guide.body} />
           )}

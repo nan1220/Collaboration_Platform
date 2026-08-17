@@ -9,15 +9,17 @@ import { ProjectCard } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { MarkdownEditor } from "@/components/markdown-editor";
 import { useLanguage } from "@/lib/i18n";
 
 const EMPTY_DIRECT_FORM = {
@@ -88,86 +90,110 @@ export default function ProfessorPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button>Submit a directly agreed project (FR-7)</Button>} />
-          <DialogContent>
+          <DialogContent className="sm:max-w-2xl">
             <DialogHeader>
               <DialogTitle>Submit a directly agreed project</DialogTitle>
+              <DialogDescription>
+                For a project you've already agreed with a company directly — this skips the company
+                portal and staff review, and publishes immediately.
+              </DialogDescription>
             </DialogHeader>
-            <div className="flex max-h-[70vh] flex-col gap-3 overflow-y-auto">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-title">Title</Label>
-                <Input id="d-title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+            <div className="flex max-h-[70vh] flex-col gap-5 overflow-y-auto px-0.5">
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Project details</p>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="d-title">Title</Label>
+                  <Input id="d-title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="d-expertise">Required expertise</Label>
+                    <Input
+                      id="d-expertise"
+                      placeholder={currentUser.department}
+                      value={form.required_expertise}
+                      onChange={(e) => setForm((f) => ({ ...f, required_expertise: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="d-size">Group size</Label>
+                    <Input
+                      id="d-size"
+                      type="number"
+                      min={1}
+                      className="w-24"
+                      value={form.group_size}
+                      onChange={(e) => setForm((f) => ({ ...f, group_size: Number(e.target.value) }))}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-expertise">Required expertise</Label>
-                <Input
-                  id="d-expertise"
-                  placeholder={currentUser.department}
-                  value={form.required_expertise}
-                  onChange={(e) => setForm((f) => ({ ...f, required_expertise: e.target.value }))}
-                />
+
+              <Separator />
+
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Description</p>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="d-bg">Background and objective</Label>
+                  <MarkdownEditor
+                    id="d-bg"
+                    rows={5}
+                    value={form.background_objective}
+                    onChange={(v) => setForm((f) => ({ ...f, background_objective: v }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="d-deliverable">Deliverable</Label>
+                  <MarkdownEditor
+                    id="d-deliverable"
+                    rows={3}
+                    value={form.deliverable}
+                    onChange={(v) => setForm((f) => ({ ...f, deliverable: v }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="d-skills">Required student skills</Label>
+                  <Input
+                    id="d-skills"
+                    value={form.required_skills}
+                    onChange={(e) => setForm((f) => ({ ...f, required_skills: e.target.value }))}
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-bg">Background and objective</Label>
-                <Textarea
-                  id="d-bg"
-                  rows={3}
-                  className="font-mono text-sm"
-                  value={form.background_objective}
-                  onChange={(e) => setForm((f) => ({ ...f, background_objective: e.target.value }))}
-                />
-                <p className="text-xs text-muted-foreground">Markdown supported.</p>
+
+              <Separator />
+
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Supervision</p>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="d-chair">Chair contact information</Label>
+                  <Input
+                    id="d-chair"
+                    value={form.chair_contact_info}
+                    onChange={(e) => setForm((f) => ({ ...f, chair_contact_info: e.target.value }))}
+                  />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="d-deadline">Application deadline</Label>
+                    <Input
+                      id="d-deadline"
+                      type="date"
+                      value={form.application_deadline}
+                      onChange={(e) => setForm((f) => ({ ...f, application_deadline: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="d-docs">Required documents</Label>
+                    <Input
+                      id="d-docs"
+                      value={form.required_documents}
+                      onChange={(e) => setForm((f) => ({ ...f, required_documents: e.target.value }))}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-deliverable">Deliverable</Label>
-                <Input
-                  id="d-deliverable"
-                  value={form.deliverable}
-                  onChange={(e) => setForm((f) => ({ ...f, deliverable: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-skills">Required student skills</Label>
-                <Input
-                  id="d-skills"
-                  value={form.required_skills}
-                  onChange={(e) => setForm((f) => ({ ...f, required_skills: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-size">Group size</Label>
-                <Input
-                  id="d-size"
-                  type="number"
-                  min={1}
-                  value={form.group_size}
-                  onChange={(e) => setForm((f) => ({ ...f, group_size: Number(e.target.value) }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-chair">Chair contact information</Label>
-                <Input
-                  id="d-chair"
-                  value={form.chair_contact_info}
-                  onChange={(e) => setForm((f) => ({ ...f, chair_contact_info: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-deadline">Application deadline</Label>
-                <Input
-                  id="d-deadline"
-                  type="date"
-                  value={form.application_deadline}
-                  onChange={(e) => setForm((f) => ({ ...f, application_deadline: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="d-docs">Required documents</Label>
-                <Input
-                  id="d-docs"
-                  value={form.required_documents}
-                  onChange={(e) => setForm((f) => ({ ...f, required_documents: e.target.value }))}
-                />
-              </div>
+
               <Button
                 onClick={() => directMutation.mutate()}
                 disabled={

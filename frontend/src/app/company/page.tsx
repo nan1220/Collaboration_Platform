@@ -9,16 +9,18 @@ import { ProjectCard } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { MarkdownEditor } from "@/components/markdown-editor";
 import { useLanguage } from "@/lib/i18n";
 
 const EMPTY_FORM = {
@@ -82,69 +84,97 @@ export default function CompanyPage() {
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button>Submit a project proposal</Button>} />
-          <DialogContent>
+          <DialogContent className="sm:max-w-2xl">
             <DialogHeader>
               <DialogTitle>Submit a project proposal</DialogTitle>
+              <DialogDescription>
+                Mandatory fields adapted from the existing intake sheet (FR-2). Staff review this before
+                it becomes visible to professors.
+              </DialogDescription>
             </DialogHeader>
-            <div className="flex max-h-[70vh] flex-col gap-3 overflow-y-auto">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-title">Project title</Label>
-                <Input id="c-title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+            <div className="flex max-h-[70vh] flex-col gap-5 overflow-y-auto px-0.5">
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Project details</p>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="c-title">Project title</Label>
+                  <Input id="c-title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="c-expertise">Required area of expertise</Label>
+                    <Input
+                      id="c-expertise"
+                      placeholder="e.g. School of Management, Informatics"
+                      value={form.required_expertise}
+                      onChange={(e) => setForm((f) => ({ ...f, required_expertise: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="c-size">Group size</Label>
+                    <Input
+                      id="c-size"
+                      type="number"
+                      min={1}
+                      className="w-24"
+                      value={form.group_size}
+                      onChange={(e) => setForm((f) => ({ ...f, group_size: Number(e.target.value) }))}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-expertise">Required area of expertise</Label>
-                <Input
-                  id="c-expertise"
-                  placeholder="e.g. School of Management, Informatics"
-                  value={form.required_expertise}
-                  onChange={(e) => setForm((f) => ({ ...f, required_expertise: e.target.value }))}
-                />
+
+              <Separator />
+
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Description</p>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="c-bg">Project background and objective</Label>
+                  <MarkdownEditor
+                    id="c-bg"
+                    rows={5}
+                    value={form.background_objective}
+                    onChange={(v) => setForm((f) => ({ ...f, background_objective: v }))}
+                    placeholder="What does the company need, and why?"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="c-deliverable">Project deliverable</Label>
+                  <MarkdownEditor
+                    id="c-deliverable"
+                    rows={3}
+                    value={form.deliverable}
+                    onChange={(v) => setForm((f) => ({ ...f, deliverable: v }))}
+                    placeholder="What should the team hand over at the end?"
+                  />
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-bg">Project background and objective</Label>
-                <Textarea
-                  id="c-bg"
-                  rows={3}
-                  className="font-mono text-sm"
-                  value={form.background_objective}
-                  onChange={(e) => setForm((f) => ({ ...f, background_objective: e.target.value }))}
-                />
-                <p className="text-xs text-muted-foreground">Markdown supported.</p>
+
+              <Separator />
+
+              <div className="flex flex-col gap-3">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  Resources &amp; requirements
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="c-resources">Available company resources</Label>
+                    <Input
+                      id="c-resources"
+                      value={form.company_resources}
+                      onChange={(e) => setForm((f) => ({ ...f, company_resources: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="c-skills">Required student skills</Label>
+                    <Input
+                      id="c-skills"
+                      value={form.required_skills}
+                      onChange={(e) => setForm((f) => ({ ...f, required_skills: e.target.value }))}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-deliverable">Project deliverable</Label>
-                <Input
-                  id="c-deliverable"
-                  value={form.deliverable}
-                  onChange={(e) => setForm((f) => ({ ...f, deliverable: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-resources">Available company resources</Label>
-                <Input
-                  id="c-resources"
-                  value={form.company_resources}
-                  onChange={(e) => setForm((f) => ({ ...f, company_resources: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-skills">Required student skills</Label>
-                <Input
-                  id="c-skills"
-                  value={form.required_skills}
-                  onChange={(e) => setForm((f) => ({ ...f, required_skills: e.target.value }))}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="c-size">Group size</Label>
-                <Input
-                  id="c-size"
-                  type="number"
-                  min={1}
-                  value={form.group_size}
-                  onChange={(e) => setForm((f) => ({ ...f, group_size: Number(e.target.value) }))}
-                />
-              </div>
+
               <Button
                 onClick={() => submitMutation.mutate()}
                 disabled={submitMutation.isPending || !form.title || !form.background_objective}
