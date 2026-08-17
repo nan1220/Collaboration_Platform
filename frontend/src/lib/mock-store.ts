@@ -164,6 +164,18 @@ function toProject(raw: RawProject): Project {
           return u ? toUserSummary(u) : null;
         })()
       : null,
+    requested_professor: raw.requested_professor_id
+      ? (() => {
+          const u = findUser(raw.requested_professor_id!);
+          return u ? toUserSummary(u) : null;
+        })()
+      : null,
+    suggested_by: raw.suggested_by_id
+      ? (() => {
+          const u = findUser(raw.suggested_by_id!);
+          return u ? toUserSummary(u) : null;
+        })()
+      : null,
     chair_contact_info: raw.chair_contact_info,
     application_deadline: raw.application_deadline,
     required_documents: raw.required_documents,
@@ -348,13 +360,14 @@ export const store = {
   // taking on (FR-5).
   projects(
     userId: number | null,
-    params: { status?: string; expertise?: string; q?: string; companyId?: string } = {}
+    params: { status?: string; expertise?: string; q?: string; companyId?: string; suggestedBy?: string } = {}
   ): Project[] {
     let list = getState().projects.slice();
 
     if (params.status) list = list.filter((p) => p.status === params.status);
     if (params.expertise) list = list.filter((p) => p.required_expertise === params.expertise);
     if (params.companyId) list = list.filter((p) => p.company_id === Number(params.companyId));
+    if (params.suggestedBy) list = list.filter((p) => p.suggested_by_id === Number(params.suggestedBy));
     if (params.q) {
       const needle = params.q.toLowerCase();
       list = list.filter(
@@ -366,8 +379,9 @@ export const store = {
     const user = userId ? findUser(userId) : undefined;
     const PUBLISHED: ProjectStatus[] = ["open", "ongoing", "complete"];
     if (!user || user.role === "student" || user.role === "company") {
-      // companies additionally get their own projects at any status via companyId param above
-      if (!params.companyId) list = list.filter((p) => PUBLISHED.includes(p.status));
+      // companies/students additionally get their own projects at any status
+      // via companyId/suggestedBy above
+      if (!params.companyId && !params.suggestedBy) list = list.filter((p) => PUBLISHED.includes(p.status));
     } else if (user.role === "professor") {
       list = list.filter((p) => PUBLISHED.includes(p.status) || p.status === "approved");
     }
@@ -409,6 +423,8 @@ export const store = {
       source: "company",
       company_id: company.id,
       assigned_professor_id: null,
+      requested_professor_id: null,
+      suggested_by_id: null,
       chair_contact_info: "",
       application_deadline: "",
       required_documents: "",
@@ -453,6 +469,8 @@ export const store = {
       source: "professor_direct",
       company_id: null,
       assigned_professor_id: user.id,
+      requested_professor_id: null,
+      suggested_by_id: null,
       chair_contact_info: body.chair_contact_info,
       application_deadline: body.application_deadline,
       required_documents: body.required_documents,
@@ -461,6 +479,61 @@ export const store = {
     };
     db.projects.push(project);
     recordAudit(user.id, "project", String(project.id), "submitted directly and published");
+    persist();
+    return toProject(project);
+  },
+
+  // FR-8: student suggests their own topic, naming an existing company and
+  // requesting a supervisor. Unlike FR-7's professor-submitted projects, this
+  // still goes through the normal staff review queue - the requested
+  // professor is only a suggestion, not an assignment; supervision is only
+  // ever granted through takeOnSupervision (FR-6), same as any other topic.
+  submitStudentProject(
+    userId: number | null,
+    body: {
+      title: string;
+      required_expertise: string;
+      background_objective: string;
+      deliverable: string;
+      company_resources: string;
+      required_skills: string;
+      group_size: number;
+      company_id: number;
+      requested_professor_id: number;
+    }
+  ): Project {
+    const user = requireRole(userId, "student");
+    const db = getState();
+    if (!db.companies.some((c) => c.id === body.company_id)) {
+      throw new ApiError(400, "Select a valid company");
+    }
+    const professor = db.users.find((u) => u.id === body.requested_professor_id && u.role === "professor");
+    if (!professor) {
+      throw new ApiError(400, "Select a valid supervisor");
+    }
+    const project: RawProject = {
+      id: db.nextProjectId++,
+      title: body.title,
+      required_expertise: body.required_expertise,
+      background_objective: body.background_objective,
+      deliverable: body.deliverable,
+      company_resources: body.company_resources,
+      required_skills: body.required_skills,
+      group_size: body.group_size || 1,
+      status: "pending",
+      source: "student_suggested",
+      company_id: body.company_id,
+      assigned_professor_id: null,
+      requested_professor_id: body.requested_professor_id,
+      suggested_by_id: user.id,
+      chair_contact_info: "",
+      application_deadline: "",
+      required_documents: "",
+      created_at: now(),
+      updated_at: now(),
+    };
+    db.projects.push(project);
+    recordAudit(user.id, "project", String(project.id), `suggested by student, requested ${professor.name} to supervise`);
     persist();
     return toProject(project);
   },
@@ -784,6 +857,13 @@ export const store = {
   companies(userId: number | null): Company[] {
     requireRole(userId, "staff");
     return getState().companies.slice();
+  },
+
+  // FR-8: a minimal, unrestricted company list so students can pick an
+  // existing company when suggesting their own topic - same openness as
+  // demoUsers(), and just as safe since it exposes nothing but id/name.
+  companyDirectory(): Pick<Company, "id" | "name">[] {
+    return getState().companies.map((c) => ({ id: c.id, name: c.name }));
   },
 
   myCompany(userId: number | null): Company {

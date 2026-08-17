@@ -29,6 +29,8 @@ export interface RawProject {
   source: ProjectSource;
   company_id: number | null;
   assigned_professor_id: number | null;
+  requested_professor_id: number | null;
+  suggested_by_id: number | null;
   chair_contact_info: string;
   application_deadline: string;
   required_documents: string;
@@ -182,6 +184,8 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "company",
     company_id: 1,
     assigned_professor_id: 2,
+    requested_professor_id: null,
+    suggested_by_id: null,
     chair_contact_info: "Chair contact: p1@tum.de",
     application_deadline: "2026-09-15",
     required_documents: "CV, transcript of records",
@@ -206,6 +210,8 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "company",
     company_id: 2,
     assigned_professor_id: null,
+    requested_professor_id: null,
+    suggested_by_id: null,
     chair_contact_info: "",
     application_deadline: "",
     required_documents: "",
@@ -231,6 +237,8 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
+    requested_professor_id: null,
+    suggested_by_id: null,
     chair_contact_info: "Chair contact: p2@tum.de",
     application_deadline: "2026-10-01",
     required_documents: "CV",
@@ -256,6 +264,8 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
+    requested_professor_id: null,
+    suggested_by_id: null,
     chair_contact_info: "Chair contact: p2@tum.de",
     application_deadline: "2026-10-15",
     required_documents: "CV, brief motivation paragraph",
@@ -280,11 +290,39 @@ export const SEED_PROJECTS: RawProject[] = [
     source: "company",
     company_id: 2,
     assigned_professor_id: null,
+    requested_professor_id: null,
+    suggested_by_id: null,
     chair_contact_info: "",
     application_deadline: "",
     required_documents: "",
     created_at: "2026-06-20T09:00:00.000Z",
     updated_at: "2026-06-20T09:00:00.000Z",
+  },
+  {
+    id: 6,
+    title: "Supplier sustainability scorecard",
+    required_expertise: "School of Management",
+    background_objective:
+      "**Student S1** already has an informal agreement with **Company C1** to look at how they score " +
+      "suppliers on sustainability, and would like Professor P1 to supervise it given their background in " +
+      "digital business models.\n\n" +
+      "Company C1's procurement team currently tracks supplier sustainability in an ad-hoc spreadsheet with " +
+      "no consistent scoring method across categories.",
+    deliverable: "A scoring framework plus a prototype scorecard for Company C1's top 20 suppliers.",
+    company_resources: "Existing supplier spreadsheet, a procurement contact for interviews.",
+    required_skills: "Excel/Python, comfort synthesizing qualitative interview notes into a scoring rubric",
+    group_size: 1,
+    status: "pending",
+    source: "student_suggested",
+    company_id: 1,
+    assigned_professor_id: null,
+    requested_professor_id: 2,
+    suggested_by_id: 4,
+    chair_contact_info: "",
+    application_deadline: "",
+    required_documents: "",
+    created_at: "2026-07-01T09:00:00.000Z",
+    updated_at: "2026-07-01T09:00:00.000Z",
   },
 ];
 

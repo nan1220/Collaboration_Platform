@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import {
   FolderKanban,
   BookOpen,
@@ -16,7 +15,6 @@ import {
   LogOut,
   type LucideIcon,
 } from "lucide-react";
-import { api } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { useLanguage, roleLabel, type Locale } from "@/lib/i18n";
 import {
@@ -41,19 +39,16 @@ const NAV_LINKS: { href: string; labelKey: Parameters<ReturnType<typeof useLangu
 
 // The header's own brand link doubles as "go to my main page" once signed
 // in - staff/professor/company always land on their dashboard; a student
-// lands on their active (confirmed) project if they have one, else their
-// applications page.
+// lands on their applications page, where they can apply, accept offers and
+// track each application's decision progress (rather than jumping straight
+// into a single project's detail view).
 function mainPageFor(
   role: Role,
-  activeProjectId: number | undefined,
   t: ReturnType<typeof useLanguage>["t"]
 ): { href: string; label: string; icon: LucideIcon } {
   if (role === "staff") return { href: "/staff", label: t("nav.staffDashboard"), icon: LayoutDashboard };
   if (role === "professor") return { href: "/professor", label: t("nav.mySupervision"), icon: GraduationCap };
   if (role === "company") return { href: "/company", label: t("nav.myCompany"), icon: Building2 };
-  if (activeProjectId) {
-    return { href: `/projects/detail?id=${activeProjectId}`, label: t("nav.myCurrentProject"), icon: FolderKanban };
-  }
   return { href: "/student", label: t("nav.myApplications"), icon: ClipboardList };
 }
 
@@ -76,14 +71,7 @@ export function NavBar() {
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
   );
 
-  const isStudent = currentUser?.role === "student";
-  const { data: myApplications } = useQuery({
-    queryKey: ["applications", "mine", currentUser?.id],
-    queryFn: () => api.applications(currentUser!.id),
-    enabled: isStudent,
-  });
-  const activeProject = myApplications?.find((a) => a.confirmed);
-  const mainPage = currentUser ? mainPageFor(currentUser.role, activeProject?.project.id, t) : null;
+  const mainPage = currentUser ? mainPageFor(currentUser.role, t) : null;
   const MainPageIcon = mainPage?.icon;
   const mainPageActive = mainPage && currentPath === normalize(mainPage.href.split("?")[0]);
 

@@ -815,9 +815,9 @@ Source: Process Documentation
 
 == Student Features
 
-=== FR-8, Student Project Submission Portal (Must)  
-The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet).\
-Source: C2, C4, C5, S12  
+=== FR-8, Student Project Submission Portal (Must)
+The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet). In addition to describing the topic, the student names an existing company and requests a professor/supervisor to run it. The submission then enters the same pending status as a company submission (FR-2) and goes through the normal staff review queue - naming a supervisor is a request, not an assignment; supervision is only granted once a professor formally takes it on (FR-6).\
+Source: C2, C4, C5, S12
 === FR-9, Student Profiles (Should)  
 Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  \
 Source: Team Decision  
