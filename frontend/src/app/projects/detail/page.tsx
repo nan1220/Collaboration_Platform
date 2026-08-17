@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { Markdown } from "@/components/markdown";
 import {
   ALLOWED_TRANSITIONS,
   applicationStatus,
@@ -163,7 +164,7 @@ function ProjectDetail() {
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={project.status} />
             {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
-            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor-submitted"}</Badge>
+            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
             {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
           </div>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h1>
@@ -174,11 +175,15 @@ function ProjectDetail() {
         <CardContent className="flex flex-col gap-3 pt-6">
           <div>
             <span className="font-medium">Background and objective</span>
-            <p className="mt-1 text-muted-foreground">{project.background_objective}</p>
+            <Markdown content={project.background_objective} className="mt-1" />
           </div>
           <div>
             <span className="font-medium">Deliverable</span>
-            <p className="mt-1 text-muted-foreground">{project.deliverable || "Not specified"}</p>
+            {project.deliverable ? (
+              <Markdown content={project.deliverable} className="mt-1" />
+            ) : (
+              <p className="mt-1 text-muted-foreground">Not specified</p>
+            )}
           </div>
           <div className="grid gap-1 text-sm text-muted-foreground sm:grid-cols-2">
             <div>
@@ -356,7 +361,7 @@ function ProjectDetail() {
                   )}
                   {isAssignedProfessor && !a.withdrawn && (
                     <div className="flex gap-2 text-xs">
-                      <span className="text-muted-foreground">Professor decision: {a.professor_decision}</span>
+                      <span className="text-muted-foreground">Professor/Supervisor decision: {a.professor_decision}</span>
                       {a.professor_decision === "pending" && (
                         <>
                           <button

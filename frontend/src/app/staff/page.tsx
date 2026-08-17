@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { useLanguage, roleLabel } from "@/lib/i18n";
 import { isNotYetSupervised } from "@/lib/types";
 
 const MONITOR_TABS = [
@@ -24,6 +25,7 @@ const MONITOR_TABS = [
 
 export default function StaffPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const enabled = currentUser?.role === "staff";
   const [q, setQ] = useState("");
@@ -69,17 +71,14 @@ export default function StaffPage() {
   }, [allProjects]);
 
   if (!currentUser || currentUser.role !== "staff") {
-    return <SignInPrompt>Sign in with a staff account to see this dashboard.</SignInPrompt>;
+    return <SignInPrompt>{t("prompt.staff")}</SignInPrompt>;
   }
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Staff dashboard</h1>
-        <p className="mt-1 text-muted-foreground">
-          Review incoming submissions and monitor every project study by status (FR-17) — the
-          visibility the shared Excel sheet never had.
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("page.staff.title")}</h1>
+        <p className="mt-1 text-muted-foreground">{t("page.staff.description")}</p>
       </div>
 
       <Tabs defaultValue="pending">
@@ -152,9 +151,7 @@ export default function StaffPage() {
                     {user.name} <span className="text-muted-foreground">({user.email})</span>
                   </span>
                   <div className="flex gap-2">
-                    <Badge variant="secondary" className="capitalize">
-                      {user.role}
-                    </Badge>
+                    <Badge variant="secondary">{roleLabel(user.role, t)}</Badge>
                     {user.department && <Badge variant="outline">{user.department}</Badge>}
                     {user.program && <Badge variant="outline">{user.program}</Badge>}
                   </div>

@@ -153,8 +153,16 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Demand forecasting for regional retail chain",
     required_expertise: "School of Management",
     background_objective:
-      "Company C1 wants a forecasting model for weekly demand across 40 stores, using two years of POS data.",
-    deliverable: "A working forecasting model plus a short report on accuracy and rollout recommendations.",
+      "**Company C1** wants a forecasting model for weekly demand across 40 stores, using two years of POS data.\n\n" +
+      "Key questions:\n" +
+      "- Which store/product combinations are hardest to forecast, and why?\n" +
+      "- How much would a better model actually reduce overstock and stockouts?\n\n" +
+      "See the [POS data dictionary](https://example.com) shared with the assigned team.",
+    deliverable:
+      "A working forecasting model, plus a short report covering:\n" +
+      "1. Accuracy vs. the current baseline\n" +
+      "2. Rollout recommendations\n" +
+      "3. Known limitations",
     company_resources: "Access to two years of anonymized POS data, a technical contact for questions.",
     required_skills: "Python or R, basic time-series/statistics",
     group_size: 2,
@@ -173,8 +181,12 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Customer churn analysis for SaaS product",
     required_expertise: "School of Management",
     background_objective:
-      "Company C2 is losing customers after the trial period and wants a data-driven root cause analysis.",
-    deliverable: "A churn driver analysis with prioritized, actionable recommendations.",
+      "**Company C2** is losing customers after the trial period and wants a data-driven root cause analysis.\n\n" +
+      "Known context:\n" +
+      "- Trial-to-paid conversion has dropped ~15% year over year\n" +
+      "- Support tickets mention *onboarding confusion* most often\n\n" +
+      "> The team will get read access to anonymized usage and billing data on day one.",
+    deliverable: "A churn driver analysis with **prioritized, actionable** recommendations.",
     company_resources: "Anonymized usage and billing data, a product manager as point of contact.",
     required_skills: "SQL, basic statistics, comfort presenting to non-technical stakeholders",
     group_size: 1,
@@ -193,8 +205,13 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Open-source contribution tracking dashboard",
     required_expertise: "Informatics",
     background_objective:
-      "Research topic proposed directly by Professor P2: build a dashboard summarizing contribution patterns across a set of OSS repositories.",
-    deliverable: "A working dashboard and a short writeup of the methodology.",
+      "Research topic proposed directly by **Professor P2**: build a dashboard summarizing contribution " +
+      "patterns across a set of OSS repositories.\n\n" +
+      "Metrics of interest:\n" +
+      "- Commit and PR frequency over time\n" +
+      "- Reviewer response latency\n" +
+      "- Contributor retention after a first merged PR",
+    deliverable: "A working dashboard and a short writeup of the methodology (`README.md` in the repo is enough).",
     company_resources: "",
     required_skills: "TypeScript or Python, git/GitHub API familiarity",
     group_size: 2,
@@ -213,8 +230,13 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Predictive maintenance dashboard for manufacturing partner",
     required_expertise: "Informatics",
     background_objective:
-      "Direct agreement between Professor P2 and a manufacturing partner: a dashboard flagging machines likely to need maintenance soon.",
-    deliverable: "A prototype dashboard with a documented model and evaluation.",
+      "Direct agreement between **Professor P2** and a manufacturing partner: a dashboard flagging " +
+      "machines likely to need maintenance soon.\n\n" +
+      "Scope for the semester:\n" +
+      "- Explore the provided sensor sample data\n" +
+      "- Prototype a simple risk score per machine\n" +
+      "- Build a minimal dashboard (table + chart is enough)",
+    deliverable: "A prototype dashboard with a **documented model and evaluation**.",
     company_resources: "Sample sensor data, one technical point of contact.",
     required_skills: "Python, basic ML, dashboarding (e.g. Streamlit/Dash)",
     group_size: 2,
@@ -233,8 +255,12 @@ export const SEED_PROJECTS: RawProject[] = [
     title: "Market entry strategy for EV charging network",
     required_expertise: "School of Management",
     background_objective:
-      "A mobility startup wants an analysis of which German regions to prioritize for charger rollout.",
-    deliverable: "A market entry report ranking candidate regions with supporting rationale.",
+      "A mobility startup wants an analysis of which German regions to **prioritize for charger rollout**.\n\n" +
+      "Factors to weigh:\n" +
+      "- EV registration growth by region\n" +
+      "- Existing charger density\n" +
+      "- Grid connection cost estimates",
+    deliverable: "A market entry report **ranking candidate regions** with supporting rationale.",
     company_resources: "Market research budget for data purchases, biweekly check-in calls.",
     required_skills: "Market research, basic GIS/data analysis a plus",
     group_size: 3,
@@ -322,22 +348,34 @@ export const SEED_CHECKINS: RawCheckIn[] = [
 export const SEED_GUIDES: Guide[] = [
   {
     slug: "finding-a-supervisor-for-company-topics",
-    title: "Finding a supervisor for a company-submitted topic",
+    title: "Finding a professor/supervisor for a company-submitted topic",
     category: "Company projects",
     audience: "student",
-    body: `Company-submitted topics still need a professor to take on supervision before you can apply.
+    body: `Company-submitted topics still need a professor/supervisor to take on supervision before you can apply.
 
-Not every professor can supervise every topic: professors see submissions matched to their own area of
-expertise (the "required expertise" tag on the project), and only take on projects that fit their chair.
-A professor who has taught you in an unrelated area — even a familiar name — may not be a match for a
-School of Management topic.
+Not every professor/supervisor can supervise every topic: professors/supervisors see submissions matched
+to their own area of expertise (the **required expertise** tag on the project), and only take on projects
+that fit their chair. A professor/supervisor who has taught you in an unrelated area — even a familiar
+name — may not be a match for a School of Management topic.
 
-Steps:
-1. Check the "required expertise" tag on the project page. A project only becomes visible to students
-   once a matching professor has taken it on and published the listing.
-2. If you know a professor whose chair fits, feel free to mention the topic to them directly — professors
-   can also submit a project they've agreed on directly with a company (no company portal step needed).
-3. If you're unsure who to contact, ask staff directly rather than guessing.`,
+## Steps
+
+1. Check the *required expertise* tag on the project page. A project only becomes visible to students
+   once a matching professor/supervisor has taken it on and published the listing.
+2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly —
+   they can also submit a project they've agreed on directly with a company (no company portal step needed).
+3. If you're unsure who to contact, ask staff directly rather than guessing.
+
+## Quick reference
+
+| Situation | What to do |
+| --- | --- |
+| Topic approved, no professor/supervisor yet | Wait, or mention it to a matching professor/supervisor yourself |
+| Topic still "pending" | Nothing to do yet — staff hasn't reviewed it |
+| Not sure who supervises your area | Ask staff, don't guess |
+
+> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise —
+> expertise match matters more than familiarity.`,
     updated_by: 1,
     updated_at: "2026-05-01T09:00:00.000Z",
   },
@@ -346,11 +384,15 @@ Steps:
     title: "What the project status labels mean",
     category: "General",
     audience: "all",
-    body: `Projects move through a fixed set of stages: pending (submitted, awaiting staff review), approved
-(staff-approved, visible to professors whose expertise matches), ongoing (a professor has taken on
-supervision and published the listing — now open for student applications), and filled (a student has
-confirmed the offer). Every change is logged, so staff, professors and students can see the real state of
-a project instead of relying on a spreadsheet or word of mouth.`,
+    body: `Projects move through a fixed set of stages:
+
+- **Pending** — submitted, awaiting staff review
+- **Approved** — staff-approved, visible to professors/supervisors whose expertise matches
+- **Ongoing** — a professor/supervisor has taken on supervision and published the listing, now open for student applications
+- **Filled** — a student has confirmed the offer
+
+Every change is logged, so staff, professors/supervisors and students can see the real state of a project
+instead of relying on a spreadsheet or word of mouth.`,
     updated_by: 1,
     updated_at: "2026-02-15T09:00:00.000Z",
   },

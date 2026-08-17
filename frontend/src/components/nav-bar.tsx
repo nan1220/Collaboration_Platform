@@ -16,6 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useCurrentUser } from "@/lib/current-user";
+import { useLanguage, roleLabel, type Locale } from "@/lib/i18n";
 import {
   Popover,
   PopoverContent,
@@ -28,15 +29,15 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS: { href: string; label: string; icon: LucideIcon; roles?: string[] }[] = [
-  { href: "/projects", label: "Projects", icon: FolderKanban },
-  { href: "/students", label: "Student directory", icon: Users, roles: ["professor", "company", "staff"] },
-  { href: "/teammates", label: "Find teammates", icon: Users, roles: ["student"] },
-  { href: "/guides", label: "Guides", icon: BookOpen },
-  { href: "/staff", label: "Staff dashboard", icon: LayoutDashboard, roles: ["staff"] },
-  { href: "/professor", label: "My supervision", icon: GraduationCap, roles: ["professor"] },
-  { href: "/company", label: "My company", icon: Building2, roles: ["company"] },
-  { href: "/student", label: "My applications", icon: ClipboardList, roles: ["student"] },
+const NAV_LINKS: { href: string; labelKey: Parameters<ReturnType<typeof useLanguage>["t"]>[0]; icon: LucideIcon; roles?: string[] }[] = [
+  { href: "/projects", labelKey: "nav.projects", icon: FolderKanban },
+  { href: "/students", labelKey: "nav.studentDirectory", icon: Users, roles: ["professor", "company", "staff"] },
+  { href: "/teammates", labelKey: "nav.findTeammates", icon: Users, roles: ["student"] },
+  { href: "/guides", labelKey: "nav.guides", icon: BookOpen },
+  { href: "/staff", labelKey: "nav.staffDashboard", icon: LayoutDashboard, roles: ["staff"] },
+  { href: "/professor", labelKey: "nav.mySupervision", icon: GraduationCap, roles: ["professor"] },
+  { href: "/company", labelKey: "nav.myCompany", icon: Building2, roles: ["company"] },
+  { href: "/student", labelKey: "nav.myApplications", icon: ClipboardList, roles: ["student"] },
 ];
 
 // trailingSlash is enabled (next.config.ts), so usePathname() returns paths
@@ -48,6 +49,7 @@ function normalize(path: string) {
 
 export function NavBar() {
   const { currentUser, setCurrentUserId } = useCurrentUser();
+  const { locale, setLocale, t } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
   const currentPath = normalize(pathname);
@@ -85,11 +87,30 @@ export function NavBar() {
                 )}
               >
                 <Icon className="size-4" />
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             );
           })}
         </nav>
+
+        <div className="flex items-center overflow-hidden rounded-md border border-primary-foreground/30 text-xs font-medium">
+          {(["en", "de"] as Locale[]).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLocale(l)}
+              aria-label={`${t("nav.language")}: ${l.toUpperCase()}`}
+              aria-pressed={locale === l}
+              className={cn(
+                "px-2 py-1.5 uppercase transition-colors",
+                locale === l
+                  ? "bg-primary-foreground/20 text-primary-foreground"
+                  : "text-primary-foreground/60 hover:bg-primary-foreground/10 hover:text-primary-foreground/90"
+              )}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
 
         {currentUser ? (
           <Popover open={menuOpen} onOpenChange={setMenuOpen}>
@@ -107,9 +128,9 @@ export function NavBar() {
             />
             <PopoverContent align="end">
               <PopoverTitle>{currentUser.name}</PopoverTitle>
-              <PopoverDescription>Signed in for this demo session.</PopoverDescription>
-              <Badge variant="secondary" className="w-fit capitalize">
-                {currentUser.role}
+              <PopoverDescription>{t("nav.signedInSession")}</PopoverDescription>
+              <Badge variant="secondary" className="w-fit">
+                {roleLabel(currentUser.role, t)}
               </Badge>
               <Button
                 variant="outline"
@@ -122,14 +143,14 @@ export function NavBar() {
                 }}
               >
                 <LogOut className="size-4" />
-                Sign out
+                {t("nav.signOut")}
               </Button>
             </PopoverContent>
           </Popover>
         ) : (
           <Link href="/login" className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "gap-1.5")}>
             <UserRound className="size-4" />
-            Sign in
+            {t("nav.signIn")}
           </Link>
         )}
       </div>

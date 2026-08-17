@@ -18,10 +18,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/lib/i18n";
+import { stripMarkdown } from "@/components/markdown";
+import { MarkdownEditor } from "@/components/markdown-editor";
 
 export default function GuidesPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", category: "General", body: "" });
@@ -58,43 +61,43 @@ export default function GuidesPage() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Guides</h1>
-          <p className="mt-1 max-w-2xl text-muted-foreground">
-            Practical, TUM-specific guidance — like how to find an eligible supervisor for a
-            company-submitted topic — instead of figuring it out through word of mouth.
-          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("page.guides.title")}</h1>
+          <p className="mt-1 max-w-2xl text-muted-foreground">{t("page.guides.description")}</p>
         </div>
         {currentUser?.role === "staff" && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger render={<Button>New guide</Button>} />
-            <DialogContent>
+            <DialogContent className="sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>New guide</DialogTitle>
               </DialogHeader>
               <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    value={form.title}
-                    onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="category">Category</Label>
-                  <Input
-                    id="category"
-                    value={form.category}
-                    onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
-                  />
+                <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="title">Title</Label>
+                    <Input
+                      id="title"
+                      value={form.title}
+                      onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="category">Category</Label>
+                    <Input
+                      id="category"
+                      className="sm:w-40"
+                      value={form.category}
+                      onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
+                    />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="body">Body</Label>
-                  <Textarea
+                  <MarkdownEditor
                     id="body"
                     rows={8}
                     value={form.body}
-                    onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
+                    onChange={(v) => setForm((f) => ({ ...f, body: v }))}
                   />
                 </div>
                 <Button
@@ -119,7 +122,7 @@ export default function GuidesPage() {
                   {guide.category}
                 </Badge>
                 <CardTitle className="mt-1">{guide.title}</CardTitle>
-                <CardDescription className="line-clamp-3">{guide.body}</CardDescription>
+                <CardDescription className="line-clamp-3">{stripMarkdown(guide.body)}</CardDescription>
               </CardHeader>
             </Card>
           </Link>

@@ -1,17 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import { GraduationCap, Building2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
+  const { t } = useLanguage();
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Sign in</h1>
-        <p className="mt-1 text-muted-foreground">
-          How you get in depends on who you are (FR-1/NFR-1).
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("signIn.title")}</h1>
+        <p className="mt-1 text-muted-foreground">{t("signIn.subtitle")}</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -20,14 +22,12 @@ export default function LoginPage() {
             <div className="flex size-10 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
               <GraduationCap className="size-5" />
             </div>
-            <CardTitle className="mt-2">TUM members</CardTitle>
-            <CardDescription>
-              Students, professors and staff sign in with their TUM institutional account.
-            </CardDescription>
+            <CardTitle className="mt-2">{t("signIn.tumMembers.title")}</CardTitle>
+            <CardDescription>{t("signIn.tumMembers.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/login/shibboleth" className={cn(buttonVariants({ variant: "default" }))}>
-              Continue with Shibboleth
+              {t("signIn.tumMembers.action")}
             </Link>
           </CardContent>
         </Card>
@@ -37,15 +37,12 @@ export default function LoginPage() {
             <div className="flex size-10 items-center justify-center rounded-lg bg-secondary text-secondary-foreground">
               <Building2 className="size-5" />
             </div>
-            <CardTitle className="mt-2">Companies</CardTitle>
-            <CardDescription>
-              No TUM account needed — log in with your work email, or register a new company. Staff
-              verify new companies before they can submit a project (NFR-1).
-            </CardDescription>
+            <CardTitle className="mt-2">{t("signIn.companies.title")}</CardTitle>
+            <CardDescription>{t("signIn.companies.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/register" className={cn(buttonVariants({ variant: "outline" }))}>
-              Log in or register
+              {t("signIn.companies.action")}
             </Link>
           </CardContent>
         </Card>

@@ -1,3 +1,5 @@
+#import "@preview/rexllent:0.4.0": xlsx-parser
+
 // #import "@preview/cuti:0.4.0": fakebold
 
 // #import "@preview/wordometer:0.1.5": word-count, total-words
@@ -243,14 +245,67 @@
 	}
 }
 
+#set table(
+  fill: (x, y) => if y == 0 { gray } else { none },
+  align: (x, y) => {
+    let ret = horizon
+    if y == 0 { ret += center }
+    else { ret += left }
+    ret
+  },
+)
+#show table.cell: it => {
+  if it.y == 0 { strong(it) }
+  else { it }
+}
+
 = Introduction
 
 
 == Purpose of this Document 
+This specification defines the requirements for a project studies platform, developed as part of a bachelor's Project Study at TUM Campus Heilbronn in collaboration with BirdVision. It is adapted from ISO/IEC/IEEE 29148, scaled down and extended with a literature review section to meet the academic requirements of a project study report. Every requirement in Sections 6 and 7 is traceable back to its source and forward to its prototype coverage, per Section 9. That traceability, more than any single requirement, is what this document is meant to demonstrate. 
+
+
+
+
+
+
+
 == Project Background and Motivation 
+
+A project study for TUM School of Management students is a research or practical project, carried out by a student team in collaboration with a company and a supervising professorship. This project, “Project Studies Platform for BirdVision”, was assigned to build a platform supporting a project study process similar to this one, which this document itself is a product of.
+
+Companies, professors, and students currently coordinate project studies at TUM Campus Heilbronn in three ways: university staff sourcing companies directly and sending out given topics to professors, professors and companies agreeing between themselves, or students agreeing with a company and finding a supervising professor on their own. These processes are decentralized and realized via a variety of mediums. Recurring pain points arising from the status quo were identified through semi-structured interviews, which this document translates into a scoped set of requirements.
+
+
+
+
+
 == Scope of the Platform 
+The scope of the platform is limited to the project study process at TUM Campus Heilbronn, rather than industry-academia collaborations in general. The reasoning behind this scope and discussion on how this platform can be adapted for different institutions is written out in sections 4.4 and 4.5. Broader findings from the interviews are not excluded and presented in section 5.
+
+To deliver on the project goal of a testable MVP, this document is accompanied by a non-functional prototype.
+
+
+
+
 == Definitions, Acronyms, and Abbreviations 
+// SRS: Software Requirements Specification
+// FR/NFR: Functional Requirement / Non-Functional Requirement
+// MoSCoW: prioritization scheme: Must, Should, Could, Won't (Section 6.1)
+// NDA: Non-disclosure agreement
+// GDPR: General Data Protection Regulation
+
+/ SRS: Software Requirements Specification
+/ FR / NFR: Functional Requirement / Non-Functional Requirement
+/ MoSCoW: Prioritization scheme: Must, Should, Could, Won't (Section 6.1)
+/ NDA: Non-Disclosure Agreement
+/ GDPR: General Data Protection Regulation
+
 == Document Overview
+Section 2 reviews the literature behind the project's methodological choices. Section 3 goes over the interview methodology, sample, and its limitations. Section 4 describes the platform's overall scope and boundaries. Section 5 presents the pain points the requirements are derived from. Sections 6 and 7 specify the functional and non-functional requirements. Section 8 provides system models. Section 9 traces requirements back to their source and forward to prototype coverage. Section 10 discusses risks and conclusions.
+
+
 
 
 #pagebreak()
@@ -376,7 +431,6 @@ groups. Appendix B lists all participants; the distribution is summarised below.
 #figure(
   table(
     columns: (auto, auto, auto),
-    align: (left, center, left),
     stroke: 0.5pt,
     [*Group*], [*n*], [*Institutional background*],
     [Students], [13], [9 TUM Heilbronn, 2 TUM Garching, 1 RWTH Aachen,
@@ -444,7 +498,6 @@ Each requirement therefore states what kind of evidence it rests on:
 #figure(
   table(
     columns: (auto, 1fr),
-    align: (left + top, left + top),
     stroke: 0.5pt,
     inset: 7pt,
     [*Basis*], [*Meaning*],
@@ -454,8 +507,7 @@ Each requirement therefore states what kind of evidence it rests on:
     [Taken from how the project-study process currently works at TUM Campus
      Heilbronn, rather than from interview data.],
     [Design decision],
-    [A choice made by the authors, where neither source supplied a requirement.
-     Listed individually, with reasons, in Section 10.],
+    [A choice made by the authors, where neither source supplied a requirement. Recorded as Team Decision in the traceability table (Appendix C), with the reasoning given at the requirement itself.],
   ),
   caption: [Evidence basis recorded for each requirement],
 )
@@ -467,6 +519,11 @@ Each requirement therefore states what kind of evidence it rests on:
 //   works at TUM Campus Heilbronn, rather than from interview data.
 // / Design decision: a choice made by the authors, where neither source supplied a
 //   requirement. These are listed individually, with reasons, in Section 10.
+
+Three requirements rest on a design decision rather than on interview data or the current process: Student Profiles (FR-9), Dual Approval (FR-15), and Language Support (NFR-3). Each is argued for where it is specified, and FR-15, which proposes a change to how student selection currently works, is discussed again in Section 10.
+
+
+
 
 Two further attributes are recorded and feed the prioritization scheme in
 Section 6: whether the underlying pain point recurs across groups, and whether
@@ -507,22 +564,18 @@ existing institutional processes.
 == Stakeholder Groups, Roles and Motivations
 
 
-- *Students:* search for projects, apply and carry out the work, motivated by
-  practical experience, industry contact and, in several cases, employment
-  prospects. Their engagement is conditional --- several said they would
-  withdraw from a project seen as serving only a commercial interest.
+- *Students:* search for projects, apply and carry out the work, motivated by practical experience, industry contact and, in several cases, employment prospects. Their engagement is conditional --- several said they would withdraw from a project seen as serving only a commercial interest.
 
-- *Companies:* post projects and receive results, motivated by talent contact,
-  access to expertise and usable outcomes. The companies interviewed were
-  oriented mainly towards recruiting, and the requirements derived from them
-  reflect that.
+- *Companies:* post projects and receive results, motivated by talent contact, access to expertise and usable outcomes. The companies interviewed were oriented mainly towards recruiting, and the requirements derived from them reflect that.
 
-- *Professors and academic researchers:* supervise and assess projects, motivated
-  by access to real problems and by teaching value. Their constraint is time.
+- *Professors and academic researchers:* supervise and assess projects, motivated by access to real problems and by teaching value. Their constraint is time.
 
-- *University staff:* administer the process, matching requests to supervisors and
-  tracking progress. Their main obstacle is obtaining timely responses from
-  professorships.
+- *University staff:* administer the process, matching requests to supervisors and tracking progress. Their main obstacle is obtaining timely responses from professorships.
+
+
+These motivations are not aligned by default. The platform does not assume they are; its function is to make each group's constraints visible to the others.
+
+
 
 // #set terms(hanging-indent: 1.5em, spacing: 0.9em)
 // / Students: search for projects, apply and carry out the work, motivated by
@@ -544,8 +597,7 @@ existing institutional processes.
 
 
 
-These motivations are not aligned by default. The platform does not assume they
-are; its function is to make each group's constraints visible to the others.
+
 
 
 == Assumptions and Constraints 
@@ -594,7 +646,6 @@ arrangements:
 #figure(
   table(
     columns: (auto, 1fr),
-    align: (left + top, left + top),
     stroke: 0.5pt,
     inset: 7pt,
     [*Tag*], [*Meaning*],
@@ -607,9 +658,7 @@ arrangements:
   caption: [Transferability tags applied to requirements],
 )
 
-These tags feed the prioritization scheme in Section 6.1: requirements that are
-generalizable and grounded in cross-cutting pain points rank above those that
-are institution-specific or supported by a single group.
+These tags feed the prioritization scheme in Section 6.1: requirements that are generalizable and grounded in cross-cutting pain points rank above those that are institution-specific or supported by a single group.
 
 
 
@@ -625,6 +674,7 @@ platform would acquire its first users on each of the three sides.
 = Stakeholder Needs (Pain Points) <stakeholder-needs>
 
 The pain points in this chapter are derived from semi-structured interviews conducted across three primary stakeholder groups relevant to the project study process. Each pain point is presented with the interview ID it was sourced from. See appendix 11.B for anonymized interview counts per stakeholder group and matching interview IDs.
+
 BirdVision's primary interest with this project study was gaining insight into industry-academia collaborations as a whole, particularly the stakeholders' motivations and the problems they encounter. The interviews were accordingly conducted on the broader premise of industry-academia collaborations, in order to gather as wide a range of insights as possible. However, as the stated aim of the project is a platform supporting project studies specifically, and the scope of the platform is limited, not every pain point identified applies directly to the project study process, or to TUM in particular. These findings are nonetheless documented in full below.
 
 
@@ -741,9 +791,9 @@ New project submissions will be marked as 'pending'. Staff will approve them bef
 Source: Process Documentation  
 
 === FR-4, Company Browse Student Topics (Must)  
-Companies can browse topics submitted by students\
-Source: C5  
 
+Companies can browse topics submitted by students. Acceptance requires the company to fill in mandatory fields (company name, company contact information), and the completed entry becomes visible to professors.\
+Source: C2 (directly suggested this feature), C5, S12
 
 
 
@@ -753,8 +803,12 @@ Source: C5
 Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
 Source: P3, P4, U1, U2  
 === FR-6, Professor Supervision Take-on (Must)  
-To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
-Source: Process Documentation  
+To take on a project — either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) — the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
+Source: Process Documentation 
+
+
+// To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
+// Source: Process Documentation  
 === FR-7, Direct Project Submission (Should)  
 When a professor and a company agree directly on a project study, the professor will submit it with the required fields filled in for students to apply. \ 
 Source: Process Documentation  
@@ -762,7 +816,7 @@ Source: Process Documentation
 == Student Features
 
 === FR-8, Student Project Submission Portal (Must)  
-The mandatory fields include: Areas of Expertise, Research Interests, Skills, Previous Projects, Availability, and Contact Information.  \
+The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet).\
 Source: C2, C4, C5, S12  
 === FR-9, Student Profiles (Should)  
 Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  \
@@ -775,7 +829,7 @@ Students can view available projects with complete information, including compan
 Source: S6, S7, S8, S9  
 === FR-12, Application Status Visibility (Should)
 Students will see a simple accepted/rejected status for each application.  \
-Source: S1  
+Source: S1, S8, S12, S13
 
 
 == General Features
@@ -789,7 +843,7 @@ Source: P4
 A student's application will require approval from both the professor and the company before it is finalized. At TUM Campus Heilbronn, the selection of students is currently handled solely by the university, with no formal role for companies in reviewing individual applicants. This proposed change aims to give companies input on who joins their projects, which could lead to higher satisfaction with the outcomes. However, this change may slow down the process and add a coordination step between professors and companies, which are recognized costs of the benefit.  \
 Source: Team Decision  
 === FR-16, Manual Multi-Offer Decision (Should)  
-If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-13 and FR-16: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  \
+If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-12 and FR-13: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  \
 Source: Process Documentation 
 
 == Administrative Staff Features
@@ -823,17 +877,27 @@ Source: Process Documentation
 == Usability 
 Four groups use the platform: students, companies, professors, and university staff. Not all of them work with software every day, professors and administrative staff least of all. Each role sees only the functions it needs (FR-1, Role-Based Access), so no one has to learn the parts of the system that belong to someone else. Every listing shows the same fields in the same order. Users compare projects, then find the same information in the same place each time. Inconsistent listings would bring back the fragmented presentation that the platform replaces.
 
+=== NFR-3, Language Support
+The platform is viewable in both English and German. German-language requirements were named as a disadvantage by international students (S5, S7, S10), particularly at institutions with a large international intake and degree programs taught in English. \
+Source: S5, S7, S10
+
 == Security and Data Privacy 
 === NFR-1, Identity Verification 
 Use of institutional logins for verifying student and staff identities. A verified company email domain serves as a simple check for companies, before being made available to administrative staff for a more in-depth check.\
 Source: C4
 === NFR-2, Data Protection for Submitted Documents
-CVs, transcripts, and motivation letters uploaded through the platform (FR-8) count as personal data under the GDPR. Access is limited to the professor and the company that review the application. No other user can open these files or reach them through public listings. FR-4 (Company Browse and Accept Student Topics) keeps topic listings public, but the documents attached to an application stay private. How long these documents are stored, and when they are deleted once an application closes, lies outside the scope of this specification and the prototype (Section 4.6). \
+CVs, transcripts, and motivation letters uploaded with an application (FR-11) count as personal data under the GDPR. Access is limited to the professor and the company that review the application. No other user can open these files or reach them through project listings. Student-submitted topics (FR-8) and the entries a company accepts (FR-4) stay visible to the other platform roles, but the documents attached to an application do not. How long these documents are stored, and when they are deleted once an application closes, lies outside the scope of this specification and the prototype (Section 4.6).\
 Source: Process Documentation (legal/regulatory constraint)
+
+
+// === NFR-3 Language Support
+// The platform should be able to be viewed in both English and German, especially for universities with a large portion of international students and multiple degrees offered in English. \
+// Source: Team decision
 
 
 
 == Maintainability / Extensibility
+The requirements are structured so that Could-priority and out-of-scope features can be added later without changing the core Must-priority workflow. Student Team Matching (FR-10) and Lightweight Progress Check-in (FR-14) are extensions to the platform's functionality without requiring changes to it.
 
 
 
@@ -874,14 +938,60 @@ Source: Process Documentation (legal/regulatory constraint)
 = Traceability and Prototype Alignment <traceability-prototype-alignment>
 
 == Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
-== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
-== Pain Points Without Requirements and Requirements Without Prototype Coverage (brief justification)<requirements-without-prototype-coverage>
 
+The full traceability table, including prototype status, MoSCoW priority, and transferability tags for every requirement, is provided in Appendix C. The table below presents the abbreviated form for reference within the running text. 
+
+
+== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
+
+
+
+
+== Pain Points Without Requirements and Justifications<requirements-without-prototype-coverage>
+The following pain points were identified but deliberately left without a
+corresponding requirement.
+
+- *Language barrier* (S5, S7, S10): Partially addressed. Language Support (NFR-3) makes the platform itself usable in German and English, but the German-language requirements of the projects and chairs themselves lie outside what a platform can change.
+
+- *Value and goal misalignment* (S6, S8, S11, U1, C2, C4): Dual Approval
+  (FR-15) addresses company satisfaction with the selection, but not the
+  underlying motivational mismatch, which cannot be addressed via a platform.
+
+- *Outcome measurement* (P1, P5, C2): Defining an accurate quality measurement
+  is highly complex.
+
+- *Time and financial resource pressure* (P5): External constraint, not
+  addressable via a platform.
+
+- *University structural complexity and inconsistency across institutions*
+  (C4): Acknowledged in the transferability discussion; not resolvable by a
+  feature.
+
+- *Output quality and software/tooling mismatches between student and company
+  environments* (C2): Structural, and therefore largely not addressable via a
+  platform. A further implementation of the light progress check (FR-14) could
+  improve outcome quality by supporting more effective communication.
+
+- *Screening signal degradation due to AI-generated CVs* (C3): Platform-side AI
+  checks are technically conceivable, but their accuracy is low and the
+  implementation effort is not proportionate to the value.
+
+== Requirements Without Prototype Coverage and Justifications
 
 
 
 #pagebreak()
-= Assumptions, Risks, and Open Issues
+= Risks, Discussion and Conclusion
+This document has translated a set of semi-structured interviews across stakeholder groups into scoped requirements, which can be traced back to the corresponding pain point and traced forward to the prototype coverage, for a project studies platform specific to TUM Campus Heilbronn. This traceability, rather than the completeness of any one requirement, is the main assertion of this document.
+
+Risks primarily rest on 26 interviews of uneven depth across groups, and especially since requirements were not checked back with the people they originated from. So the contents of this document are informed proposals, not validated findings. Two points follow from that directly. Company and professor findings come from smaller, less saturated samples than the student group, so they're less likely to hold up even within TUM Campus Heilbronn specifically. And Dual Approval (FR-15) is a proposed change, not something already happening. The reasoning behind it (companies having more of a say in the process improves satisfaction with outcomes) holds up logically, but nothing actually tests whether it would be effective or introduce further complications. One more risk is not related to the interviews at all: the platform handles personal application data (Section 7.2), and no one with legal expertise has reviewed what that would require.
+
+The transferability tags in the traceability table give pointers on how this work can be extended beyond TUM Campus Heilbronn, but that's discussed in principle in Section 4.5 and nothing more, it hasn't been tried. Closer to what's actually in hand are the broader industry-academia findings collected: experiences, motivations, barriers, what keeps people from collaborating in the first place.
+
+
+
+
+
 
 
 
@@ -912,6 +1022,22 @@ Source: Process Documentation (legal/regulatory constraint)
 }
 
 #pagebreak()
+
 #nonumber[= Appendices]
+
+#figure(
+  xlsx-parser(
+    read("./tables/Traceability_Table_Draft_1 (Autosaved).xlsx", encoding: none),
+    
+    columns: (65pt, auto, auto, 0pt),
+    
+    sheet-index: 1,
+    parse-fill: false,
+    parse-table-style: false,
+    parse-font: false,
+  ),
+  caption: [Interview Sample Composition and Participant IDs ($n=26$)],
+  
+)
 
 // #heading(numbering: none)[Hello]
