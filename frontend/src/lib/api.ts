@@ -22,6 +22,7 @@ export const api = {
     department: string;
     program: string;
     expertise: string;
+    bio: string;
   }) => run(() => store.signInInstitutional(body)),
   registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
     run(() => store.registerCompany(body)),
