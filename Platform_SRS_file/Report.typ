@@ -22,18 +22,19 @@
 
 #set text(font: document_font)
 
-#set par(leading: 0.95em)  // smaller global line spacing
+// #set par(leading: 0em)  // smaller global line spacing
 
 #let tum_blue = rgb("0065BD")
 
 // --- Content placeholders ---
-#let essay_title = "Software Requirements Specification for a Collaboration Platform for Project Studies"
+#let essay_title = "Design and Prototyping of a Platform for Academic–Industry Project Collaboration"
+#let essay_title = "Design and Prototyping of a Platform for Academic-Industry Project Collaboration"
 // #let essay_title = "Gradient-Based"
-#let essay_subtitle = "Report for Project Study"
+#let essay_subtitle = "Software Requirements Specification for a Project Studies Platform"
 #let author_name = "Nan Jiang"
 #let examiner_name = "Prof. Dr. Miriam Bird"
 #let supervisor_name="Lorenz Tidow"
-#let submited_date="16.08.2026"
+#let submited_date="17.08.2026"
 
 // --- Header ---
 #grid(
@@ -56,16 +57,16 @@
 
 // --- Title Section ---
 #[
-	#set text(size: 24pt)
+	#set text(size: 22pt)
 	#set par(leading: 0.5em)
 	*#essay_title*
 ]
 
-#v(1mm)
+// #v(1mm)
 
 // #text(size: 14pt)[#essay_subtitle]
 #box(width: 165mm)[
-  #text(size: 14pt)[#essay_subtitle]
+  #text(size: 14.5pt)[#essay_subtitle]
 ]
 
 #v(16mm)
@@ -215,7 +216,7 @@
 )
 
 #set text(font: document_font, size: 12pt, lang: "en")
-#set par(justify: true, leading: 1em, spacing: 1.5em)
+#set par(justify: true, leading: 0.53em, spacing: 1em)
 
 // Footnotes: 10 pt, single spacing, justified
 #show footnote.entry: it => {
@@ -247,42 +248,83 @@
 
 #set table(
   fill: (x, y) => if y == 0 { gray } else { none },
-  align: (x, y) => {
-    let ret = horizon
-    if y == 0 { ret += center }
-    else { ret += left }
-    ret
-  },
+  align: left + horizon,
+  stroke: 0.5pt,
 )
 #show table.cell: it => {
   if it.y == 0 { strong(it) }
   else { it }
 }
 
-= Introduction
+// https://forum.typst.app/t/figure-and-table-captions-with-chapter-number/1520/7
+// show chapter on figure numbering
+#set figure(numbering: (..num) =>
+  numbering("1.1", counter(heading).get().first(), num.pos().first())
+)
+
+#show heading.where(level: 1): it => {
+  // reset figure counters so they are counted per chapter
+  counter(figure.where(kind: image)).update(0)
+  counter(figure.where(kind: table)).update(0)
+  counter(figure.where(kind: raw)).update(0)
+  it
+}
+
+#show figure.where(kind: table): set figure.caption(position: top)
+
+#let tbl-filter(
+  tbl,
+  keep-cols: (),
+  exclude-rows: (),
+  rows-to-be-inserted: (:),
+) = {
+  let ncols = tbl.columns.len()
+  let nrows = tbl.rows.len()
+
+  exclude-rows = exclude-rows.map(i => {
+    if (i < 0) { i += nrows }
+    i
+  })
+
+  let cells = tbl.children
+    .enumerate()
+    .filter(((i, cell)) => {
+      let col = calc.rem(i, ncols)
+      let row = calc.floor(i / ncols)
+
+      keep-cols.contains(col) and not exclude-rows.contains(row)
+    })
+    .map(((i, cell)) => cell)
+
+  ncols = keep-cols.len()
+
+  for (j, (i, cell)) in rows-to-be-inserted.pairs().enumerate() {
+    cells.insert(int(i) * ncols + j, cell)
+  }
+
+  cells
+}
+
+= Introduction <introdcution>
 
 
 == Purpose of this Document 
-This specification defines the requirements for a project studies platform, developed as part of a bachelor's Project Study at TUM Campus Heilbronn in collaboration with BirdVision. It is adapted from ISO/IEC/IEEE 29148, scaled down and extended with a literature review section to meet the academic requirements of a project study report. Every requirement in Sections 6 and 7 is traceable back to its source and forward to its prototype coverage, per Section 9. That traceability, more than any single requirement, is what this document is meant to demonstrate. 
+// This specification defines the requirements for a project studies platform, developed as part of a bachelor's Project Study at TUM Campus Heilbronn in collaboration with BirdVision. It is adapted from ISO/IEC/IEEE 29148, scaled down and extended with a literature review section to meet the academic requirements of a project study report. Every requirement in @functional-requirements and @non-functional-requirements is traceable back to its source and forward to its prototype coverage, per @traceability-prototype-alignment. That traceability, more than any single requirement, is what this document is meant to demonstrate. 
+
+This specification defines the requirements for a project studies platform, developed as part of a bachelor's Project Study at TUM Campus Heilbronn in collaboration with BirdVision. It is adapted from ISO/IEC/IEEE 29148, scaled down and extended with a literature review section to meet the academic requirements of a project study report. Every requirement in @functional-requirements and @non-functional-requirements is traceable back to its source and forward to its prototype coverage in #link("https://nan1220.github.io/Collaboration_Platform/",)[the deployed prototype]#footnote[https://nan1220.github.io/Collaboration_Platform/], per @traceability-prototype-alignment. That traceability, more than any single requirement, is what this document is meant to demonstrate. 
 
 
 
 
 
-
-
-== Project Background and Motivation 
+== Project Background and Motivation
 
 A project study for TUM School of Management students is a research or practical project, carried out by a student team in collaboration with a company and a supervising professorship. This project, “Project Studies Platform for BirdVision”, was assigned to build a platform supporting a project study process similar to this one, which this document itself is a product of.
 
-Companies, professors, and students currently coordinate project studies at TUM Campus Heilbronn in three ways: university staff sourcing companies directly and sending out given topics to professors, professors and companies agreeing between themselves, or students agreeing with a company and finding a supervising professor on their own. These processes are decentralized and realized via a variety of mediums. Recurring pain points arising from the status quo were identified through semi-structured interviews, which this document translates into a scoped set of requirements.
-
-
-
-
+Companies, professors, and students currently coordinate project studies at TUM Campus Heilbronn in three ways: university staff sourcing companies directly and sending out given topics to professors, professors and companies agreeing between themselves, or students agreeing with a company and finding a supervising professor on their own. These processes are decentralized and realized via a variety of mediums. Recurring pain points arising from the status quo were identified through semi-structured interviews and written responses, which this document translates into a scoped set of requirements.
 
 == Scope of the Platform 
-The scope of the platform is limited to the project study process at TUM Campus Heilbronn, rather than industry-academia collaborations in general. The reasoning behind this scope and discussion on how this platform can be adapted for different institutions is written out in sections 4.4 and 4.5. Broader findings from the interviews are not excluded and presented in section 5.
+The scope of the platform is limited to the project study process at TUM Campus Heilbronn, rather than industry-academia collaborations in general. The reasoning behind this scope and discussion on how this platform can be adapted for different institutions is written out in sections 4.4 and 4.5. Broader findings from the interviews are not excluded and presented in @stakeholder-needs.
 
 To deliver on the project goal of a testable MVP, this document is accompanied by a non-functional prototype.
 
@@ -296,44 +338,44 @@ To deliver on the project goal of a testable MVP, this document is accompanied b
 // NDA: Non-disclosure agreement
 // GDPR: General Data Protection Regulation
 
-/ SRS: Software Requirements Specification
-/ FR / NFR: Functional Requirement / Non-Functional Requirement
-/ MoSCoW: Prioritization scheme: Must, Should, Could, Won't (Section 6.1)
-/ NDA: Non-Disclosure Agreement
-/ GDPR: General Data Protection Regulation
+- *SRS*: Software Requirements Specification
+- *FR* / *NFR*: Functional Requirement / Non-Functional Requirement
+- *MoSCoW*: Prioritization scheme: Must, Should, Could, Won't (Section 6.1)
+- *NDA*: Non-Disclosure Agreement
+- *GDPR*: General Data Protection Regulation
+- *Professorship*: Used in this document to refer both to the professor and the PhD candidates/research associates working for the chair; professor/researcher or professor/supervisor is sometimes used instead
 
 == Document Overview
-Section 2 reviews the literature behind the project's methodological choices. Section 3 goes over the interview methodology, sample, and its limitations. Section 4 describes the platform's overall scope and boundaries. Section 5 presents the pain points the requirements are derived from. Sections 6 and 7 specify the functional and non-functional requirements. Section 8 provides system models. Section 9 traces requirements back to their source and forward to prototype coverage. Section 10 discusses risks and conclusions.
+@literature-review reviews the literature behind the project's methodological choices. @research-approach-and-limitation goes over the interview methodology, sample, and its limitations. @overall-description describes the platform's overall scope, boundaries and transferability. Section 5 presents the pain points the requirements are derived from. @functional-requirements and @non-functional-requirements specify the functional and non-functional requirements. @use-case-diagrams provides system models. @traceability-prototype-alignment traces requirements back to their source and forward to prototype coverage. @risks-discussion-conclusion discusses risks and conclusions.
 
 
 
+// #pagebreak()
+= Literature review <literature-review>
 
-#pagebreak()
-= Literature review
 
 // In this section we provide a review of industry and academic practices in requirements engineering, focusing on the elicitation of requirements from stakeholders. We describe the sources for our methodology, including the choice of standard, the interview-based elicitation method, and the literature on small-sample saturation. We also discuss traceability practices and prioritization schemes relevant to this project.
 
-In this section we review the academic grounding for the project’s methodological choices. In particular, the requirements engineering approach and the broader phenomenon of academia-industry collaboration that the platform aims to address.
+In this section we review the academic grounding for the project’s methodological choices. //In particular, the requirements engineering approach and the broader phenomenon of academia-industry collaboration that the platform aims to address.
 
 == Requirements Engineering Grounding
 
 
 === Selection and Adaptation of the Requirements Engineering Standard
-This specification follows ISO/IEC/IEEE 29148:2018 #cite(<IEEE29148_2018>, form: "normal") -- the current international standard for requirements engineering, which supersedes IEEE 830-1998 #cite(<IEEE830_1998>, form: "normal"). The predecessor addressed the specification document alone, whereas 29148 covers the requirements process as a whole, including elicitation, analysis and validation. Consequently, such a form is more appropriate for this project, since much of what follows concerns how requirements were derived from stakeholder interviews and how strongly each is supported. The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.
+This specification is based on ISO/IEC/IEEE 29148:2018 #cite(<IEEE29148_2018>, form: "normal") -- the current international standard for requirements engineering. //, *which supersedes IEEE 830-1998 #cite(<IEEE830_1998>, form: "normal"). The predecessor addressed the specification document alone, whereas. *
+29148 covers the requirements process as a whole, including elicitation, analysis and validation, in comparison to older versions. Consequently, such a form is more appropriate for this project, since much of what follows concerns how requirements were derived from stakeholder interviews/responses and how strongly each is supported. //*The standard is applied in scaled-down form appropriate to a single-semester project and extended with a literature review section to meet the academic requirements of a project study report.*
 
 === Interview-Based Requirements Elicitation
-Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements. @ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
+Semi-structured interviews were used to explore stakeholder needs without assuming predefined system requirements.
+@ferrari2022requirementsevolveelicitationempirical show that interviews support an iterative elicitation process in which stakeholder initial ideas are progressively clarified and refined into requirements through the dialogue. //and iterative feedback. Accordingly, this project first analyzed interview data inductively to identify recurring needs and pain points, which then served as the basis for deriving platform requirements.
 
 === Sample Adequacy and Thematic Saturation
-@macqueen1998codebook defined thematic saturation as the point at which no new codes emerge from additional interviews. And, the number of interviews required to reach the point of saturation is a recurring question in qualitative research. 
+Thematic saturation, the point at which no new codes emerge from additional interviews, is a recurring benchmark in qualitative research according to @macqueen1998codebook, though what counts as "enough" varies with what is being measured.
 
-@guest2006many found that little new information emerged after the first 12 of their 60 interviews.
+@guest2006many found little new information after 12 of 60 interviews, @hennink2017code found code saturation at 9 interviews, but 16–24 were needed for a rich understanding of those codes. @hagaman2017crosscultural, working across four sites, found 16 interviews or fewer sufficient within a single group, but cross-group themes required 20 to 40.
 
-@hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. 
-
-@hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40.
-
-These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 6 and 2 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
+Taken together, this suggests a lower bound around 9 to 12 interviews for basic code saturation within a stakeholder group, and a more defensible target of 16 or more for meaningful within-group understanding, with 20 to 40 needed for cross-group findings to be considered stable.
+//@macqueen1998codebook defined thematic saturation as the point at which no new codes emerge from additional interviews. And, the number of interviews required to reach the point of saturation is a recurring question in qualitative research. @guest2006many found that little new information emerged after the first 12 of their 60 interviews. @hennink2017code argue that the answer depends on what saturation is taken to mean. No new codes appeared in their data after 9 interviews, but arriving at a rich understanding of those codes took between 16 and 24. These figures come from fairly uniform groups of participants. @hagaman2017crosscultural worked across 4 sites and found that 16 interviews or fewer sufficed within a single group, while themes running across groups needed 20 to 40. These thresholds provide a basis for assessing the 26 interviews conducted for this study rather than merely reporting their number. The student group, at 13 interviews, exceeds the code-saturation threshold reported by Hennink et al. and falls within the range Hagaman and Wutich associate with thematic convergence in a single group; the pain points reported for students in @student-pain-points can therefore be regarded as reasonably stable. The company, professor and university-staff groups, at 5, 6 and 2 interviews respectively, fall below every threshold cited above, and findings specific to them are correspondingly treated as indicative. The cross-cutting findings in @cross-cutting-findings, which draw on the full sample of 26, sit within the range associated with cross-group themes, though not at its upper end. Requirements are accordingly framed throughout as informed proposals rather than validated findings.
 
 
 === Requirements Traceability
@@ -348,7 +390,9 @@ Requirements traceability is the ability to follow a requirement forward into de
 
 Post-specification traceability, linking requirements to what was built from them, is comparatively well supported by tools. Pre-specification traceability, linking a requirement back to the stakeholder statement and rationale that produced it, tends to be neglected, and most of the problems attributed to poor traceability turn out to originate there. //Section 9 is structured around this backward direction, recording for each requirement the pain point and interview material it derives from, before mapping it forward to the prototype.
 
-@traceability-prototype-alignment is organised along both directions: @traceability-table provides the pre-specification record, tracing each requirement back to its pain point and interview material, while @coverage-table @requirements-without-prototype-coverage[and] provide the post-specification record, mapping requirements forward to prototype screens and accounting for those left unimplemented.
+@traceability-prototype-alignment is organized along both directions: @traceability-table provides the pre-specification record, tracing each requirement back to its pain point and interview material, while @coverage-table provide the post-specification record, mapping requirements forward to prototype screens. @requirements-without-prototype-coverage accounts for pain points without requirements and requirements without implementation.
+
+//@traceability-prototype-alignment is organised along both directions: @traceability-table provides the pre-specification record, tracing each requirement back to its pain point and interview material, while @coverage-table @requirements-without-prototype-coverage[and] provide the post-specification record, mapping requirements forward to prototype screens and accounting for those left unimplemented.
 
 
 
@@ -366,19 +410,19 @@ Collaboration between universities and companies has been studied extensively, a
 
 
 === Barriers and information asymmetry between stakeholder groups
-@barriers2010universityindustry separate two kinds of barrier to university-industry collaboration. Orientation-related barriers arise from differences in what each side is trying to achieve and on what timescale. Transaction-related barriers arise from the mechanics of working together, including administration and intellectual property. Prior collaboration experience reduces the first kind, while trust between the parties reduces both. Difficulties such as identifying the right contact person or establishing what expertise is available fall into the second category, which is where a platform can plausibly intervene. This distinction is used in @cross-cutting-findings to organise the pain points that recur across stakeholder groups.
+@barriers2010universityindustry separate two kinds of barrier to university-industry collaboration. Orientation-related barriers arise from differences in what each side is trying to achieve and on what timescale. Transaction-related barriers arise from the mechanics of working together, including administration and intellectual property. Prior collaboration experience reduces the first kind, while trust between the parties reduces both. Difficulties such as identifying the right contact person or establishing what expertise is available fall into the second category, which is where a platform can plausibly intervene. //This distinction is used in @cross-cutting-findings to organise the pain points that recur across stakeholder groups.
 
 
 === Divergent motivations of academic and industry partners
-The two sides enter collaboration for different reasons. @academicengagement2013 show that academic engagement is driven largely by research-related motives, including access to data, funding and problems worth studying, while firms pursue capability, talent and commercial application. Neither set of motives is illegitimate, but they are not automatically aligned, and the semester rhythm that governs university work rarely matches company project timelines. A platform mediating between the two therefore cannot assume a shared objective; it has to make each side's constraints legible to the other. @cross-cutting-findings returns to this point where the mismatch surfaced in the interview data.
+The two sides enter collaboration for different reasons. @academicengagement2013 show that academic engagement is driven largely by research-related motives, including access to data, funding and problems worth studying, while firms pursue capability, talent and commercial application. Neither set of motives is illegitimate, but they are not automatically aligned, and the semester rhythm that governs university work rarely matches company project timelines. A platform mediating between the two therefore cannot assume a shared objective; it has to make each side's constraints legible to the other. @academia-industry-goal-misalignment returns to this point where the mismatch surfaced in the interview data.
 
 
 === Platforms and intermediaries as a category of solution
 Where two parties struggle to find and evaluate each other, a third party can lower the cost of doing so. @intermediation2006 develops a typology of innovation intermediaries and defines them as bodies acting as brokers between parties in the innovation process, performing functions such as scanning, matchmaking and coordination. The platform specified in this document sits in that category, with the difference that it serves three groups rather than two.
 
 
-#pagebreak()
-= Research Approach and Limitations 
+// #pagebreak()
+= Research Approach and Limitations <research-approach-and-limitation>
 
 == Interview Methodology
 
@@ -390,10 +434,7 @@ were consolidated into a single matrix, analysed by group, and translated into
 requirements, from which the prototype, the traceability table, the use case
 diagrams and the key user flows were produced.
 
-Interviews were semi-structured, using a common guide across all groups so that
-responses stayed comparable, with follow-up questions free to depart from it
-wherever a participant raised something unanticipated. The guide covered four
-areas:
+Interviews were semi-structured, using a common guide across all groups so that responses stayed comparable, with follow-up questions free to depart from it wherever a participant raised something unanticipated. Some responses were collected via email when the participant was not available for an interview, resulting limitations are discussed in the following section. The guide covered four areas:
 
 + *Current collaboration experience* --- what forms of collaboration the
   participant had taken part in, and how they found them.
@@ -404,52 +445,50 @@ areas:
 + *Platform and solution needs* --- asked last, so that earlier answers were not
   framed around a software solution.
 
-Only the last area concerns the platform directly. The first three establish how
-collaboration currently works and why it is difficult, and are reported in
-Section 5 independently of the specification.
+The first three guiding questions explore how collaboration currently works and why it is difficult, while the last one concerns the platform directly.
+//Only the last area concerns the platform directly. The first three establish how collaboration currently works and why it is difficult, and are reported in @stakeholder-needs independently of the specification.
 
-Four stakeholder groups were distinguished: students, companies, professors and
-university staff. Staff were separated from professors because their role is
-administrative rather than academic, and their pain points proved to differ
-accordingly. Participants were recruited through campus contacts and, for most
-company representatives, at Career Factory; Section 3.2 discusses the resulting
-composition and limitations.
+Four stakeholder groups were distinguished: students, companies, professorships and university staff. Staff were separated from professors because their role is administrative rather than academic, and their experience and motivations proved to differ accordingly. Participants were recruited through campus contacts or via publicly available institutional email addresses. Additionally, most company representatives were first contacted at TUM Career Factory. Section 3.2 discusses the resulting composition and limitations.
+//Four stakeholder groups were distinguished: students, companies, professors and university staff. Staff were separated from professors because their role is administrative rather than academic, and their pain points proved to differ accordingly. Participants were recruited through campus contacts and, for most company representatives, at Career Factory; Section 3.2 discusses the resulting composition and limitations.
 
 
-Responses were recorded in a matrix with participants as columns and the four
-areas as rows, allowing each theme to be read across all participants and across
-groups. Section 3.3 describes how the requirements were derived from it.
+The response matrix had participants as columns and the four areas as rows, allowing each theme to be read across all participants and across groups. Section 3.3 describes how the requirements were derived from it.
+//The responses were recorded in a matrix with participants as columns and the four areas as rows, allowing each theme to be read across all participants and across groups. Section 3.3 describes how the requirements were derived from it.
+
 
 
 
 
 == Sample Composition and Limitations
 
-Twenty-six semi-structured interviews were conducted across four stakeholder
-groups. Appendix B lists all participants; the distribution is summarised below.
+Twenty-six semi-structured interviews and written responses were gathered across four stakeholder groups. #link(<appendix-b>)[Table A.1] lists all participants; the distribution is summarized below.
 
 #figure(
   table(
     columns: (auto, auto, auto),
-    stroke: 0.5pt,
+    align: (x, y) => {
+      if x == 1 { center + horizon }
+      else { left + horizon }
+    },
     [*Group*], [*n*], [*Institutional background*],
     [Students], [13], [9 TUM Heilbronn, 2 TUM Garching, 1 RWTH Aachen,
                        1 Reutlingen],
     [Companies], [5], [Startup, industrial manufacturing, software,
                        energy management, IT services],
-    [Professors and \ researchers], [6], [2 TUM Heilbronn, 1 TUM Munich, 1 RWTH Aachen,
+    [Professorships], [6], [2 TUM Heilbronn, 1 TUM Munich, 1 RWTH Aachen,
                         1 Koblenz, 1 Passau],
     [University staff], [2], [2 TUM Heilbronn],
   ),
   caption: [Interview sample by stakeholder group],
 )
 
-The sample spans five universities. Eight of the 21 university-affiliated
-participants are based outside TUM Campus Heilbronn, so where the same
-difficulties recur across institutions, they are unlikely to be local artefacts.
+The sample spans five universities and seven campuses. Eight of the 21 university-affiliated participants are based outside TUM Campus Heilbronn, so where the same difficulties recur across institutions, they are unlikely to be local artefacts.
+
+Some responses were collected in writing over email rather than through a live interview, where a participant was not available for a call. This affects the core advantage of the semi-structured format described in Section 2.1.2: a written response cannot be followed up on the way a live interview can, so points raised only briefly could not be probed further, and answers that departed from the guide's four areas were not clarified in real time. Written responses are otherwise treated the same as oral ones throughout the analysis, but should be read with this constraint in mind.
+
 
 Two limitations shape how the company findings should be read. Most company
-representatives were recruited at Career Factory, a university--company event on
+representatives were recruited at Career Factory, a university-company event on
 the Bildungscampus, so the sample includes no firms that have never collaborated
 with a university or have stopped doing so. More importantly, four of the five
 hold roles in human resources, apprenticeship management or campus relations.
@@ -457,7 +496,7 @@ Their interest in the university is oriented towards recruiting, and the
 requirements derived from this group reflect that. Needs around research
 cooperation, confidentiality and intellectual property are under-represented.
 The founder interviewed as C1 offers a partial counterweight, having neither a
-recruiting function nor an employer-branding budget, and is treated in Section 6
+recruiting function nor an employer-branding budget, and is treated in @functional-requirements
 as a contrasting case rather than as one observation among five.
 
 The company, professor and staff groups are small, and findings specific to them
@@ -480,34 +519,32 @@ already committed to it, and says little about what would bring in a firm that
 has not.
 
 
-== From Interview Insights to Requirements (how findings were translated, requirements framed as informed proposals, not validated findings)
+== From Interview Insights to Requirements
 
 The analysis started from the response matrix described above. Each theme was
 read across all 26 participants, first within a stakeholder group and then
 across groups, and recurring statements were grouped into pain points. Pain
-points named by only one group are reported under that group in Section 5, while
+points named by only one group are reported under that group in @stakeholder-needs, while
 those raised by more than one group are reported once among the cross-cutting
 findings at the end of that section. Each pain point lists the participants who
 raised it, so a reader can see how many independent sources stand behind it.
 
 Requirements were then derived from these pain points. The two sets do not match
 one to one. Some pain points lie outside what a platform can fix, and those are
-accounted for in Section 9. Some requirements, in turn, come from elsewhere.
+accounted for in @traceability-prototype-alignment. Some requirements, in turn, come from elsewhere.
 Each requirement therefore states what kind of evidence it rests on:
 
 #figure(
   table(
     columns: (auto, 1fr),
-    stroke: 0.5pt,
-    inset: 7pt,
     [*Basis*], [*Meaning*],
     [Interview],
     [Taken from one or more interview statements, cited by participant ID.],
     [Process documentation],
     [Taken from how the project-study process currently works at TUM Campus
      Heilbronn, rather than from interview data.],
-    [Design decision],
-    [A choice made by the authors, where neither source supplied a requirement. Recorded as Team Decision in the traceability table (Appendix C), with the reasoning given at the requirement itself.],
+    [Team decision],
+    [A choice made by the authors, where neither source supplied a requirement. Recorded as Team Decision in the traceability table (#link(<appendix-c>)[Table A.3]), with the reasoning given at the requirement itself.],
   ),
   caption: [Evidence basis recorded for each requirement],
 )
@@ -520,31 +557,29 @@ Each requirement therefore states what kind of evidence it rests on:
 // / Design decision: a choice made by the authors, where neither source supplied a
 //   requirement. These are listed individually, with reasons, in Section 10.
 
-Three requirements rest on a design decision rather than on interview data or the current process: Student Profiles (FR-9), Dual Approval (FR-15), and Language Support (NFR-3). Each is argued for where it is specified, and FR-15, which proposes a change to how student selection currently works, is discussed again in Section 10.
+// Three requirements rest on a design decision rather than on interview data or the current process: Student Profiles (FR-9), Dual Approval (FR-15), and Language Support (NFR-3). Each is argued for where it is specified, and FR-15, which proposes a change to how student selection currently works, is discussed again in Section 10.
+
+Two requirements rest on a team decision rather than on interview data or the current process: Student Profiles (FR-9) and Dual Approval (FR-15). Each is argued for where it is specified, and FR-15, which proposes a change to how student selection currently works, is discussed again in Section 10.
 
 
-
-
-Two further attributes are recorded and feed the prioritization scheme in
-Section 6: whether the underlying pain point recurs across groups, and whether
-the requirement depends on TUM's administrative arrangements or would apply at
-any university.
+Another attribute is recorded in order to distinguish transferability between institutions: whether the requirement depends on TUM's administrative arrangements or would apply at any university.
+//Two further attributes are recorded and feed the prioritization scheme in Section 6: whether the underlying pain point recurs across groups, and whether the requirement depends on TUM's administrative arrangements or would apply at any university.
 
 The prototype was built from the requirement set as a whole rather than
-requirement by requirement. The mapping from requirement to screen in Section 9
+requirement by requirement. The mapping from requirement to screen in @traceability-prototype-alignment
 was therefore drawn up after implementation, not before it.
 
 Two limits follow. The requirements were never taken back to participants for
 confirmation, and the step from interview statement to pain point rests on the
 authors' reading of the material. Together with the sample limitations described
-above, this is why the requirements in Sections 6 and 7 are presented as
+above, this is why the requirements in @functional-requirements and @non-functional-requirements are presented as
 informed proposals. Each one can be traced to its evidence, and the strength of
 that evidence is recorded, but none has been checked against the people it came
 from.
 
 
 #pagebreak()
-= Overall Description 
+= Overall Description <overall-description>
 
 
 == Product Perspective 
@@ -555,23 +590,16 @@ currently find one another through scattered institute pages, personal contacts,
 job boards and events, and its purpose is to reduce the cost of that search and
 standardise the information exchanged once contact is made.
 
-What exists at the end of this project study is a prototype. It demonstrates the
-interfaces and flows specified here, but implements no persistent storage, no
-authentication against university identity systems and no integration with
-existing institutional processes. 
+
+What exists at the end of this project study is a prototype. It demonstrates the interfaces and flows specified here, but implements no persistent storage and no integration with existing institutional processes. 
 
 
 == Stakeholder Groups, Roles and Motivations
 
-
 - *Students:* search for projects, apply and carry out the work, motivated by practical experience, industry contact and, in several cases, employment prospects. Their engagement is conditional --- several said they would withdraw from a project seen as serving only a commercial interest.
-
 - *Companies:* post projects and receive results, motivated by talent contact, access to expertise and usable outcomes. The companies interviewed were oriented mainly towards recruiting, and the requirements derived from them reflect that.
-
 - *Professors and academic researchers:* supervise and assess projects, motivated by access to real problems and by teaching value. Their constraint is time.
-
 - *University staff:* administer the process, matching requests to supervisors and tracking progress. Their main obstacle is obtaining timely responses from professorships.
-
 
 These motivations are not aligned by default. The platform does not assume they are; its function is to make each group's constraints visible to the others.
 
@@ -612,7 +640,7 @@ rather than to a fixed institutional calendar.
 
 There is one more assumption, about how selection currently works. Students at
 the TUM Global Center for Family Enterprise are chosen by the university alone,
-with no involvement from the companies whose projects they apply to. Section 6
+with no involvement from the companies whose projects they apply to. @functional-requirements
 contains a requirement that would change this. We have flagged it there as a
 proposed change to the process rather than presenting it as something the
 platform merely automates.
@@ -625,8 +653,7 @@ questions that operating such a platform would raise.
 
 
 
-== Scope Boundary: TUM-Specific Focus (explicit justification: administrative/collaboration processes differ significantly across universities, so single-institution depth was prioritized over shallow generality) 
-
+== Scope Boundary: TUM-Specific Focus
 The platform is specified against one process in particular: the project study
 process at TUM Campus Heilbronn. Administrative arrangements vary a great deal
 between universities, and a specification broad enough to fit all of them would
@@ -638,7 +665,7 @@ the difficulties it responds to came up at every university in our sample.
 
 
 
-== Transferability to Other Institutions (brief discussion of what would need to adapt for other universities) 
+== Transferability to Other Institutions
 
 Each requirement is tagged according to how far it depends on local
 arrangements:
@@ -646,8 +673,6 @@ arrangements:
 #figure(
   table(
     columns: (auto, 1fr),
-    stroke: 0.5pt,
-    inset: 7pt,
     [*Tag*], [*Meaning*],
     [Generalizable], [Would apply at any university.],
     [Adaptable], [Depends on an arrangement other institutions also have in some
@@ -663,21 +688,18 @@ These tags feed the prioritization scheme in Section 6.1: requirements that are 
 
 
 
-== Out-of-Scope Items (e.g. backend functionality not prototyped)
+== Out-of-Scope Items
 Outside the scope of this specification and the prototype: persistent storage
-and backend services, authentication against university identity providers,
-automated student--project matching, contract and intellectual-property
-handling, integration with university administration systems, and how the
-platform would acquire its first users on each of the three sides.
+and backend services, integration with university administration systems, and how the platform would acquire its first users on each of the three sides.
 
 #pagebreak()
-= Stakeholder Needs (Pain Points) <stakeholder-needs>
+= Stakeholder Needs <stakeholder-needs>
 
-The pain points in this chapter are derived from semi-structured interviews conducted across three primary stakeholder groups relevant to the project study process. Each pain point is presented with the interview ID it was sourced from. See appendix 11.B for anonymized interview counts per stakeholder group and matching interview IDs.
+Four stakeholder groups were tracked during recruitment: students, companies, professorships, and university staff, reflecting their distinct administrative and academic roles. For reporting pain points in @stakeholder-needs, however, staff are grouped with professors rather than presented separately, given the small size of the staff sample and the TUM Campus Heilbronn-specific nature of their perspective.
 
-BirdVision's primary interest with this project study was gaining insight into industry-academia collaborations as a whole, particularly the stakeholders' motivations and the problems they encounter. The interviews were accordingly conducted on the broader premise of industry-academia collaborations, in order to gather as wide a range of insights as possible. However, as the stated aim of the project is a platform supporting project studies specifically, and the scope of the platform is limited, not every pain point identified applies directly to the project study process, or to TUM in particular. These findings are nonetheless documented in full below.
+Each pain point in this section is presented with the interview ID it was sourced from. See #link(<appendix-b>)[Table A.1] for anonymized interview counts per stakeholder group and matching interview IDs.
 
-
+The findings are sourced in the context of industry-academia collaborations in general, thus might not be entirely relevant for project studies specifically. These findings are nonetheless documented in full below.
 
 
 == Student Pain Points <student-pain-points>
@@ -723,7 +745,7 @@ Two different professors reported that there is no formal mechanism for assessin
 Time and financial resources dedicated to these collaborations were named as the first budget item companies tend to cut, constraining the professor's ability to sustain partnerships (P5).
 
 
-== Company Pain Points
+== Company Pain Points <company-pain-points>
 
 === Contact identification and structural complexity
 Identifying the correct contact person and aligning expectations, timelines, and available resources was the most frequently cited difficulty (C3, C4). University structures were separately described as complex and inconsistent between institutions (C4), directly reinforcing the transferability discussion in Section 4.4-4.5.
@@ -750,7 +772,7 @@ Identifying and reaching the correct person was named independently by professor
 === Bidirectional information insufficiency
 Every stakeholder group reports the same underlying gap directed at a different counterpart: students want more complete project information from companies and professors (S7, S9); professors want companies to provide more structured project detail (P3); companies want more visibility into student and professor profiles, expertise, and ongoing activity (C4). The specific direction differs but the pattern recurs across all three groups.
 
-=== Academia-industry goal misalignment
+=== Academia-industry goal misalignment <academia-industry-goal-misalignment>
 This is the most substantively supported cross-cutting finding. The university research staff perspective names it directly (U1), one company frames it as their central complaint about output usability (C2), a second names it explicitly as a reason to disengage (C4), and it recurs independently across multiple students, either as a disengagement trigger (S6) or as lived experience (S8, S11).
 
 === Outcome quality
@@ -761,14 +783,14 @@ Named as an application-ending concern by students (S8, S12, S13) and, from the 
 
 
 
-#pagebreak()
+// #pagebreak()
 = Functional Requirements <functional-requirements>
 
 
 
 
 
-== Prioritization Scheme (MoSCoW, criteria defined here. Requirements grounded in cross-cutting pain points and structurally independent of TUM-specific administration are prioritized higher) <prioritization-scheme>
+== Prioritization Scheme <prioritization-scheme>
 Requirements are prioritized using MoSCoW (Must, Should, Could, Won't), a judgement-based scheme, which is suited to the context of this project. Priority is assigned according to two criteria, applied in the following order: 1) Structural necessity. A requirement is Must-priority if the core application-to-supervision workflow cannot operate from start to finish without it. This holds true no matter how many interviews support it directly. 2) Strength of evidence. Among the requirements that are not structurally necessary, those founded on a cross-cutting finding or supported across multiple interviews are ranked as Should. Requirements based on a single citation, a team decision, or those that meet a narrower need are ranked as Could. Requirements that are clearly out of scope are marked as Won't in Section 4.6.
 
 Transferability (Section 4.5) is noted for each requirement, but it does not influence this prioritization. The two attributes address different questions, and a requirement can do well in one without doing well in the other.
@@ -787,8 +809,10 @@ The following fields are required: Project Title, Required Area of Expertise, Pr
 Source: S7, S8, S9, P3, P4, P6 
 
 === FR-3, Submission Review and Approval (Should)  
-New project submissions will be marked as 'pending'. Staff will approve them before professors can see them.  \
-Source: Process Documentation  
+New company project submissions are marked as 'Pending'. Once approved by staff,
+their status changes to 'Approved', and they become visible to professors for a
+supervision decision. \
+Source: Process Documentation
 
 === FR-4, Company Browse Student Topics (Must)  
 
@@ -801,10 +825,15 @@ Source: C2 (directly suggested this feature), C5, S12
 == Professor Features
 === FR-5, Professor Profiles and Expertise Matching (Should)  
 Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
-Source: P3, P4, U1, U2  
+Source: P3, P4, U1, U2 
+
 === FR-6, Professor Supervision Take-on (Must)  
-To take on a project - either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) - the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
-Source: Process Documentation 
+To take on a project — either submitted by a company (FR-2) or a student topic
+accepted by a company (FR-4) — the professor provides chair contact information,
+application deadlines, and required documents. Once the professor takes on
+supervision, the project's status changes to 'Open' and it becomes visible to
+students for application.\
+Source: Process Documentation
 
 
 // To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
@@ -815,9 +844,9 @@ Source: Process Documentation
 
 == Student Features
 
-=== FR-8, Student Project Submission Portal (Must)
-The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet). In addition to describing the topic, the student names an existing company and requests a professor/supervisor to run it. The submission then enters the same pending status as a company submission (FR-2) and goes through the normal staff review queue - naming a supervisor is a request, not an assignment; supervision is only granted once a professor formally takes it on (FR-6).\
-Source: C2, C4, C5, S12
+=== FR-8, Student Project Submission Portal (Must)  
+The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet).\
+Source: C2, C4, C5, S12  
 === FR-9, Student Profiles (Should)  
 Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  \
 Source: Team Decision  
@@ -847,14 +876,17 @@ If a student is accepted to multiple projects, they will manually confirm one an
 Source: Process Documentation 
 
 == Administrative Staff Features
-=== FR-17, Staff Master Dashboard (Should)
-Staff will be able to view all project studies across every status: Pending, Approved, Open, Ongoing, and Complete.  \
-- *Pending:* submitted by companies but not yet approved by staff.
-- *Approved:* passed staff review and visible to professors for a supervision decision.
-- *Open:* taken on by a supervisor and available for students to view and apply to.
-- *Ongoing:* has a student team currently working on it.
-- *Complete:* completed and the final deliverable submitted.  \
+=== FR-17, Staff Master Dashboard (Should)  
+Staff will be able to view all project studies across every status: Pending,
+Approved, Open, Ongoing, and Complete.
+
+- *Pending* projects have been submitted by companies but have not yet been approved by staff.
+- *Approved* projects have passed staff review and are visible to professors for a supervision decision.
+- *Open* projects have been taken on by a supervisor and are available for students to view and apply to. 
+- *Ongoing* projects have a student team currently working on them.
+- *Complete* projects have been completed and the final deliverable submitted.\
 Source: U1, U2
+
 === FR-18, Filter Incoming Submissions (Should)  
 Staff will have the ability to filter and search incoming company submissions during reviews. The volume of submissions will scale with FR-3. Filtering will ensure that manual reviews do not become bottlenecks.  \
 Source: Process Documentation  
@@ -877,8 +909,8 @@ Source: Process Documentation
 
 
 
-#pagebreak()
-= Non-Functional Requirements 
+// #pagebreak()
+= Non-Functional Requirements <non-functional-requirements>
 == Usability 
 Four groups use the platform: students, companies, professors, and university staff. Not all of them work with software every day, professors and administrative staff least of all. Each role sees only the functions it needs (FR-1, Role-Based Access), so no one has to learn the parts of the system that belong to someone else. Every listing shows the same fields in the same order. Users compare projects, then find the same information in the same place each time. Inconsistent listings would bring back the fragmented presentation that the platform replaces.
 
@@ -907,49 +939,143 @@ The requirements are structured so that Could-priority and out-of-scope features
 
 
 #pagebreak()
-= System Models 
+= Use Case Diagrams <use-case-diagrams>
 
-== Use Case Diagram(s)
+The use case diagrams show how the requirements from @functional-requirements and @non-functional-requirements are realised through interactions between students, companies, professors, and university staff. They group the requirements into four connected areas of the platform: access, project intake, application and selection, and profiles and topics. For spacing reasons, the @use-case-platform-access[Figures] - @use-case-application[] of the use case diagrams are placed together after the their description.
+
+== Platform Access
+
+@use-case-platform-access shows the common access flow. Users log in and are directed to role-specific dashboards (FR-1). Affiliation is verified during this process (NFR-1), while NFR-3 allows the platform to be viewed in German or English.
+
+== Project Intake
+
+@use-case-project-intake shows how projects enter the platform. Companies submit proposals (FR-2), which staff review and approve (FR-3), supported by filtering and status monitoring (FR-17, FR-18). Professors can view relevant submissions, take on supervision, and publish projects (FR-5, FR-6). Directly agreed projects can instead be submitted through FR-7.
+
+== Profiles and Topics
+
+@use-case-student-profiles covers student profiles and student-initiated topics. Students can submit topics (FR-8), maintain profiles (FR-9), and indicate that they are seeking teammates (FR-10). Companies can browse and accept student-submitted topics through FR-4, completing the required company and contact information when accepting a topic.
+
+== Application and Selection
+
+@use-case-application covers the process after publication. Students browse projects, apply, and track their status (FR-11, FR-12). Professors and companies participate in the selection decision (FR-15), while application documents remain access-restricted (NFR-2). Status changes trigger notifications (FR-13), and students can confirm one offer while withdrawing others (FR-16). Progress check-ins are covered by FR-14.
+
+
+#pagebreak()
 
 #figure(
   caption: [Platform access Use Case diagram],
 )[
-  #image("diagrams/uc_access.drawio.pdf", width: 91%)
-]
-
-#figure(
-  caption: [Application and Selection Use Case diagram],
-)[
-  #image("diagrams/uc_application.drawio.pdf", width: 100%)
-]
+  #image("diagrams/uc_access.drawio.pdf", width: 80%)
+] <use-case-platform-access>
 
 #figure(
   caption: [Project Intake Use Case diagram],
 )[
-  #image("diagrams/uc_intake.drawio.pdf", width: 93%)
-]
+  #image("diagrams/uc_intake.drawio.pdf", width: 100%)
+] <use-case-project-intake>
 
 #figure(
   caption: [Profiles and Topics Use Case diagram],
 )[
-  #image("diagrams/uc_profiles.drawio.pdf", width: 93%)
-]
+  #image("diagrams/uc_profiles.drawio.pdf", width: 95%)
+] <use-case-student-profiles>
 
+#figure(
+  caption: [Application and Selection Use Case diagram],
+)[
+  #image("diagrams/uc_application.drawio.pdf", width: 120%)
+] <use-case-application>
 
-// == Key User Flows
 
 
 #pagebreak()
 = Traceability and Prototype Alignment <traceability-prototype-alignment>
 
-== Traceability Table: Interview Insight → Pain Point → Requirement ID <traceability-table>
+== Traceability Table <traceability-table>
 
-The full traceability table, including prototype status, MoSCoW priority, and transferability tags for every requirement, is provided in Appendix C. The table below presents the abbreviated form for reference within the running text. 
+The full traceability table, including prototype status, MoSCoW priority, and transferability tags for every requirement, is provided in #link(<appendix-c>)[Table A.3]. The table below presents the abbreviated form for reference within the running text. 
+
+#let next-page-table(next-page-content: [], ..table-args) = context {
+  let columns = table-args.named().at("columns", default: 1)
+  let column-amount = if type(columns) == int {
+    columns
+  } else if type(columns) == array {
+    columns.len()
+  } else {
+    1
+  }
+
+  // Counter of tables so we can create a unique table-part-counter for each table
+  let table-counter = counter("table")
+  table-counter.step()
+
+  // Counter for the amount of pages in the table
+  // It is increased by one for each footer repetition
+  let table-part-counter = counter("table-part" + str(table-counter.get().first()))
+  show <table-footer>: footer => {
+    table-part-counter.step()
+    context {
+      if table-part-counter.get() != table-part-counter.final() {
+      // if table-part-counter.get().first() > 1 {
+        // Display the footer only if we aren't at the last page
+        footer
+      }
+    }
+  }
+
+  table(
+    ..table-args,
+    table.footer(
+      // The 'next page' content spans all columns and has no stroke
+      // Must be selectable by the show rule above which hides it at the last page
+      table.cell(colspan: column-amount, stroke: none, [#next-page-content <table-footer>])
+    )
+  )
+
+  // Compensate for the empty footer at the last page of the table
+  v(-measure(next-page-content).height)
+}
+
+#{
+  show figure: set block(breakable: true)
+  figure(
+  next-page-table(
+    // head: [],
+    next-page-content: align(right)[Continued on next page],
+    columns: (auto, 280pt, auto),
+    ..tbl-filter(
+      xlsx-parser(
+        read("./tables/Appendices.xlsx", encoding: none),
+        
+        sheet-index: 0,
+        parse-fill: false,
+        parse-table-style: false,
+        parse-font: false,
+      ),
+      keep-cols: (0,1,2),
+      exclude-rows: (1,4,8,12,18,25),
+      rows-to-be-inserted: (
+        "1": table.cell([Access Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+        "3": table.cell([Company Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+        "6": table.cell([Professor / Supervisor Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+        "9": table.cell([Student Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+        "14": table.cell([General Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+        "20": table.cell([Staff Features], colspan: 3, align: center, fill: aqua.transparentize(70%)),
+      )
+    )
+  ),
+  caption: figure.caption(position: top)[Requirements Traceability Overview],
+  )
+}
 
 
-== Prototype Coverage Table: Screen → Requirement ID  <coverage-table>
+== Prototype Coverage Table <coverage-table>
 
+Every requirement in @functional-requirements and @non-functional-requirements is built in the prototype except for two, both limited by the prototype’s frontend-only scope (Section 4.6) rather than by an implementation gap within a single requirement.
 
+- *FR-4 Company Browse:* Companies can browse student-submitted topics and the accept action exists, but clicking it does not yet open the prompt for entering the mandatory acceptance fields (company name, contact information). Since company profiles are not required elsewhere in the prototype, they have to enter this information manually.
+
+- *NFR-2 Data Protection for Submitted Documents:* Requires a backend hosted in a server with persistent storage, which is outside the platform prototype scope. 
 
 
 == Pain Points Without Requirements and Justifications<requirements-without-prototype-coverage>
@@ -957,36 +1083,27 @@ The following pain points were identified but deliberately left without a
 corresponding requirement.
 
 - *Language barrier* (S5, S7, S10): Partially addressed. Language Support (NFR-3) makes the platform itself usable in German and English, but the German-language requirements of the projects and chairs themselves lie outside what a platform can change.
-
 - *Value and goal misalignment* (S6, S8, S11, U1, C2, C4): Dual Approval
   (FR-15) addresses company satisfaction with the selection, but not the
   underlying motivational mismatch, which cannot be addressed via a platform.
-
 - *Outcome measurement* (P1, P5, C2): Defining an accurate quality measurement
   is highly complex.
-
 - *Time and financial resource pressure* (P5): External constraint, not
   addressable via a platform.
-
 - *University structural complexity and inconsistency across institutions*
   (C4): Acknowledged in the transferability discussion; not resolvable by a
   feature.
-
 - *Output quality and software/tooling mismatches between student and company
   environments* (C2): Structural, and therefore largely not addressable via a
   platform. A further implementation of the light progress check (FR-14) could
   improve outcome quality by supporting more effective communication.
-
 - *Screening signal degradation due to AI-generated CVs* (C3): Platform-side AI
   checks are technically conceivable, but their accuracy is low and the
   implementation effort is not proportionate to the value.
 
-== Requirements Without Prototype Coverage and Justifications
 
-
-
-#pagebreak()
-= Risks, Discussion and Conclusion
+// #pagebreak()
+= Risks, Discussion and Conclusion <risks-discussion-conclusion>
 This document has translated a set of semi-structured interviews across stakeholder groups into scoped requirements, which can be traced back to the corresponding pain point and traced forward to the prototype coverage, for a project studies platform specific to TUM Campus Heilbronn. This traceability, rather than the completeness of any one requirement, is the main assertion of this document.
 
 Risks primarily rest on 26 interviews of uneven depth across groups, and especially since requirements were not checked back with the people they originated from. So the contents of this document are informed proposals, not validated findings. Two points follow from that directly. Company and professor findings come from smaller, less saturated samples than the student group, so they're less likely to hold up even within TUM Campus Heilbronn specifically. And Dual Approval (FR-15) is a proposed change, not something already happening. The reasoning behind it (companies having more of a say in the process improves satisfaction with outcomes) holds up logically, but nothing actually tests whether it would be effective or introduce further complications. One more risk is not related to the interviews at all: the platform handles personal application data (Section 7.2), and no one with legal expertise has reviewed what that would require.
@@ -1030,19 +1147,226 @@ The transferability tags in the traceability table give pointers on how this wor
 
 #nonumber[= Appendices]
 
-#figure(
+#set figure(numbering: (..num) =>
+  numbering("A.1", 1, num.pos().first())
+)
+
+// #context {text.size}
+
+#metadata(none) <appendix-b>
+#{
+  show figure: set block(breakable: true)
+  set text(size: 11.8pt)
+  figure(
+    {
+      show regex("\("): it => [\ #it]
+      table(
+        // columns: (65pt, 0pt, 0pt, auto, auto, 0pt, 0pt, 0pt, 0pt),
+        columns: (auto, 210pt, auto, auto),
+        align: left,
+        ..tbl-filter(
+          xlsx-parser(
+            read("./tables/Appendices.xlsx", encoding: none),
+            
+            sheet-index: 3,
+            parse-fill: false,
+            parse-table-style: false,
+            parse-font: false,
+          ),
+          keep-cols: (0, 1, 2, 3),
+          exclude-rows: (-1,-2)
+        ) 
+      )
+    },
+    caption: [Sample Composition, Participant IDs, and Data Collection Format ($n=26$)],
+  )
+}
+
+#pagebreak()
+#{
+  show figure: set block(breakable: true)
+  set text(size: 11.8pt)
+  figure(
+    {
+      // show regex("\("): it => [\ #it]
+      table(
+        // columns: (65pt, 0pt, 0pt, auto, auto, 0pt, 0pt, 0pt, 0pt),
+        columns: (auto, auto, 350pt),
+        align: left,
+        ..tbl-filter(
+          xlsx-parser(
+            read("./tables/Appendices.xlsx", encoding: none),
+            
+            sheet-index: 2,
+            parse-fill: false,
+            parse-table-style: false,
+            parse-font: false,
+          ),
+          keep-cols: (0, 1, 2, 3),
+          // exclude-rows: (-1,-2)
+        ) 
+      )
+    },
+    caption: [Thematic Areas and Guiding Questions <appendix-a>],
+  )
+}
+
+// #xlsx-parser(
+//   read("./tables/Appendices.xlsx", encoding: none),
+  
+//   sheet-index: 0,
+//   parse-fill: false,
+//   parse-table-style: false,
+//   parse-font: false,
+// ).columns
+
+
+// #heading(numbering: none)[Hello]
+
+#let biggest-table-keep-cols = (0,1,2,3, 4, 5, 6, 7)
+#let biggest-table-coln = biggest-table-keep-cols.len()
+#let biggest-table-data = tbl-filter(
   xlsx-parser(
-    read("./tables/Traceability_Table_Draft_1 (Autosaved).xlsx", encoding: none),
-    
-    columns: (65pt, auto, auto, 0pt),
+    read("./tables/Appendices.xlsx", encoding: none),
     
     sheet-index: 1,
     parse-fill: false,
     parse-table-style: false,
     parse-font: false,
   ),
-  caption: [Interview Sample Composition and Participant IDs ($n=26$)],
-  
+  keep-cols: biggest-table-keep-cols,
+  exclude-rows: (1,4,8,12,18,25),
+  rows-to-be-inserted: (
+    "1": table.cell([Access Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+    "3": table.cell([Company Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+    "6": table.cell([Professor / Supervisor Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+    "9": table.cell([Student Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+    "14": table.cell([General Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+    "20": table.cell([Staff Features], colspan: biggest-table-coln, align: center, fill: aqua.transparentize(70%)),
+  )
 )
 
-// #heading(numbering: none)[Hello]
+#let biggest-table-columns = (
+  auto,
+  80pt,
+  1.3fr,
+  1fr,
+  80pt,
+  auto,
+  80pt,
+  70pt,
+)
+
+
+// Create one table part.
+#let make-biggest-table(data) = table(
+  columns: biggest-table-columns,
+  ..data,
+)
+
+
+// --------------------------------------------------------------------
+// Split dynamically
+// --------------------------------------------------------------------
+
+#context {
+  
+  // After rotation, table height becomes horizontal width.
+  let max-width = page.width * 1.07
+
+  // Convert flat cell array into actual rows.
+  let rows = ((),)
+  let current-col = 0
+  for cell in biggest-table-data {
+    current-col += if cell.has("colspan") {
+      cell.colspan
+    } else {
+      1
+    }
+    rows.last().push(cell)
+
+    if current-col == biggest-table-coln {
+      rows.push(())
+      current-col = 0
+    }
+  }
+
+  let first-row = rows.first()
+  rows = rows.slice(1)
+
+  let parts = ()
+  let current = (first-row)
+
+  for row in rows {
+    // Try adding this row to the current table.
+    let candidate = current + row
+
+    let candidate-table = make-biggest-table(candidate)
+
+    // The first part additionally contains the caption, so measure
+    // that as well.
+    let candidate-body = if parts.len() == 0 {
+      figure(
+        candidate-table,
+        caption: [
+          Full Requirements Traceability Matrix
+        ],
+      )
+    } else {
+      candidate-table
+    }
+
+    // Lay the table out at the same width it will actually have.
+    let candidate-height = measure(
+      candidate-body,
+      width: max-width,
+    ).height
+
+    // Once its unrotated HEIGHT exceeds the portrait page WIDTH,
+    // the rotated table would stick out horizontally.
+    if candidate-height > max-width and current.len() > 0 {
+      parts.push(current)
+
+      // This row becomes the first row of the next table.
+      current = first-row + row
+    } else {
+      current = candidate
+    }
+  }
+
+  // Add the last table part.
+  if current.len() > 0 {
+    parts.push(current)
+  }
+
+
+  // ----------------------------------------------------------------
+  // Render
+  // ----------------------------------------------------------------
+  
+  [#metadata(none) <appendix-c>
+  #for (i, el) in parts.enumerate() {
+    if i > 0 {
+      pagebreak()
+    }
+
+    let tbl = make-biggest-table(el)
+
+    let body = if i == 0 {
+      figure(
+        tbl,
+        caption: [
+          Full Requirements Traceability Matrix
+        ],
+      )
+    } else {
+      tbl
+    }
+
+    rotate(
+      -90deg,
+      reflow: true,
+      body,
+    )
+  }]
+}
