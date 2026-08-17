@@ -1,3 +1,5 @@
+#import "@preview/rexllent:0.4.0": xlsx-parser
+
 // #import "@preview/cuti:0.4.0": fakebold
 
 // #import "@preview/wordometer:0.1.5": word-count, total-words
@@ -243,6 +245,20 @@
 	}
 }
 
+#set table(
+  fill: (x, y) => if y == 0 { gray } else { none },
+  align: (x, y) => {
+    let ret = horizon
+    if y == 0 { ret += center }
+    else { ret += left }
+    ret
+  },
+)
+#show table.cell: it => {
+  if it.y == 0 { strong(it) }
+  else { it }
+}
+
 = Introduction
 
 
@@ -415,7 +431,6 @@ groups. Appendix B lists all participants; the distribution is summarised below.
 #figure(
   table(
     columns: (auto, auto, auto),
-    align: (left, center, left),
     stroke: 0.5pt,
     [*Group*], [*n*], [*Institutional background*],
     [Students], [13], [9 TUM Heilbronn, 2 TUM Garching, 1 RWTH Aachen,
@@ -483,7 +498,6 @@ Each requirement therefore states what kind of evidence it rests on:
 #figure(
   table(
     columns: (auto, 1fr),
-    align: (left + top, left + top),
     stroke: 0.5pt,
     inset: 7pt,
     [*Basis*], [*Meaning*],
@@ -493,8 +507,7 @@ Each requirement therefore states what kind of evidence it rests on:
     [Taken from how the project-study process currently works at TUM Campus
      Heilbronn, rather than from interview data.],
     [Design decision],
-    [A choice made by the authors, where neither source supplied a requirement.
-     Listed individually, with reasons, in Section 10.],
+    [A choice made by the authors, where neither source supplied a requirement. Recorded as Team Decision in the traceability table (Appendix C), with the reasoning given at the requirement itself.],
   ),
   caption: [Evidence basis recorded for each requirement],
 )
@@ -506,6 +519,11 @@ Each requirement therefore states what kind of evidence it rests on:
 //   works at TUM Campus Heilbronn, rather than from interview data.
 // / Design decision: a choice made by the authors, where neither source supplied a
 //   requirement. These are listed individually, with reasons, in Section 10.
+
+Three requirements rest on a design decision rather than on interview data or the current process: Student Profiles (FR-9), Dual Approval (FR-15), and Language Support (NFR-3). Each is argued for where it is specified, and FR-15, which proposes a change to how student selection currently works, is discussed again in Section 10.
+
+
+
 
 Two further attributes are recorded and feed the prioritization scheme in
 Section 6: whether the underlying pain point recurs across groups, and whether
@@ -628,7 +646,6 @@ arrangements:
 #figure(
   table(
     columns: (auto, 1fr),
-    align: (left + top, left + top),
     stroke: 0.5pt,
     inset: 7pt,
     [*Tag*], [*Meaning*],
@@ -774,9 +791,9 @@ New project submissions will be marked as 'pending'. Staff will approve them bef
 Source: Process Documentation  
 
 === FR-4, Company Browse Student Topics (Must)  
-Companies can browse topics submitted by students\
-Source: C5  
 
+Companies can browse topics submitted by students. Acceptance requires the company to fill in mandatory fields (company name, company contact information), and the completed entry becomes visible to professors.\
+Source: C2 (directly suggested this feature), C5, S12
 
 
 
@@ -786,8 +803,12 @@ Source: C5
 Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
 Source: P3, P4, U1, U2  
 === FR-6, Professor Supervision Take-on (Must)  
-To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
-Source: Process Documentation  
+To take on a project — either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) — the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
+Source: Process Documentation 
+
+
+// To accept a project submitted by a company, the professor must provide chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.  \
+// Source: Process Documentation  
 === FR-7, Direct Project Submission (Should)  
 When a professor and a company agree directly on a project study, the professor will submit it with the required fields filled in for students to apply. \ 
 Source: Process Documentation  
@@ -795,7 +816,7 @@ Source: Process Documentation
 == Student Features
 
 === FR-8, Student Project Submission Portal (Must)  
-The mandatory fields include: Areas of Expertise, Research Interests, Skills, Previous Projects, Availability, and Contact Information.  \
+The mandatory fields include: Project Title, Required Area of expertise, Project Background and Objective, Project Deliverable, Required Company Resources, Group size, Student Team Contact Person (adapted from the current project proposal sheet).\
 Source: C2, C4, C5, S12  
 === FR-9, Student Profiles (Should)  
 Student profiles will list their program or degree, sourced from institution logins. This will help match students with teams and allow professors and companies to filter students by their program.  \
@@ -808,7 +829,7 @@ Students can view available projects with complete information, including compan
 Source: S6, S7, S8, S9  
 === FR-12, Application Status Visibility (Should)
 Students will see a simple accepted/rejected status for each application.  \
-Source: S1  
+Source: S1, S8, S12, S13
 
 
 == General Features
@@ -822,7 +843,7 @@ Source: P4
 A student's application will require approval from both the professor and the company before it is finalized. At TUM Campus Heilbronn, the selection of students is currently handled solely by the university, with no formal role for companies in reviewing individual applicants. This proposed change aims to give companies input on who joins their projects, which could lead to higher satisfaction with the outcomes. However, this change may slow down the process and add a coordination step between professors and companies, which are recognized costs of the benefit.  \
 Source: Team Decision  
 === FR-16, Manual Multi-Offer Decision (Should)  
-If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-13 and FR-16: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  \
+If a student is accepted to multiple projects, they will manually confirm one and withdraw from the others. This follows from FR-12 and FR-13: once the application statuses are real, a student accepting two projects simultaneously is a situation the platform must manage.  \
 Source: Process Documentation 
 
 == Administrative Staff Features
@@ -856,18 +877,27 @@ Source: Process Documentation
 == Usability 
 Four groups use the platform: students, companies, professors, and university staff. Not all of them work with software every day, professors and administrative staff least of all. Each role sees only the functions it needs (FR-1, Role-Based Access), so no one has to learn the parts of the system that belong to someone else. Every listing shows the same fields in the same order. Users compare projects, then find the same information in the same place each time. Inconsistent listings would bring back the fragmented presentation that the platform replaces.
 
+=== NFR-3, Language Support
+The platform is viewable in both English and German. German-language requirements were named as a disadvantage by international students (S5, S7, S10), particularly at institutions with a large international intake and degree programs taught in English. \
+Source: S5, S7, S10
+
 == Security and Data Privacy 
 === NFR-1, Identity Verification 
 Use of institutional logins for verifying student and staff identities. A verified company email domain serves as a simple check for companies, before being made available to administrative staff for a more in-depth check.\
 Source: C4
 === NFR-2, Data Protection for Submitted Documents
-CVs, transcripts, and motivation letters uploaded through the platform (FR-8) count as personal data under the GDPR. Access is limited to the professor and the company that review the application. No other user can open these files or reach them through public listings. FR-4 (Company Browse and Accept Student Topics) keeps topic listings public, but the documents attached to an application stay private. How long these documents are stored, and when they are deleted once an application closes, lies outside the scope of this specification and the prototype (Section 4.6). \
+CVs, transcripts, and motivation letters uploaded with an application (FR-11) count as personal data under the GDPR. Access is limited to the professor and the company that review the application. No other user can open these files or reach them through project listings. Student-submitted topics (FR-8) and the entries a company accepts (FR-4) stay visible to the other platform roles, but the documents attached to an application do not. How long these documents are stored, and when they are deleted once an application closes, lies outside the scope of this specification and the prototype (Section 4.6).\
 Source: Process Documentation (legal/regulatory constraint)
+
+
+// === NFR-3 Language Support
+// The platform should be able to be viewed in both English and German, especially for universities with a large portion of international students and multiple degrees offered in English. \
+// Source: Team decision
 
 
 
 == Maintainability / Extensibility
-The requirements are structured so that Could-priority and out-of-scope features can be added later without changing the core Must-priority workflow. Student Team Matching (FR-10) and Lightweight Progress Check-in (FR-14) are extensions to the platform’s functionality without requiring changes to it.
+The requirements are structured so that Could-priority and out-of-scope features can be added later without changing the core Must-priority workflow. Student Team Matching (FR-10) and Lightweight Progress Check-in (FR-14) are extensions to the platform's functionality without requiring changes to it.
 
 
 
@@ -921,7 +951,7 @@ The full traceability table, including prototype status, MoSCoW priority, and tr
 The following pain points were identified but deliberately left without a
 corresponding requirement.
 
-- *Language barrier* (S5, S7, S10): Cannot be addressed via a platform.
+- *Language barrier* (S5, S7, S10): Partially addressed. Language Support (NFR-3) makes the platform itself usable in German and English, but the German-language requirements of the projects and chairs themselves lie outside what a platform can change.
 
 - *Value and goal misalignment* (S6, S8, S11, U1, C2, C4): Dual Approval
   (FR-15) addresses company satisfaction with the selection, but not the
@@ -992,6 +1022,22 @@ The transferability tags in the traceability table give pointers on how this wor
 }
 
 #pagebreak()
+
 #nonumber[= Appendices]
+
+#figure(
+  xlsx-parser(
+    read("./tables/Traceability_Table_Draft_1 (Autosaved).xlsx", encoding: none),
+    
+    columns: (65pt, auto, auto, 0pt),
+    
+    sheet-index: 1,
+    parse-fill: false,
+    parse-table-style: false,
+    parse-font: false,
+  ),
+  caption: [Interview Sample Composition and Participant IDs ($n=26$)],
+  
+)
 
 // #heading(numbering: none)[Hello]
