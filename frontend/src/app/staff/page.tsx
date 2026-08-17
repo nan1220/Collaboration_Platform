@@ -100,7 +100,7 @@ export default function StaffPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="border-l-4 border-l-role-staff pl-4">
+        <div className="rounded-lg border-l-8 border-l-role-staff bg-role-staff/8 py-3 pr-4 pl-4">
           <h1 className="text-2xl font-semibold tracking-tight">{t("page.staff.title")}</h1>
           <p className="mt-1 text-muted-foreground">{t("page.staff.description")}</p>
         </div>
