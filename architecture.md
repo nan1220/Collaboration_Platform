@@ -11,7 +11,7 @@ Based on [requirements.md](requirements.md). This is a first-pass sketch meant t
 | **Student** | Enrolled students | Browse projects, read guides, track application/project status, optionally find teammates |
 | **Company** | External, not a platform "user" in the traditional sense | Submit a project topic via form; get notified of status; likely no persistent login needed (email + token link is enough) |
 
-A key existing constraint to encode, not just document: **eligibility rules** for who may supervise what (e.g. a professor not affiliated with the School of Management cannot supervise certain topics, even if the student knows them). This should be a rule the organizers configure, not something hardcoded — it was clearly a source of student confusion.
+A key existing constraint to encode, not just document: **eligibility rules** for who may supervise what (e.g. a professor not affiliated with the School of Management cannot supervise certain topics, even if the student knows them). This should be a rule the organizers configure, not something hardcoded - it was clearly a source of student confusion.
 
 ## 2. Core domain model (sketch)
 
@@ -31,7 +31,7 @@ AuditLogEntry  (actor_id, entity, action, timestamp)   -- since the whole point 
 Project status is a state machine, roughly:
 `submitted → under_review → approved (unassigned) → assigned (professor chosen) → in_progress → completed / rejected`
 
-Every transition should write an `AuditLogEntry` — requirement #1 is explicitly about organizers currently having *no visibility* into what happens after approval, so history/audit is not optional polish, it's the point of the system.
+Every transition should write an `AuditLogEntry` - requirement #1 is explicitly about organizers currently having *no visibility* into what happens after approval, so history/audit is not optional polish, it's the point of the system.
 
 ## 3. High-level architecture
 
@@ -44,14 +44,14 @@ flowchart TB
         Company["Company (public, no login)<br/>submission form + status link"]
     end
 
-    subgraph Frontend["Frontend — Next.js (React + TypeScript)"]
+    subgraph Frontend["Frontend - Next.js (React + TypeScript)"]
         UI["Role-gated pages/routes<br/>(App Router)"]
         Style["Tailwind CSS<br/>+ component library (shadcn/ui)"]
         Query["Data fetching/cache<br/>(TanStack Query)"]
         Forms["Forms + validation<br/>(React Hook Form + Zod)"]
     end
 
-    subgraph Backend["Backend — Django + Django REST Framework (Python)"]
+    subgraph Backend["Backend - Django + Django REST Framework (Python)"]
         API["REST API + RBAC"]
         Admin["Django Admin<br/>(fast internal tooling fallback)"]
         Auth["Auth: Django auth,<br/>TUM SSO via SAML/OAuth2 (TBD)"]
@@ -86,14 +86,14 @@ flowchart TB
     Admin --> DB
 ```
 
-One frontend app, role-gated views, rather than separate apps per role — the four user types share most of the same underlying data (projects), just with different permissions and default filters.
+One frontend app, role-gated views, rather than separate apps per role - the four user types share most of the same underlying data (projects), just with different permissions and default filters.
 
 ### Tech stack
 
 | Layer | Choice | Why |
 |---|---|---|
 | Frontend | **Next.js (React + TypeScript)**, Tailwind CSS + shadcn/ui, TanStack Query, React Hook Form + Zod | Single codebase for all roles; SSR/SSG where useful for the public company-facing pages and guides; TanStack Query handles API caching/refetch, React Hook Form + Zod give typed client-side validation for the company/application forms; large ecosystem, easy to hand off/maintain |
-| Backend | **Django + Django REST Framework (Python)** | Built-in auth, permissions/groups, and an admin panel that gives organizers a working internal tool almost for free on day one, well before the custom frontend is done — high leverage for a 2-person non-technical admin team |
+| Backend | **Django + Django REST Framework (Python)** | Built-in auth, permissions/groups, and an admin panel that gives organizers a working internal tool almost for free on day one, well before the custom frontend is done - high leverage for a 2-person non-technical admin team |
 | Database | **PostgreSQL** | Relational fits the project/status/audit model well; mature, free, easy to self-host or run managed |
 | Async/notifications | **Celery + Redis** | Decouples email sending and any batch/digest jobs from the request cycle |
 | Auth | Django auth to start; **SAML/OAuth2 to TUM SSO** if IT grants access (`django-allauth` / `djangosaml2`) | Avoids maintaining a parallel password store for students/professors if SSO is reachable |
@@ -101,13 +101,13 @@ One frontend app, role-gated views, rather than separate apps per role — the f
 | Email | SMTP via university mail server or a transactional provider | Status-change notifications, company status-check links |
 | Hosting | Docker Compose on a university-managed server, or a small cloud VM | Keeps data protection story simple if kept on university infrastructure |
 
-This stack is a starting recommendation, not a hard requirement — the main constraint worth respecting is picking something a small team can maintain after handoff (both Next.js and Django are widely known, well-documented, and don't require exotic infra).
+This stack is a starting recommendation, not a hard requirement - the main constraint worth respecting is picking something a small team can maintain after handoff (both Next.js and Django are widely known, well-documented, and don't require exotic infra).
 
 ## 4. Backend requirements
 
 **Auth & authorization**
 - Role-based access control: organizer / professor / student, plus unauthenticated "company" flow (token-link based, no account).
-- Ideally federate with TUM SSO if accessible; otherwise email/password with TUM email domain verification for students/professors. This is worth clarifying with IT early — it affects almost everything else.
+- Ideally federate with TUM SSO if accessible; otherwise email/password with TUM email domain verification for students/professors. This is worth clarifying with IT early - it affects almost everything else.
 - Configurable eligibility rules (e.g. school/department gating on who can supervise what).
 
 **API surface (REST, roughly)**
@@ -116,7 +116,7 @@ This stack is a starting recommendation, not a hard requirement — the main con
 - `Companies` + submission endpoint: public-facing, rate-limited, with basic spam/abuse protection (captcha or similar) since it's unauthenticated.
 - `Guides`: CMS-style content, versioned, organized by category/audience (e.g. "finding a supervisor for a company topic").
 - `Users`/`Admin`: organizer-only management of professor/student accounts and eligibility rules.
-- `AuditLog`: read endpoint for organizers — this is the direct fix for problem #1.
+- `AuditLog`: read endpoint for organizers - this is the direct fix for problem #1.
 - (Optional, req #3) `StudentProfiles` / `Groups`: opt-in visibility, browse/match students looking for teammates.
 
 **Non-functional**
@@ -124,7 +124,7 @@ This stack is a starting recommendation, not a hard requirement — the main con
 - **Migration path**: import from the existing Excel sheet (one-time script/CSV import), so organizers aren't re-entering current in-flight projects by hand.
 - **Notifications**: email on key transitions (company submitted → organizers; approved → professors; professor claims → student/company; status changes → relevant parties).
 - **Audit trail**: every status change and edit logged with actor + timestamp (addresses req #1 directly).
-- **Moodle relationship**: decide explicitly whether this platform *replaces* the Moodle page students currently see, or Moodle stays as a thin public-facing mirror fed from this system. That's a scope decision, not just a technical one — worth flagging to the two organizers.
+- **Moodle relationship**: decide explicitly whether this platform *replaces* the Moodle page students currently see, or Moodle stays as a thin public-facing mirror fed from this system. That's a scope decision, not just a technical one - worth flagging to the two organizers.
 
 ## 5. Frontend requirements
 
@@ -135,7 +135,7 @@ This stack is a starting recommendation, not a hard requirement — the main con
 **Organizer view**
 - Dashboard of all projects with current status + history (the core "what's actually happening" view).
 - Approve/reject queue for company submissions.
-- Guide content editor (simple CMS — doesn't need to be fancy, markdown editor is probably enough).
+- Guide content editor (simple CMS - doesn't need to be fancy, markdown editor is probably enough).
 - User/eligibility rule management.
 
 **Professor view**
@@ -162,7 +162,7 @@ This stack is a starting recommendation, not a hard requirement — the main con
 
 ## 7. Suggested build order
 
-1. Core database + organizer admin view (req #1) — this alone fixes the visibility problem and is the highest-value piece.
-2. Company submission + approval workflow (req #4) — plugs directly into #1's data model.
-3. Student guides section (req #2) — largely content work once the platform shell exists.
-4. Student teammate-matching (req #3) — optional, additive, lowest risk to defer.
+1. Core database + organizer admin view (req #1) - this alone fixes the visibility problem and is the highest-value piece.
+2. Company submission + approval workflow (req #4) - plugs directly into #1's data model.
+3. Student guides section (req #2) - largely content work once the platform shell exists.
+4. Student teammate-matching (req #3) - optional, additive, lowest risk to defer.

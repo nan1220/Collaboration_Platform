@@ -92,7 +92,7 @@ function ProjectDetail() {
   const takeOnMutation = useMutation({
     mutationFn: () => api.takeOnSupervision(currentUser!.id, projectId, takeOnForm),
     onSuccess: () => {
-      toast.success("Supervision taken on — listing published to students");
+      toast.success("Supervision taken on - listing published to students");
       invalidateProject();
     },
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to take on supervision"),
@@ -120,7 +120,7 @@ function ProjectDetail() {
   const confirmMutation = useMutation({
     mutationFn: (applicationId: number) => api.confirmOffer(currentUser!.id, applicationId),
     onSuccess: () => {
-      toast.success("Offer confirmed — project marked filled");
+      toast.success("Offer confirmed - project marked filled");
       invalidateApplications();
     },
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to confirm offer"),
@@ -311,7 +311,7 @@ function ProjectDetail() {
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="docsNote">Documents (simulated upload — list filenames)</Label>
+              <Label htmlFor="docsNote">Documents (simulated upload - list filenames)</Label>
               <Input
                 id="docsNote"
                 placeholder="cv.pdf, transcript.pdf"

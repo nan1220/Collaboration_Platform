@@ -65,7 +65,7 @@ export default function StudentPage() {
   const confirmMutation = useMutation({
     mutationFn: (applicationId: number) => api.confirmOffer(currentUser!.id, applicationId),
     onSuccess: () => {
-      toast.success("Offer confirmed — your other pending offers were withdrawn");
+      toast.success("Offer confirmed - your other pending offers were withdrawn");
       queryClient.invalidateQueries({ queryKey: ["applications"] });
     },
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to confirm offer"),
@@ -91,7 +91,7 @@ export default function StudentPage() {
           <CardHeader>
             <CardTitle className="text-base">You have {acceptedOffers.length} offers (FR-16)</CardTitle>
             <CardDescription>
-              Confirm exactly one — the others will be automatically withdrawn.
+              Confirm exactly one - the others will be automatically withdrawn.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">

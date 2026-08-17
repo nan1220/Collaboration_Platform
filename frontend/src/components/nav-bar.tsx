@@ -41,7 +41,7 @@ const NAV_LINKS: { href: string; labelKey: Parameters<ReturnType<typeof useLangu
 ];
 
 // trailingSlash is enabled (next.config.ts), so usePathname() returns paths
-// like "/projects/" — normalize before comparing against hrefs, and treat a
+// like "/projects/" - normalize before comparing against hrefs, and treat a
 // nested route (e.g. "/projects/detail") as still under its parent tab.
 function normalize(path: string) {
   return path.length > 1 ? path.replace(/\/$/, "") : path;

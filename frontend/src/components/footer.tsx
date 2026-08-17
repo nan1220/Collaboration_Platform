@@ -19,12 +19,6 @@ export function Footer() {
           <span>{t("footer.tagline")}</span>
         </div>
         <div className="flex flex-wrap gap-4">
-          <Link href="/projects" className="hover:text-foreground">
-            {t("nav.projects")}
-          </Link>
-          <Link href="/guides" className="hover:text-foreground">
-            {t("nav.guides")}
-          </Link>
           <Link href="/company" className="hover:text-foreground">
             {t("footer.submitProject")}
           </Link>

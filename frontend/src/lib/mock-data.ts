@@ -13,7 +13,7 @@ import type {
 //
 // Demo accounts are anonymized (S = student, P = professor, C = company,
 // U = university staff), mirroring the anonymized interview IDs already used
-// in the SRS traceability table — no real names, to protect the privacy of
+// in the SRS traceability table - no real names, to protect the privacy of
 // the people who actually gave interviews.
 
 export interface RawProject {
@@ -367,14 +367,14 @@ export const SEED_GUIDES: Guide[] = [
 
 Not every professor/supervisor can supervise every topic: professors/supervisors see submissions matched
 to their own area of expertise (the **required expertise** tag on the project), and only take on projects
-that fit their chair. A professor/supervisor who has taught you in an unrelated area — even a familiar
-name — may not be a match for a School of Management topic.
+that fit their chair. A professor/supervisor who has taught you in an unrelated area - even a familiar
+name - may not be a match for a School of Management topic.
 
 ## Steps
 
 1. Check the *required expertise* tag on the project page. A project only becomes visible to students
    once a matching professor/supervisor has taken it on and published the listing.
-2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly —
+2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly -
    they can also submit a project they've agreed on directly with a company (no company portal step needed).
 3. If you're unsure who to contact, ask staff directly rather than guessing.
 
@@ -383,10 +383,10 @@ name — may not be a match for a School of Management topic.
 | Situation | What to do |
 | --- | --- |
 | Topic approved, no professor/supervisor yet | Wait, or mention it to a matching professor/supervisor yourself |
-| Topic still "pending" | Nothing to do yet — staff hasn't reviewed it |
+| Topic still "pending" | Nothing to do yet - staff hasn't reviewed it |
 | Not sure who supervises your area | Ask staff, don't guess |
 
-> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise —
+> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise -
 > expertise match matters more than familiarity.`,
     updated_by: 1,
     updated_at: "2026-05-01T09:00:00.000Z",
@@ -398,10 +398,10 @@ name — may not be a match for a School of Management topic.
     audience: "all",
     body: `Projects move through a fixed set of stages:
 
-- **Pending** — submitted, awaiting staff review
-- **Approved** — staff-approved, visible to professors/supervisors whose expertise matches
-- **Ongoing** — a professor/supervisor has taken on supervision and published the listing, now open for student applications
-- **Filled** — a student has confirmed the offer
+- **Pending** - submitted, awaiting staff review
+- **Approved** - staff-approved, visible to professors/supervisors whose expertise matches
+- **Ongoing** - a professor/supervisor has taken on supervision and published the listing, now open for student applications
+- **Filled** - a student has confirmed the offer
 
 Every change is logged, so staff, professors/supervisors and students can see the real state of a project
 instead of relying on a spreadsheet or word of mouth.`,

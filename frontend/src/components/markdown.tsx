@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
 
 // For plain-text previews (e.g. a line-clamped card excerpt) where rendering
-// full markdown isn't appropriate — strips the common syntax rather than
+// full markdown isn't appropriate - strips the common syntax rather than
 // showing raw "### " or "**bold**" markers.
 export function stripMarkdown(content: string): string {
   return content

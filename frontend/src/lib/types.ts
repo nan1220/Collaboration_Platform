@@ -7,7 +7,7 @@ export interface UserSummary {
   department: string; // professor: chair; company/student/staff: unused
   program: string; // student: degree program (FR-9); unused otherwise
   expertise: string; // FR-5: professor/supervisor profile "chair/expertise", sourced at login
-  bio: string; // FR-5: professor/supervisor profile — short bio, sourced at login; unused otherwise
+  bio: string; // FR-5: professor/supervisor profile - short bio, sourced at login; unused otherwise
 }
 
 export interface User extends UserSummary {
@@ -26,22 +26,22 @@ export interface Company {
 // FR-7: professor-submitted projects skip the company portal entirely.
 export type ProjectSource = "company" | "professor_direct";
 
-// Design decision: the SRS's staff dashboard (FR-17) lists five buckets —
-// pending, approved, not yet supervised, ongoing, filled — but "not yet
+// Design decision: the SRS's staff dashboard (FR-17) lists five buckets -
+// pending, approved, not yet supervised, ongoing, filled - but "not yet
 // supervised" and "approved" describe the same underlying record from two
 // angles (approved, with vs. without a professor attached yet). Rather than
 // invent a redundant stored state, "not yet supervised" is computed as
 // `status === "approved" && !assigned_professor`, and the four real stages
 // below map onto the use-case diagrams: pending (FR-3 queue) -> approved
 // (visible to professors, FR-5) -> ongoing (professor took it on and
-// published it, FR-6 — open for applications) -> filled (a student has been
+// published it, FR-6 - open for applications) -> filled (a student has been
 // confirmed, FR-16).
 export type ProjectStatus = "pending" | "approved" | "ongoing" | "filled" | "rejected";
 
 export interface Project {
   id: number;
   title: string;
-  required_expertise: string; // FR-2 "Required Area of Expertise" — also used for FR-5 matching
+  required_expertise: string; // FR-2 "Required Area of Expertise" - also used for FR-5 matching
   background_objective: string; // FR-2 "Project Background and Objective"
   deliverable: string; // FR-2 "Project Deliverable"
   company_resources: string; // FR-2 "Available Company Resources"
@@ -142,7 +142,7 @@ export type ApplicationOverallStatus = "pending" | "accepted" | "rejected" | "co
 
 // FR-15 dual decision + FR-16 confirmation, collapsed into one status for display.
 // A professor_direct project has no company, so the company side is treated as
-// automatically satisfied — the professor's decision is the only one that counts.
+// automatically satisfied - the professor's decision is the only one that counts.
 export function applicationStatus(
   app: Pick<Application, "professor_decision" | "company_decision" | "confirmed" | "withdrawn">,
   hasCompany: boolean
@@ -159,7 +159,7 @@ export function applicationStatus(
 
 export const APPLICATION_STATUS_LABELS: Record<ApplicationOverallStatus, string> = {
   pending: "Pending decision",
-  accepted: "Offer made — awaiting confirmation",
+  accepted: "Offer made - awaiting confirmation",
   rejected: "Rejected",
   confirmed: "Confirmed",
   withdrawn: "Withdrawn",

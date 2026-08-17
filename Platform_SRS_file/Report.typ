@@ -803,7 +803,7 @@ Source: C2 (directly suggested this feature), C5, S12
 Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
 Source: P3, P4, U1, U2  
 === FR-6, Professor Supervision Take-on (Must)  
-To take on a project — either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) — the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
+To take on a project - either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) - the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
 Source: Process Documentation 
 
 

@@ -8,10 +8,10 @@ export type Locale = "en" | "de";
 const STORAGE_KEY = "collab-platform-locale";
 
 // NFR-3: "The platform should be viewable in German and English language."
-// Flat dot-path keys rather than nested objects — simplest to keep the two
+// Flat dot-path keys rather than nested objects - simplest to keep the two
 // dictionaries in sync and to extend. Covers the shared chrome (nav, footer,
 // home, sign-in/registration flow) fully, plus the title/description of
-// every other page — deeper form-field labels stay English for now.
+// every other page - deeper form-field labels stay English for now.
 const en = {
   "nav.projects": "Projects",
   "nav.studentDirectory": "Student directory",
@@ -26,11 +26,11 @@ const en = {
   "nav.signedInSession": "Signed in for this demo session.",
   "nav.language": "Language",
 
-  "footer.tagline": "Collaboration Platform — a project topic database prototype.",
+  "footer.tagline": "Collaboration Platform - a project topic database prototype.",
   "footer.submitProject": "Submit a project",
 
   "home.heroSubtitle":
-    "One consistent database for company and professor/supervisor-submitted project topics — shared by staff, professors/supervisors, students and companies, instead of a spreadsheet nobody else can see.",
+    "One consistent database for company and professor/supervisor-submitted project topics - shared by staff, professors/supervisors, students and companies, instead of a spreadsheet nobody else can see.",
   "home.browseProjects": "Browse projects",
   "home.submitProjectCompany": "Submit a project (company)",
   "home.notSignedInTitle": "You're not signed in",
@@ -58,7 +58,7 @@ const en = {
 
   "home.feature.database.title": "One shared database",
   "home.feature.database.description":
-    "Staff, professors/supervisors, students and companies all see the same project data and status history — not a spreadsheet only two people can read.",
+    "Staff, professors/supervisors, students and companies all see the same project data and status history - not a spreadsheet only two people can read.",
   "home.feature.companySubmissions.title": "Company submissions",
   "home.feature.companySubmissions.description":
     "Companies submit a topic through a portal (FR-2). Staff approve it, a matching professor/supervisor takes it on and publishes it (FR-6).",
@@ -67,7 +67,7 @@ const en = {
     "Students submit a topic and profile that professors/supervisors and companies can browse (FR-4/FR-8/FR-9), and can flag themselves as looking for a team (FR-10).",
   "home.feature.guides.title": "Guides that actually help",
   "home.feature.guides.description":
-    "Concrete, TUM-specific guidance — like finding a professor/supervisor whose expertise matches a topic — instead of word of mouth.",
+    "Concrete, TUM-specific guidance - like finding a professor/supervisor whose expertise matches a topic - instead of word of mouth.",
 
   "signIn.title": "Sign in",
   "signIn.subtitle": "How you get in depends on who you are (FR-1/NFR-1).",
@@ -76,7 +76,7 @@ const en = {
   "signIn.tumMembers.action": "Continue with Shibboleth",
   "signIn.companies.title": "Companies",
   "signIn.companies.description":
-    "No TUM account needed — log in with your work email, or register a new company. Staff verify new companies before they can submit a project (NFR-1).",
+    "No TUM account needed - log in with your work email, or register a new company. Staff verify new companies before they can submit a project (NFR-1).",
   "signIn.companies.action": "Log in or register",
   "signInPrompt.action": "Sign in",
 
@@ -85,7 +85,7 @@ const en = {
     "In production this would redirect to TUM's real Shibboleth identity provider (NFR-1). This prototype has no institutional backend to redirect to, so it simulates the round trip here instead.",
   "shibboleth.firstTime": "First time signing in",
   "shibboleth.firstTimeDesc":
-    "A real Shibboleth login releases your identity attributes (name, affiliation) to the platform, which creates your account automatically the first time it sees them — simulated here by just asking for that information directly.",
+    "A real Shibboleth login releases your identity attributes (name, affiliation) to the platform, which creates your account automatically the first time it sees them - simulated here by just asking for that information directly.",
   "shibboleth.fullName": "Full name",
   "shibboleth.affiliation": "Affiliation",
   "shibboleth.chairDepartment": "Chair",
@@ -98,16 +98,16 @@ const en = {
   "role.staff": "University staff",
   "role.company": "Company",
   "shibboleth.quickSignIn": "Mock sign-in for testing",
-  "shibboleth.quickSignInDesc": "Testing shortcut for this prototype only — would not exist in a real deployment.",
+  "shibboleth.quickSignInDesc": "Testing shortcut for this prototype only - would not exist in a real deployment.",
 
   "toast.signedIn": "Signed in",
-  "toast.companyRegistered": "Company registered — pending staff verification",
+  "toast.companyRegistered": "Company registered - pending staff verification",
   "toast.signInFailed": "Sign-in failed",
   "toast.registrationFailed": "Registration failed",
 
   "register.title": "Company access",
   "register.description":
-    "No TUM account needed. Already registered? Sign in below. New here? Register your company — staff confirm new companies before they can submit a project (NFR-1).",
+    "No TUM account needed. Already registered? Sign in below. New here? Register your company - staff confirm new companies before they can submit a project (NFR-1).",
   "register.alreadyRegistered": "Already registered",
   "register.workEmail": "Work email",
   "register.logIn": "Log in",
@@ -126,14 +126,14 @@ const en = {
 
   "page.staff.title": "Staff dashboard",
   "page.staff.description":
-    "Review incoming submissions and monitor every project study by status (FR-17) — the visibility the shared Excel sheet never had.",
+    "Review incoming submissions and monitor every project study by status (FR-17) - the visibility the shared Excel sheet never had.",
   "page.professor.title": "My supervision",
   "page.professor.description":
     "Topics matched to your expertise ({expertise}), the projects you supervise, and direct submissions for projects already agreed with a company.",
   "page.professor.noneSet": "none set",
   "page.professor.chair": "Chair",
   "page.professor.expertise": "Expertise",
-  "page.professor.noBio": "No bio set yet — added on first Shibboleth sign-in.",
+  "page.professor.noBio": "No bio set yet - added on first Shibboleth sign-in.",
   "page.professor.statSupervising": "Supervising",
   "page.professor.statFilled": "Completed",
   "page.professor.statMatched": "Matched topics",
@@ -146,11 +146,11 @@ const en = {
   "page.projects.title": "Projects",
   "page.guides.title": "Guides",
   "page.guides.description":
-    "Practical, TUM-specific guidance — like how to find an eligible supervisor for a company-submitted topic — instead of figuring it out through word of mouth.",
+    "Practical, TUM-specific guidance - like how to find an eligible supervisor for a company-submitted topic - instead of figuring it out through word of mouth.",
   "page.teammates.title": "Find teammates",
   "page.students.title": "Student directory",
   "page.students.description":
-    "Topics and profile data submitted by students (FR-4/FR-8), filterable by program (FR-9) — so companies and professors/supervisors can scout ahead instead of waiting for applications.",
+    "Topics and profile data submitted by students (FR-4/FR-8), filterable by program (FR-9) - so companies and professors/supervisors can scout ahead instead of waiting for applications.",
 
   "common.loading": "Loading…",
 } as const;
@@ -169,11 +169,11 @@ const de: Record<keyof typeof en, string> = {
   "nav.signedInSession": "Für diese Demo-Sitzung angemeldet.",
   "nav.language": "Sprache",
 
-  "footer.tagline": "Collaboration Platform — ein Prototyp für eine Projektthemen-Datenbank.",
+  "footer.tagline": "Collaboration Platform - ein Prototyp für eine Projektthemen-Datenbank.",
   "footer.submitProject": "Projekt einreichen",
 
   "home.heroSubtitle":
-    "Eine einheitliche Datenbank für von Unternehmen und Professor:innen/Betreuer:innen eingereichte Projektthemen — gemeinsam genutzt von Mitarbeitenden, Professor:innen/Betreuer:innen, Studierenden und Unternehmen, statt einer Tabelle, die sonst niemand einsehen kann.",
+    "Eine einheitliche Datenbank für von Unternehmen und Professor:innen/Betreuer:innen eingereichte Projektthemen - gemeinsam genutzt von Mitarbeitenden, Professor:innen/Betreuer:innen, Studierenden und Unternehmen, statt einer Tabelle, die sonst niemand einsehen kann.",
   "home.browseProjects": "Projekte durchsuchen",
   "home.submitProjectCompany": "Projekt einreichen (Unternehmen)",
   "home.notSignedInTitle": "Sie sind nicht angemeldet",
@@ -202,7 +202,7 @@ const de: Record<keyof typeof en, string> = {
 
   "home.feature.database.title": "Eine gemeinsame Datenbank",
   "home.feature.database.description":
-    "Mitarbeitende, Professor:innen/Betreuer:innen, Studierende und Unternehmen sehen alle dieselben Projektdaten und den Statusverlauf — keine Tabelle, die nur zwei Personen lesen können.",
+    "Mitarbeitende, Professor:innen/Betreuer:innen, Studierende und Unternehmen sehen alle dieselben Projektdaten und den Statusverlauf - keine Tabelle, die nur zwei Personen lesen können.",
   "home.feature.companySubmissions.title": "Unternehmenseinreichungen",
   "home.feature.companySubmissions.description":
     "Unternehmen reichen ein Thema über ein Portal ein (FR-2). Mitarbeitende genehmigen es, ein passender Professor / Betreuer übernimmt und veröffentlicht es (FR-6).",
@@ -211,7 +211,7 @@ const de: Record<keyof typeof en, string> = {
     "Studierende reichen ein Thema und Profil ein, das Professor:innen/Betreuer:innen und Unternehmen durchsuchen können (FR-4/FR-8/FR-9), und können sich als teamsuchend markieren (FR-10).",
   "home.feature.guides.title": "Leitfäden, die wirklich helfen",
   "home.feature.guides.description":
-    "Konkrete, TUM-spezifische Hinweise — etwa wie man eine passende Betreuung findet — statt Mundpropaganda.",
+    "Konkrete, TUM-spezifische Hinweise - etwa wie man eine passende Betreuung findet - statt Mundpropaganda.",
 
   "signIn.title": "Anmelden",
   "signIn.subtitle": "Wie Sie sich anmelden, hängt davon ab, wer Sie sind (FR-1/NFR-1).",
@@ -220,7 +220,7 @@ const de: Record<keyof typeof en, string> = {
   "signIn.tumMembers.action": "Weiter mit Shibboleth",
   "signIn.companies.title": "Unternehmen",
   "signIn.companies.description":
-    "Kein TUM-Konto nötig — melden Sie sich mit Ihrer geschäftlichen E-Mail an oder registrieren Sie ein neues Unternehmen. Mitarbeitende verifizieren neue Unternehmen, bevor sie ein Projekt einreichen können (NFR-1).",
+    "Kein TUM-Konto nötig - melden Sie sich mit Ihrer geschäftlichen E-Mail an oder registrieren Sie ein neues Unternehmen. Mitarbeitende verifizieren neue Unternehmen, bevor sie ein Projekt einreichen können (NFR-1).",
   "signIn.companies.action": "Anmelden oder registrieren",
   "signInPrompt.action": "Anmelden",
 
@@ -229,7 +229,7 @@ const de: Record<keyof typeof en, string> = {
     "In der Produktivumgebung würde dies zum echten Shibboleth-Identitätsanbieter der TUM weiterleiten (NFR-1). Dieser Prototyp hat kein institutionelles Backend, daher wird der Ablauf hier simuliert.",
   "shibboleth.firstTime": "Erste Anmeldung",
   "shibboleth.firstTimeDesc":
-    "Eine echte Shibboleth-Anmeldung gibt Ihre Identitätsattribute (Name, Zugehörigkeit) an die Plattform weiter, die daraus beim ersten Mal automatisch ein Konto anlegt — hier simuliert, indem diese Angaben direkt abgefragt werden.",
+    "Eine echte Shibboleth-Anmeldung gibt Ihre Identitätsattribute (Name, Zugehörigkeit) an die Plattform weiter, die daraus beim ersten Mal automatisch ein Konto anlegt - hier simuliert, indem diese Angaben direkt abgefragt werden.",
   "shibboleth.fullName": "Vollständiger Name",
   "shibboleth.affiliation": "Zugehörigkeit",
   "shibboleth.chairDepartment": "Lehrstuhl",
@@ -242,16 +242,16 @@ const de: Record<keyof typeof en, string> = {
   "role.staff": "Universitätsmitarbeiter:in",
   "role.company": "Unternehmen",
   "shibboleth.quickSignIn": "Mock-Anmeldung zu Testzwecken",
-  "shibboleth.quickSignInDesc": "Nur ein Testkürzel für diesen Prototyp — würde in einer echten Umgebung nicht existieren.",
+  "shibboleth.quickSignInDesc": "Nur ein Testkürzel für diesen Prototyp - würde in einer echten Umgebung nicht existieren.",
 
   "toast.signedIn": "Angemeldet",
-  "toast.companyRegistered": "Unternehmen registriert — Bestätigung durch Mitarbeitende steht aus",
+  "toast.companyRegistered": "Unternehmen registriert - Bestätigung durch Mitarbeitende steht aus",
   "toast.signInFailed": "Anmeldung fehlgeschlagen",
   "toast.registrationFailed": "Registrierung fehlgeschlagen",
 
   "register.title": "Unternehmenszugang",
   "register.description":
-    "Kein TUM-Konto nötig. Bereits registriert? Melden Sie sich unten an. Neu hier? Registrieren Sie Ihr Unternehmen — Mitarbeitende bestätigen neue Unternehmen, bevor sie ein Projekt einreichen können (NFR-1).",
+    "Kein TUM-Konto nötig. Bereits registriert? Melden Sie sich unten an. Neu hier? Registrieren Sie Ihr Unternehmen - Mitarbeitende bestätigen neue Unternehmen, bevor sie ein Projekt einreichen können (NFR-1).",
   "register.alreadyRegistered": "Bereits registriert",
   "register.workEmail": "Geschäftliche E-Mail",
   "register.logIn": "Anmelden",
@@ -271,14 +271,14 @@ const de: Record<keyof typeof en, string> = {
 
   "page.staff.title": "Mitarbeiter-Dashboard",
   "page.staff.description":
-    "Eingehende Einreichungen prüfen und jede Projektarbeit nach Status verfolgen (FR-17) — die Übersicht, die die gemeinsame Excel-Tabelle nie bot.",
+    "Eingehende Einreichungen prüfen und jede Projektarbeit nach Status verfolgen (FR-17) - die Übersicht, die die gemeinsame Excel-Tabelle nie bot.",
   "page.professor.title": "Meine Betreuung",
   "page.professor.description":
     "Themen passend zu Ihrem Fachgebiet ({expertise}), die von Ihnen betreuten Projekte sowie direkt mit einem Unternehmen vereinbarte Einreichungen.",
   "page.professor.noneSet": "nicht angegeben",
   "page.professor.chair": "Lehrstuhl",
   "page.professor.expertise": "Fachgebiet",
-  "page.professor.noBio": "Noch kein Kurzprofil hinterlegt — wird bei der ersten Shibboleth-Anmeldung angegeben.",
+  "page.professor.noBio": "Noch kein Kurzprofil hinterlegt - wird bei der ersten Shibboleth-Anmeldung angegeben.",
   "page.professor.statSupervising": "Betreut",
   "page.professor.statFilled": "Abgeschlossen",
   "page.professor.statMatched": "Passende Themen",
@@ -291,11 +291,11 @@ const de: Record<keyof typeof en, string> = {
   "page.projects.title": "Projekte",
   "page.guides.title": "Leitfäden",
   "page.guides.description":
-    "Konkrete, TUM-spezifische Hinweise — etwa wie man eine geeignete Betreuung für ein von einem Unternehmen eingereichtes Thema findet — statt Mundpropaganda.",
+    "Konkrete, TUM-spezifische Hinweise - etwa wie man eine geeignete Betreuung für ein von einem Unternehmen eingereichtes Thema findet - statt Mundpropaganda.",
   "page.teammates.title": "Teampartner finden",
   "page.students.title": "Studierendenverzeichnis",
   "page.students.description":
-    "Von Studierenden eingereichte Themen und Profildaten (FR-4/FR-8), filterbar nach Studiengang (FR-9) — damit Unternehmen und Professor:innen/Betreuer:innen vorab sichten können, statt auf Bewerbungen zu warten.",
+    "Von Studierenden eingereichte Themen und Profildaten (FR-4/FR-8), filterbar nach Studiengang (FR-9) - damit Unternehmen und Professor:innen/Betreuer:innen vorab sichten können, statt auf Bewerbungen zu warten.",
 
   "common.loading": "Wird geladen…",
 };

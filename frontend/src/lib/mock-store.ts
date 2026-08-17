@@ -34,7 +34,7 @@ import {
 /**
  * Fully client-side stand-in for a real backend, so the frontend can be built
  * as a static export (GitHub Pages) with no server at all. State is seeded
- * from mock-data.ts and persisted to localStorage so it survives reloads —
+ * from mock-data.ts and persisted to localStorage so it survives reloads -
  * there is no cross-device/user sync, which matches what's actually possible
  * without a real backend.
  */
@@ -253,7 +253,7 @@ export const store = {
   },
 
   // Access use case (FR-1/NFR-1): TUM members authenticate via Shibboleth,
-  // which we can't actually call from a static site — this simulates the
+  // which we can't actually call from a static site - this simulates the
   // round trip. The account is created just-in-time on first "login"
   // (mirroring how real Shibboleth-backed SPs provision accounts from IdP
   // attributes the first time they see a given identity).
@@ -316,7 +316,7 @@ export const store = {
     return { user, company };
   },
 
-  // A returning company signs back in with the email they registered with —
+  // A returning company signs back in with the email they registered with -
   // there's no password in this mock, so the email itself is the lookup key
   // (still more realistic than just picking your company off a public list).
   signInCompany(contactEmail: string): { user: User; company: Company } {
@@ -325,10 +325,10 @@ export const store = {
     const db = getState();
     const company = db.companies.find((c) => c.contact_email.toLowerCase() === email);
     if (!company) {
-      throw new ApiError(404, "No company registered with that email — register instead");
+      throw new ApiError(404, "No company registered with that email - register instead");
     }
     const user = db.users.find((u) => u.id === company.user_id);
-    if (!user) throw new ApiError(404, "No company registered with that email — register instead");
+    if (!user) throw new ApiError(404, "No company registered with that email - register instead");
     return { user, company };
   },
 
@@ -412,7 +412,7 @@ export const store = {
   },
 
   // FR-7: professor submits a directly agreed project, skipping the company
-  // portal and staff review — they're already both the supervisor and the
+  // portal and staff review - they're already both the supervisor and the
   // approver of this arrangement.
   submitDirectProject(
     userId: number | null,
@@ -773,7 +773,7 @@ export const store = {
 
   // Wipes all local demo data back to the seed dataset in mock-data.ts. Only
   // meaningful because this whole "database" is a localStorage stand-in
-  // (see the module comment above) — there's nothing server-side to reset.
+  // (see the module comment above) - there's nothing server-side to reset.
   resetDatabase(userId: number | null): void {
     const user = requireRole(userId, "staff");
     state = freshState();

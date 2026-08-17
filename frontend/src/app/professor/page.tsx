@@ -94,7 +94,7 @@ export default function ProfessorPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* FR-5: professor/supervisor profile — chair/expertise, sourced from institution login */}
+      {/* FR-5: professor/supervisor profile - chair/expertise, sourced from institution login */}
       <Card>
         <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex gap-4">
@@ -150,7 +150,7 @@ export default function ProfessorPage() {
                 <DialogHeader>
                   <DialogTitle>Submit a directly agreed project</DialogTitle>
                   <DialogDescription>
-                    For a project you've already agreed with a company directly — this skips the company
+                    For a project you've already agreed with a company directly - this skips the company
                     portal and staff review, and publishes immediately.
                   </DialogDescription>
                 </DialogHeader>
@@ -266,7 +266,7 @@ export default function ProfessorPage() {
       </Card>
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-medium">Matched to your expertise — ready to take on (FR-5/FR-6)</h2>
+        <h2 className="font-medium">Matched to your expertise - ready to take on (FR-5/FR-6)</h2>
         {matched.length === 0 && (
           <p className="text-sm text-muted-foreground">No approved, unsupervised topics match your expertise right now.</p>
         )}

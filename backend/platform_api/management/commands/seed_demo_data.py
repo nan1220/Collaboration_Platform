@@ -15,7 +15,7 @@ class Command(BaseCommand):
         User.objects.filter(is_superuser=False).delete()
 
         # Demo accounts are anonymized (S = student, P = professor, C = company,
-        # U = university staff) — no real names, for the privacy of the people
+        # U = university staff) - no real names, for the privacy of the people
         # who actually gave interviews for the SRS this prototype is based on.
         organizer = User.objects.create_user("u1", role=User.Role.ORGANIZER, first_name="Staff", last_name="U1")
         prof_mgmt = User.objects.create_user(
@@ -63,7 +63,7 @@ class Command(BaseCommand):
             category="Company projects", audience=Guide.Audience.STUDENT,
             body=(
                 "Company-submitted topics need a supervisor from the department the topic is tagged "
-                "with (usually School of Management for business topics) — a professor who has taught "
+                "with (usually School of Management for business topics) - a professor who has taught "
                 "you in an unrelated department may not be eligible, even if you know them. Check the "
                 "required department on the project page, then browse eligible professors."
             ),
