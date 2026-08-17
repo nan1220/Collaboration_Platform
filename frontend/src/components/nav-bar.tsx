@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import {
   FolderKanban,
   BookOpen,
@@ -15,6 +16,7 @@ import {
   LogOut,
   type LucideIcon,
 } from "lucide-react";
+import { api } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { useLanguage, roleLabel, type Locale } from "@/lib/i18n";
 import {
@@ -28,17 +30,32 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
+import type { Role } from "@/lib/types";
 
 const NAV_LINKS: { href: string; labelKey: Parameters<ReturnType<typeof useLanguage>["t"]>[0]; icon: LucideIcon; roles?: string[] }[] = [
   { href: "/projects", labelKey: "nav.projects", icon: FolderKanban },
   { href: "/students", labelKey: "nav.studentDirectory", icon: Users, roles: ["professor", "company", "staff"] },
   { href: "/teammates", labelKey: "nav.findTeammates", icon: Users, roles: ["student"] },
   { href: "/guides", labelKey: "nav.guides", icon: BookOpen },
-  { href: "/staff", labelKey: "nav.staffDashboard", icon: LayoutDashboard, roles: ["staff"] },
-  { href: "/professor", labelKey: "nav.mySupervision", icon: GraduationCap, roles: ["professor"] },
-  { href: "/company", labelKey: "nav.myCompany", icon: Building2, roles: ["company"] },
-  { href: "/student", labelKey: "nav.myApplications", icon: ClipboardList, roles: ["student"] },
 ];
+
+// The header's own brand link doubles as "go to my main page" once signed
+// in - staff/professor/company always land on their dashboard; a student
+// lands on their active (confirmed) project if they have one, else their
+// applications page.
+function mainPageFor(
+  role: Role,
+  activeProjectId: number | undefined,
+  t: ReturnType<typeof useLanguage>["t"]
+): { href: string; label: string; icon: LucideIcon } {
+  if (role === "staff") return { href: "/staff", label: t("nav.staffDashboard"), icon: LayoutDashboard };
+  if (role === "professor") return { href: "/professor", label: t("nav.mySupervision"), icon: GraduationCap };
+  if (role === "company") return { href: "/company", label: t("nav.myCompany"), icon: Building2 };
+  if (activeProjectId) {
+    return { href: `/projects/detail?id=${activeProjectId}`, label: t("nav.myCurrentProject"), icon: FolderKanban };
+  }
+  return { href: "/student", label: t("nav.myApplications"), icon: ClipboardList };
+}
 
 // trailingSlash is enabled (next.config.ts), so usePathname() returns paths
 // like "/projects/" - normalize before comparing against hrefs, and treat a
@@ -59,20 +76,46 @@ export function NavBar() {
     (link) => !link.roles || (currentUser && link.roles.includes(currentUser.role))
   );
 
+  const isStudent = currentUser?.role === "student";
+  const { data: myApplications } = useQuery({
+    queryKey: ["applications", "mine", currentUser?.id],
+    queryFn: () => api.applications(currentUser!.id),
+    enabled: isStudent,
+  });
+  const activeProject = myApplications?.find((a) => a.confirmed);
+  const mainPage = currentUser ? mainPageFor(currentUser.role, activeProject?.project.id, t) : null;
+  const MainPageIcon = mainPage?.icon;
+  const mainPageActive = mainPage && currentPath === normalize(mainPage.href.split("?")[0]);
+
   return (
     <header
       data-role={currentUser?.role}
       className="sticky top-0 z-40 bg-primary text-primary-foreground shadow-md shadow-black/10"
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link href={mainPage?.href ?? "/"} className="flex items-center gap-3 shrink-0">
           <span className="flex items-center rounded-[2px] bg-white px-2 py-1.5 shadow-sm">
             {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
             <img src={withBasePath("/tum-logo.svg")} alt="Technical University of Munich" className="h-5 w-auto" />
           </span>
           {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
           <img src={withBasePath("/logo-mark.svg")} alt="" aria-hidden="true" className="h-6 w-6" />
-          <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
+          {mainPage && MainPageIcon ? (
+            <span
+              aria-current={mainPageActive ? "page" : undefined}
+              className={cn(
+                "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-semibold transition-colors",
+                mainPageActive
+                  ? "bg-primary-foreground/15 text-primary-foreground shadow-inner"
+                  : "text-primary-foreground/90 hover:bg-primary-foreground/10"
+              )}
+            >
+              <MainPageIcon className="size-4" />
+              {mainPage.label}
+            </span>
+          ) : (
+            <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
+          )}
         </Link>
 
         <nav className="flex flex-1 flex-wrap items-center gap-0.5">
