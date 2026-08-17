@@ -34,13 +34,19 @@ export default function ProfilePage() {
   const isCompany = currentUser?.role === "company";
   const isProfessor = currentUser?.role === "professor";
 
-  const [bio, setBio] = useState("");
+  const [identity, setIdentity] = useState({ bio: "", department: "", expertise: "", program: "" });
   useEffect(() => {
-    setBio(currentUser?.bio ?? "");
-  }, [currentUser?.bio]);
+    if (!currentUser) return;
+    setIdentity({
+      bio: currentUser.bio,
+      department: currentUser.department,
+      expertise: currentUser.expertise,
+      program: currentUser.program,
+    });
+  }, [currentUser]);
 
-  const bioMutation = useMutation({
-    mutationFn: (value: string) => api.updateProfile(currentUser!.id, { bio: value }),
+  const identityMutation = useMutation({
+    mutationFn: (values: typeof identity) => api.updateProfile(currentUser!.id, values),
     onSuccess: () => {
       toast.success(t("toast.profileUpdated"));
       queryClient.invalidateQueries({ queryKey: ["demo-users"] });
@@ -95,21 +101,6 @@ export default function ProfilePage() {
               <h2 className="text-xl font-semibold tracking-tight">{currentUser.name}</h2>
               <div className="flex flex-wrap gap-1.5">
                 <Badge variant="secondary">{roleLabel(currentUser.role, t)}</Badge>
-                {isProfessor && (
-                  <>
-                    <Badge variant="outline">
-                      {t("page.professor.chair")}: {currentUser.department || t("page.professor.noneSet")}
-                    </Badge>
-                    <Badge variant="outline">
-                      {t("page.professor.expertise")}: {currentUser.expertise || t("page.professor.noneSet")}
-                    </Badge>
-                  </>
-                )}
-                {isStudent && currentUser.program && (
-                  <Badge variant="outline">
-                    {t("page.profile.program")}: {currentUser.program}
-                  </Badge>
-                )}
                 {isCompany && myCompany && (
                   <>
                     <Badge variant="outline">
@@ -121,32 +112,67 @@ export default function ProfilePage() {
                   </>
                 )}
               </div>
+              {isCompany && myCompany && (
+                <p className="text-sm text-muted-foreground">
+                  {t("page.profile.contact")}: {myCompany.contact_name} ({myCompany.contact_email})
+                </p>
+              )}
             </div>
+
+            {isProfessor && (
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="department">{t("page.professor.chair")}</Label>
+                  <Input
+                    id="department"
+                    placeholder="e.g. Chair of Digital Business"
+                    value={identity.department}
+                    onChange={(e) => setIdentity((i) => ({ ...i, department: e.target.value }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="expertise">{t("page.professor.expertise")}</Label>
+                  <Input
+                    id="expertise"
+                    placeholder="e.g. School of Management"
+                    value={identity.expertise}
+                    onChange={(e) => setIdentity((i) => ({ ...i, expertise: e.target.value }))}
+                  />
+                </div>
+              </div>
+            )}
+
+            {isStudent && (
+              <div className="flex flex-col gap-1.5">
+                <Label htmlFor="program">{t("page.profile.program")}</Label>
+                <Input
+                  id="program"
+                  placeholder="e.g. B.Sc. Management and Data Science"
+                  value={identity.program}
+                  onChange={(e) => setIdentity((i) => ({ ...i, program: e.target.value }))}
+                />
+              </div>
+            )}
 
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="bio">{t("page.profile.bioLabel")}</Label>
               <MarkdownEditor
                 id="bio"
                 rows={4}
-                value={bio}
-                onChange={setBio}
+                value={identity.bio}
+                onChange={(v) => setIdentity((i) => ({ ...i, bio: v }))}
                 placeholder={t("page.profile.bioPlaceholder")}
               />
-              <Button
-                className="self-start"
-                size="sm"
-                onClick={() => bioMutation.mutate(bio)}
-                disabled={bioMutation.isPending || bio === (currentUser.bio ?? "")}
-              >
-                {t("page.profile.saveBio")}
-              </Button>
             </div>
 
-            {isCompany && myCompany && (
-              <p className="text-sm text-muted-foreground">
-                {t("page.profile.contact")}: {myCompany.contact_name} ({myCompany.contact_email})
-              </p>
-            )}
+            <Button
+              className="self-start"
+              size="sm"
+              onClick={() => identityMutation.mutate(identity)}
+              disabled={identityMutation.isPending}
+            >
+              {t("page.profile.save")}
+            </Button>
           </div>
         </CardContent>
       </Card>

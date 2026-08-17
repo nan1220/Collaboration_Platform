@@ -252,12 +252,17 @@ export const store = {
     return getState().users.slice();
   },
 
-  // Every role has a profile now, not just professors - anyone can edit their
-  // own bio, regardless of role.
-  updateProfile(userId: number | null, targetId: number, body: { bio: string }): UserSummary {
+  // Every role has a profile now - anyone can edit their own bio and
+  // role-relevant details (chair/expertise for professors, program for
+  // students) from the /profile page, rather than only at first sign-in.
+  updateProfile(
+    userId: number | null,
+    targetId: number,
+    body: Partial<Pick<User, "bio" | "department" | "expertise" | "program">>
+  ): UserSummary {
     const user = requireUser(userId);
     if (user.id !== targetId) throw new ApiError(403, "Cannot edit another user's profile");
-    user.bio = body.bio;
+    Object.assign(user, body);
     persist();
     return toUserSummary(user);
   },
@@ -266,15 +271,10 @@ export const store = {
   // which we can't actually call from a static site - this simulates the
   // round trip. The account is created just-in-time on first "login"
   // (mirroring how real Shibboleth-backed SPs provision accounts from IdP
-  // attributes the first time they see a given identity).
-  signInInstitutional(body: {
-    name: string;
-    role: "student" | "professor" | "staff";
-    department: string;
-    program: string;
-    expertise: string;
-    bio: string;
-  }): User {
+  // attributes the first time they see a given identity). Only name and role
+  // come from the "IdP" here - chair, expertise, program and bio are
+  // self-declared profile content, filled in later on /profile.
+  signInInstitutional(body: { name: string; role: "student" | "professor" | "staff" }): User {
     if (!body.name.trim()) throw new ApiError(400, "Name is required");
     const db = getState();
     const user: User = {
@@ -282,10 +282,10 @@ export const store = {
       role: body.role,
       name: body.name.trim(),
       email: "",
-      department: body.role === "professor" ? body.department : "",
-      program: body.role === "student" ? body.program : "",
-      expertise: body.role === "professor" ? body.expertise : "",
-      bio: body.role === "professor" ? body.bio : "",
+      department: "",
+      program: "",
+      expertise: "",
+      bio: "",
     };
     db.users.push(user);
     persist();

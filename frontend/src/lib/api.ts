@@ -15,16 +15,13 @@ async function run<T>(fn: () => T): Promise<T> {
 export const api = {
   demoUsers: () => run(() => store.demoUsers()),
   users: (userId: number) => run(() => store.users(userId)),
-  updateProfile: (userId: number, body: { bio: string }) => run(() => store.updateProfile(userId, userId, body)),
+  updateProfile: (
+    userId: number,
+    body: Partial<{ bio: string; department: string; expertise: string; program: string }>
+  ) => run(() => store.updateProfile(userId, userId, body)),
 
-  signInInstitutional: (body: {
-    name: string;
-    role: "student" | "professor" | "staff";
-    department: string;
-    program: string;
-    expertise: string;
-    bio: string;
-  }) => run(() => store.signInInstitutional(body)),
+  signInInstitutional: (body: { name: string; role: "student" | "professor" | "staff" }) =>
+    run(() => store.signInInstitutional(body)),
   registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
     run(() => store.registerCompany(body)),
   signInCompany: (contactEmail: string) => run(() => store.signInCompany(contactEmail)),
