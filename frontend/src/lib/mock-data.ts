@@ -13,7 +13,7 @@ import type {
 //
 // Demo accounts are anonymized (S = student, P = professor, C = company,
 // U = university staff), mirroring the anonymized interview IDs already used
-// in the SRS traceability table — no real names, to protect the privacy of
+// in the SRS traceability table - no real names, to protect the privacy of
 // the people who actually gave interviews.
 
 export interface RawProject {
@@ -70,29 +70,33 @@ export interface RawCheckIn {
 export interface RawAuditLogEntry {
   id: number;
   actor_id: number | null;
-  entity: "project" | "guide" | "application" | "company";
+  entity: "project" | "guide" | "application" | "company" | "database";
   entity_id: string;
   action: string;
   timestamp: string;
 }
 
 export const SEED_USERS: User[] = [
-  { id: 1, role: "staff", name: "Staff U1", email: "u1@tum.de", department: "", program: "" },
+  { id: 1, role: "staff", name: "Staff U1", email: "u1@tum.de", department: "", program: "", expertise: "", bio: "" },
   {
     id: 2,
     role: "professor",
     name: "Professor P1",
     email: "p1@tum.de",
-    department: "School of Management",
+    department: "Chair of Digital Business",
     program: "",
+    expertise: "School of Management",
+    bio: "Researches digital business models and entrepreneurship. Supervises theses and project studies connecting management theory with real company data.",
   },
   {
     id: 3,
     role: "professor",
     name: "Professor P2",
     email: "p2@tum.de",
-    department: "Informatics",
+    department: "Chair of Software Engineering",
     program: "",
+    expertise: "Informatics",
+    bio: "Works on applied software engineering and data-driven systems. Enjoys supervising project studies that pair students with real-world engineering problems.",
   },
   {
     id: 4,
@@ -101,6 +105,8 @@ export const SEED_USERS: User[] = [
     email: "s1@tum.de",
     department: "",
     program: "B.Sc. Management and Data Science",
+    expertise: "",
+    bio: "",
   },
   {
     id: 5,
@@ -109,6 +115,8 @@ export const SEED_USERS: User[] = [
     email: "s2@tum.de",
     department: "",
     program: "B.Sc. Informatics",
+    expertise: "",
+    bio: "",
   },
   {
     id: 6,
@@ -117,6 +125,8 @@ export const SEED_USERS: User[] = [
     email: "contact@companyc1.example",
     department: "",
     program: "",
+    expertise: "",
+    bio: "",
   },
   {
     id: 7,
@@ -125,6 +135,8 @@ export const SEED_USERS: User[] = [
     email: "contact@companyc2.example",
     department: "",
     program: "",
+    expertise: "",
+    bio: "",
   },
 ];
 
@@ -166,7 +178,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "Access to two years of anonymized POS data, a technical contact for questions.",
     required_skills: "Python or R, basic time-series/statistics",
     group_size: 2,
-    status: "filled",
+    status: "ongoing",
     source: "company",
     company_id: 1,
     assigned_professor_id: 2,
@@ -215,7 +227,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "",
     required_skills: "TypeScript or Python, git/GitHub API familiarity",
     group_size: 2,
-    status: "ongoing",
+    status: "open",
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
@@ -240,7 +252,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "Sample sensor data, one technical point of contact.",
     required_skills: "Python, basic ML, dashboarding (e.g. Streamlit/Dash)",
     group_size: 2,
-    status: "ongoing",
+    status: "open",
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
@@ -355,14 +367,14 @@ export const SEED_GUIDES: Guide[] = [
 
 Not every professor/supervisor can supervise every topic: professors/supervisors see submissions matched
 to their own area of expertise (the **required expertise** tag on the project), and only take on projects
-that fit their chair. A professor/supervisor who has taught you in an unrelated area — even a familiar
-name — may not be a match for a School of Management topic.
+that fit their chair. A professor/supervisor who has taught you in an unrelated area - even a familiar
+name - may not be a match for a School of Management topic.
 
 ## Steps
 
 1. Check the *required expertise* tag on the project page. A project only becomes visible to students
    once a matching professor/supervisor has taken it on and published the listing.
-2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly —
+2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly -
    they can also submit a project they've agreed on directly with a company (no company portal step needed).
 3. If you're unsure who to contact, ask staff directly rather than guessing.
 
@@ -371,10 +383,10 @@ name — may not be a match for a School of Management topic.
 | Situation | What to do |
 | --- | --- |
 | Topic approved, no professor/supervisor yet | Wait, or mention it to a matching professor/supervisor yourself |
-| Topic still "pending" | Nothing to do yet — staff hasn't reviewed it |
+| Topic still "pending" | Nothing to do yet - staff hasn't reviewed it |
 | Not sure who supervises your area | Ask staff, don't guess |
 
-> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise —
+> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise -
 > expertise match matters more than familiarity.`,
     updated_by: 1,
     updated_at: "2026-05-01T09:00:00.000Z",
@@ -386,10 +398,11 @@ name — may not be a match for a School of Management topic.
     audience: "all",
     body: `Projects move through a fixed set of stages:
 
-- **Pending** — submitted, awaiting staff review
-- **Approved** — staff-approved, visible to professors/supervisors whose expertise matches
-- **Ongoing** — a professor/supervisor has taken on supervision and published the listing, now open for student applications
-- **Filled** — a student has confirmed the offer
+- **Pending** - submitted by a company, awaiting staff review
+- **Approved** - staff-approved, visible to professors/supervisors whose expertise matches for a supervision decision
+- **Open** - a professor/supervisor has taken on supervision and published the listing, now open for student applications
+- **Ongoing** - a student has confirmed the offer and is currently working on it
+- **Complete** - the final deliverable has been submitted
 
 Every change is logged, so staff, professors/supervisors and students can see the real state of a project
 instead of relying on a spreadsheet or word of mouth.`,

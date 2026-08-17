@@ -34,7 +34,7 @@ import {
 /**
  * Fully client-side stand-in for a real backend, so the frontend can be built
  * as a static export (GitHub Pages) with no server at all. State is seeded
- * from mock-data.ts and persisted to localStorage so it survives reloads —
+ * from mock-data.ts and persisted to localStorage so it survives reloads -
  * there is no cross-device/user sync, which matches what's actually possible
  * without a real backend.
  */
@@ -59,7 +59,7 @@ interface DbState {
 // Bumped whenever seed data shape or content changes meaningfully, so
 // anyone with older cached demo data (e.g. pre-anonymization names) gets a
 // fresh reseed instead of a stale localStorage copy.
-const STORAGE_KEY = "collab-platform-mock-db-v5";
+const STORAGE_KEY = "collab-platform-mock-db-v7";
 
 function freshState(): DbState {
   return {
@@ -113,8 +113,18 @@ function findUser(id: number): User | undefined {
 }
 
 function toUserSummary(user: User): UserSummary {
-  return { id: user.id, role: user.role, name: user.name, department: user.department, program: user.program };
+  return {
+    id: user.id,
+    role: user.role,
+    name: user.name,
+    department: user.department,
+    program: user.program,
+    expertise: user.expertise,
+    bio: user.bio,
+  };
 }
+
+const UNKNOWN_USER_SUMMARY = { department: "", program: "", expertise: "", bio: "" };
 
 function requireUser(userId: number | null | undefined): User {
   const user = userId ? findUser(userId) : undefined;
@@ -173,7 +183,9 @@ function toApplication(raw: RawApplication): Application {
   const project = getState().projects.find((p) => p.id === raw.project_id);
   return {
     id: raw.id,
-    student: student ? toUserSummary(student) : { id: raw.student_id, role: "student", name: "Unknown", department: "", program: "" },
+    student: student
+      ? toUserSummary(student)
+      : { id: raw.student_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     project: project ? toProject(project) : (undefined as never),
     professor_decision: raw.professor_decision,
     company_decision: raw.company_decision,
@@ -187,7 +199,9 @@ function toApplication(raw: RawApplication): Application {
 function toStudentProfile(raw: RawStudentProfile): StudentProfile {
   const student = findUser(raw.student_id);
   return {
-    student: student ? toUserSummary(student) : { id: raw.student_id, role: "student", name: "Unknown", department: "", program: "" },
+    student: student
+      ? toUserSummary(student)
+      : { id: raw.student_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     areas_of_expertise: raw.areas_of_expertise,
     research_interests: raw.research_interests,
     skills: raw.skills,
@@ -203,7 +217,9 @@ function toCheckIn(raw: RawCheckIn): CheckIn {
   return {
     id: raw.id,
     project_id: raw.project_id,
-    author: author ? toUserSummary(author) : { id: raw.author_id, role: "student", name: "Unknown", department: "", program: "" },
+    author: author
+      ? toUserSummary(author)
+      : { id: raw.author_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     note: raw.note,
     created_at: raw.created_at,
   };
@@ -236,17 +252,29 @@ export const store = {
     return getState().users.slice();
   },
 
+  // Every role has a profile now - anyone can edit their own bio and
+  // role-relevant details (chair/expertise for professors, program for
+  // students) from the /profile page, rather than only at first sign-in.
+  updateProfile(
+    userId: number | null,
+    targetId: number,
+    body: Partial<Pick<User, "bio" | "department" | "expertise" | "program">>
+  ): UserSummary {
+    const user = requireUser(userId);
+    if (user.id !== targetId) throw new ApiError(403, "Cannot edit another user's profile");
+    Object.assign(user, body);
+    persist();
+    return toUserSummary(user);
+  },
+
   // Access use case (FR-1/NFR-1): TUM members authenticate via Shibboleth,
-  // which we can't actually call from a static site — this simulates the
+  // which we can't actually call from a static site - this simulates the
   // round trip. The account is created just-in-time on first "login"
   // (mirroring how real Shibboleth-backed SPs provision accounts from IdP
-  // attributes the first time they see a given identity).
-  signInInstitutional(body: {
-    name: string;
-    role: "student" | "professor" | "staff";
-    department: string;
-    program: string;
-  }): User {
+  // attributes the first time they see a given identity). Only name and role
+  // come from the "IdP" here - chair, expertise, program and bio are
+  // self-declared profile content, filled in later on /profile.
+  signInInstitutional(body: { name: string; role: "student" | "professor" | "staff" }): User {
     if (!body.name.trim()) throw new ApiError(400, "Name is required");
     const db = getState();
     const user: User = {
@@ -254,8 +282,10 @@ export const store = {
       role: body.role,
       name: body.name.trim(),
       email: "",
-      department: body.role === "professor" ? body.department : "",
-      program: body.role === "student" ? body.program : "",
+      department: "",
+      program: "",
+      expertise: "",
+      bio: "",
     };
     db.users.push(user);
     persist();
@@ -278,6 +308,8 @@ export const store = {
       email: body.contact_email.trim(),
       department: "",
       program: "",
+      expertise: "",
+      bio: "",
     };
     db.users.push(user);
     const company: Company = {
@@ -294,7 +326,7 @@ export const store = {
     return { user, company };
   },
 
-  // A returning company signs back in with the email they registered with —
+  // A returning company signs back in with the email they registered with -
   // there's no password in this mock, so the email itself is the lookup key
   // (still more realistic than just picking your company off a public list).
   signInCompany(contactEmail: string): { user: User; company: Company } {
@@ -303,15 +335,15 @@ export const store = {
     const db = getState();
     const company = db.companies.find((c) => c.contact_email.toLowerCase() === email);
     if (!company) {
-      throw new ApiError(404, "No company registered with that email — register instead");
+      throw new ApiError(404, "No company registered with that email - register instead");
     }
     const user = db.users.find((u) => u.id === company.user_id);
-    if (!user) throw new ApiError(404, "No company registered with that email — register instead");
+    if (!user) throw new ApiError(404, "No company registered with that email - register instead");
     return { user, company };
   },
 
   // FR-11/FR-17: role-based visibility. Students/companies only ever see
-  // published listings (ongoing/filled); staff sees everything; professors
+  // published listings (open/ongoing/complete); staff sees everything; professors
   // see published listings plus approved-but-unclaimed ones to consider
   // taking on (FR-5).
   projects(
@@ -332,7 +364,7 @@ export const store = {
     }
 
     const user = userId ? findUser(userId) : undefined;
-    const PUBLISHED: ProjectStatus[] = ["ongoing", "filled"];
+    const PUBLISHED: ProjectStatus[] = ["open", "ongoing", "complete"];
     if (!user || user.role === "student" || user.role === "company") {
       // companies additionally get their own projects at any status via companyId param above
       if (!params.companyId) list = list.filter((p) => PUBLISHED.includes(p.status));
@@ -390,7 +422,7 @@ export const store = {
   },
 
   // FR-7: professor submits a directly agreed project, skipping the company
-  // portal and staff review — they're already both the supervisor and the
+  // portal and staff review - they're already both the supervisor and the
   // approver of this arrangement.
   submitDirectProject(
     userId: number | null,
@@ -417,7 +449,7 @@ export const store = {
       company_resources: "",
       required_skills: body.required_skills,
       group_size: body.group_size || 1,
-      status: "ongoing",
+      status: "open",
       source: "professor_direct",
       company_id: null,
       assigned_professor_id: user.id,
@@ -459,19 +491,36 @@ export const store = {
     if (project.status !== "approved") {
       throw new ApiError(400, "Only approved, unsupervised projects can be taken on");
     }
-    if (project.required_expertise && project.required_expertise !== user.department) {
+    if (project.required_expertise && project.required_expertise !== user.expertise) {
       throw new ApiError(403, `This topic requires expertise from ${project.required_expertise}`);
     }
     if (!body.chair_contact_info || !body.application_deadline) {
       throw new ApiError(400, "Chair contact info and an application deadline are required");
     }
     project.assigned_professor_id = user.id;
-    project.status = "ongoing";
+    project.status = "open";
     project.chair_contact_info = body.chair_contact_info;
     project.application_deadline = body.application_deadline;
     project.required_documents = body.required_documents;
     project.updated_at = now();
     recordAudit(user.id, "project", String(project.id), "took on supervision and published listing");
+    persist();
+    return toProject(project);
+  },
+
+  // Professor marks the project complete once the final deliverable has been submitted.
+  completeProject(userId: number | null, id: number): Project {
+    const user = requireRole(userId, "professor");
+    const project = requireRawProject(id);
+    if (project.assigned_professor_id !== user.id) {
+      throw new ApiError(403, "You do not supervise this project");
+    }
+    if (project.status !== "ongoing") {
+      throw new ApiError(400, "Only a project with a team currently working on it can be marked complete");
+    }
+    project.status = "complete";
+    project.updated_at = now();
+    recordAudit(user.id, "project", String(project.id), "marked complete");
     persist();
     return toProject(project);
   },
@@ -562,7 +611,7 @@ export const store = {
   applyToProject(userId: number | null, projectId: number, documentsNote: string): Application {
     const user = requireRole(userId, "student");
     const project = requireRawProject(projectId);
-    if (project.status !== "ongoing") {
+    if (project.status !== "open") {
       throw new ApiError(400, "This project is not currently open for applications");
     }
     const db = getState();
@@ -631,7 +680,7 @@ export const store = {
     }
 
     application.confirmed = true;
-    project.status = "filled";
+    project.status = "ongoing";
     project.updated_at = now();
 
     // withdraw the student's other pending/accepted applications
@@ -742,10 +791,27 @@ export const store = {
     return companyForUser(user.id);
   },
 
+  // Unrestricted lookup for viewing a company's public profile - the same
+  // name/contact/verified info is already visible to anyone browsing a
+  // project this company submitted.
+  companyByUserId(targetUserId: number): Company | null {
+    return getState().companies.find((c) => c.user_id === targetUserId) ?? null;
+  },
+
   auditLog(userId: number | null, projectId?: number): AuditLogEntry[] {
     requireRole(userId, "staff");
     let list = getState().auditLog.slice();
     if (projectId) list = list.filter((e) => e.entity_id === String(projectId));
     return list.reverse().map(toAuditLogEntry);
+  },
+
+  // Wipes all local demo data back to the seed dataset in mock-data.ts. Only
+  // meaningful because this whole "database" is a localStorage stand-in
+  // (see the module comment above) - there's nothing server-side to reset.
+  resetDatabase(userId: number | null): void {
+    const user = requireRole(userId, "staff");
+    state = freshState();
+    recordAudit(user.id, "database", "all", "reset");
+    persist();
   },
 };

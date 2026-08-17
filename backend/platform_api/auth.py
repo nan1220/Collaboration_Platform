@@ -5,7 +5,7 @@ from .models import User
 
 class DemoUserAuthentication(BaseAuthentication):
     """Mock/dev-only auth: trusts an X-User-Id header naming one of the seeded
-    demo users. There is no password or session — this exists so the frontend
+    demo users. There is no password or session - this exists so the frontend
     can demonstrate role-gated views without building real auth/SSO yet.
     """
 

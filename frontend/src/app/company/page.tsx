@@ -69,9 +69,9 @@ export default function CompanyPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8" data-role="company">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+        <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-semibold tracking-tight">{myCompany?.name}</h1>
             {myCompany && (
@@ -101,7 +101,7 @@ export default function CompanyPage() {
                 </div>
                 <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="c-expertise">Required area of expertise</Label>
+                    <Label htmlFor="c-expertise">Required expertise for supervision</Label>
                     <Input
                       id="c-expertise"
                       placeholder="e.g. School of Management, Informatics"

@@ -6,6 +6,8 @@ export interface UserSummary {
   name: string;
   department: string; // professor: chair; company/student/staff: unused
   program: string; // student: degree program (FR-9); unused otherwise
+  expertise: string; // FR-5: professor/supervisor profile "chair/expertise", sourced at login
+  bio: string; // every role has a profile; sourced at login for professors, editable by anyone on /profile
 }
 
 export interface User extends UserSummary {
@@ -24,22 +26,21 @@ export interface Company {
 // FR-7: professor-submitted projects skip the company portal entirely.
 export type ProjectSource = "company" | "professor_direct";
 
-// Design decision: the SRS's staff dashboard (FR-17) lists five buckets —
-// pending, approved, not yet supervised, ongoing, filled — but "not yet
-// supervised" and "approved" describe the same underlying record from two
-// angles (approved, with vs. without a professor attached yet). Rather than
-// invent a redundant stored state, "not yet supervised" is computed as
-// `status === "approved" && !assigned_professor`, and the four real stages
-// below map onto the use-case diagrams: pending (FR-3 queue) -> approved
-// (visible to professors, FR-5) -> ongoing (professor took it on and
-// published it, FR-6 — open for applications) -> filled (a student has been
-// confirmed, FR-16).
-export type ProjectStatus = "pending" | "approved" | "ongoing" | "filled" | "rejected";
+// FR-17 (per the 2026 management update) lists five buckets - Pending,
+// Approved, Open, Ongoing, Complete - plus Rejected, which the dashboard
+// doesn't surface as a monitored bucket but staff can still reach via
+// review. "not yet supervised" isn't a stored state; it's computed as
+// `status === "approved" && !assigned_professor`. The stages map onto the
+// use-case diagrams: pending (FR-3 queue) -> approved (visible to
+// professors, FR-5) -> open (professor took it on and published it, FR-6 -
+// open for applications) -> ongoing (a student has confirmed and is
+// currently working, FR-16) -> complete (final deliverable submitted).
+export type ProjectStatus = "pending" | "approved" | "open" | "ongoing" | "complete" | "rejected";
 
 export interface Project {
   id: number;
   title: string;
-  required_expertise: string; // FR-2 "Required Area of Expertise" — also used for FR-5 matching
+  required_expertise: string; // FR-2 "Required Area of Expertise" - also used for FR-5 matching
   background_objective: string; // FR-2 "Project Background and Objective"
   deliverable: string; // FR-2 "Project Deliverable"
   company_resources: string; // FR-2 "Available Company Resources"
@@ -110,7 +111,7 @@ export interface CheckIn {
 export interface AuditLogEntry {
   id: number;
   actor: UserSummary | null;
-  entity: "project" | "guide" | "application" | "company";
+  entity: "project" | "guide" | "application" | "company" | "database";
   entity_id: string;
   action: string;
   timestamp: string;
@@ -119,16 +120,18 @@ export interface AuditLogEntry {
 export const STATUS_LABELS: Record<ProjectStatus, string> = {
   pending: "Pending",
   approved: "Approved",
+  open: "Open",
   ongoing: "Ongoing",
-  filled: "Filled",
+  complete: "Complete",
   rejected: "Rejected",
 };
 
 export const ALLOWED_TRANSITIONS: Record<ProjectStatus, ProjectStatus[]> = {
   pending: ["approved", "rejected"],
-  approved: ["rejected"], // approved -> ongoing happens only via the take-on flow (FR-6)
-  ongoing: [],
-  filled: [],
+  approved: ["rejected"], // approved -> open happens only via the take-on flow (FR-6)
+  open: [], // open -> ongoing happens only via the offer-confirmation flow (FR-16)
+  ongoing: [], // ongoing -> complete happens only via the mark-complete flow
+  complete: [],
   rejected: [],
 };
 
@@ -140,7 +143,7 @@ export type ApplicationOverallStatus = "pending" | "accepted" | "rejected" | "co
 
 // FR-15 dual decision + FR-16 confirmation, collapsed into one status for display.
 // A professor_direct project has no company, so the company side is treated as
-// automatically satisfied — the professor's decision is the only one that counts.
+// automatically satisfied - the professor's decision is the only one that counts.
 export function applicationStatus(
   app: Pick<Application, "professor_decision" | "company_decision" | "confirmed" | "withdrawn">,
   hasCompany: boolean
@@ -157,7 +160,7 @@ export function applicationStatus(
 
 export const APPLICATION_STATUS_LABELS: Record<ApplicationOverallStatus, string> = {
   pending: "Pending decision",
-  accepted: "Offer made — awaiting confirmation",
+  accepted: "Offer made - awaiting confirmation",
   rejected: "Rejected",
   confirmed: "Confirmed",
   withdrawn: "Withdrawn",

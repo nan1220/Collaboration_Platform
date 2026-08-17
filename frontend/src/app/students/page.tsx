@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
@@ -61,7 +62,11 @@ export default function StudentDirectoryPage() {
                 {profile.student.program && <Badge variant="outline">{profile.student.program}</Badge>}
                 {profile.looking_for_team && <Badge variant="secondary">Seeking teammates</Badge>}
               </div>
-              <CardTitle className="mt-1">{profile.student.name}</CardTitle>
+              <CardTitle className="mt-1">
+                <Link href={`/profile/detail?id=${profile.student.id}`} className="hover:underline">
+                  {profile.student.name}
+                </Link>
+              </CardTitle>
               <CardDescription>{profile.areas_of_expertise || "No areas of expertise listed"}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-1 text-sm text-muted-foreground">

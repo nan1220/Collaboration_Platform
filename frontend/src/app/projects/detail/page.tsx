@@ -7,7 +7,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
-import { StatusBadge } from "@/components/status-badge";
+import { StatusProgress } from "@/components/status-progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,7 +67,8 @@ function ProjectDetail() {
   const { data: checkIns = [] } = useQuery({
     queryKey: ["check-ins", projectId],
     queryFn: () => api.checkIns(projectId),
-    enabled: !!project && (project.status === "filled" || project.status === "ongoing"),
+    enabled:
+      !!project && (project.status === "open" || project.status === "ongoing" || project.status === "complete"),
   });
 
   const invalidateProject = () => {
@@ -92,7 +93,7 @@ function ProjectDetail() {
   const takeOnMutation = useMutation({
     mutationFn: () => api.takeOnSupervision(currentUser!.id, projectId, takeOnForm),
     onSuccess: () => {
-      toast.success("Supervision taken on — listing published to students");
+      toast.success("Supervision taken on - listing published to students");
       invalidateProject();
     },
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to take on supervision"),
@@ -120,10 +121,19 @@ function ProjectDetail() {
   const confirmMutation = useMutation({
     mutationFn: (applicationId: number) => api.confirmOffer(currentUser!.id, applicationId),
     onSuccess: () => {
-      toast.success("Offer confirmed — project marked filled");
+      toast.success("Offer confirmed - project marked ongoing");
       invalidateApplications();
     },
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to confirm offer"),
+  });
+
+  const completeMutation = useMutation({
+    mutationFn: () => api.completeProject(currentUser!.id, projectId),
+    onSuccess: () => {
+      toast.success("Project marked complete");
+      invalidateProject();
+    },
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to mark project complete"),
   });
 
   const checkInMutation = useMutation({
@@ -148,26 +158,28 @@ function ProjectDetail() {
   const canTakeOn =
     currentUser?.role === "professor" &&
     project.status === "approved" &&
-    (!project.required_expertise || project.required_expertise === currentUser.department);
+    (!project.required_expertise || project.required_expertise === currentUser.expertise);
 
   const myApplicationHere = myApplications.find((a) => a.project.id === projectId);
-  const canApply = currentUser?.role === "student" && project.status === "ongoing" && !myApplicationHere;
+  const canApply = currentUser?.role === "student" && project.status === "open" && !myApplicationHere;
 
   const canCheckIn =
-    (isAssignedProfessor && project.status === "filled") ||
+    (isAssignedProfessor && project.status === "ongoing") ||
     (currentUser?.role === "student" && myApplicationHere?.confirmed);
+
+  const canMarkComplete = isAssignedProfessor && project.status === "ongoing";
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <StatusBadge status={project.status} />
-            {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
-            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
-            {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
-          </div>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h1>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
+          <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
+          {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight">{project.title}</h1>
+        <div className="max-w-xl">
+          <StatusProgress status={project.status} />
         </div>
       </div>
 
@@ -206,7 +218,10 @@ function ProjectDetail() {
             {project.company && (
               <div>
                 <span className="font-medium text-foreground">Company: </span>
-                {project.company.name} ({project.company.contact_name})
+                <Link href={`/profile/detail?id=${project.company.user_id}`} className="hover:underline">
+                  {project.company.name}
+                </Link>{" "}
+                ({project.company.contact_name})
                 {!project.company.verified && (
                   <Badge variant="outline" className="ml-2">
                     Unverified
@@ -217,7 +232,9 @@ function ProjectDetail() {
             {project.assigned_professor && (
               <div>
                 <span className="font-medium text-foreground">Supervisor: </span>
-                {project.assigned_professor.name}
+                <Link href={`/profile/detail?id=${project.assigned_professor.id}`} className="hover:underline">
+                  {project.assigned_professor.name}
+                </Link>
               </div>
             )}
             {project.application_deadline && (
@@ -311,7 +328,7 @@ function ProjectDetail() {
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="docsNote">Documents (simulated upload — list filenames)</Label>
+              <Label htmlFor="docsNote">Documents (simulated upload - list filenames)</Label>
               <Input
                 id="docsNote"
                 placeholder="cv.pdf, transcript.pdf"
@@ -353,7 +370,9 @@ function ProjectDetail() {
               return (
                 <div key={a.id} className="flex flex-col gap-2 border-b pb-3 last:border-0 last:pb-0">
                   <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-                    <span className="font-medium">{a.student.name}</span>
+                    <Link href={`/profile/detail?id=${a.student.id}`} className="font-medium hover:underline">
+                      {a.student.name}
+                    </Link>
                     <Badge variant="outline">{APPLICATION_STATUS_LABELS[overall]}</Badge>
                   </div>
                   {(isAssignedProfessor || isOwningCompany || isStaff) && (
@@ -408,39 +427,54 @@ function ProjectDetail() {
         </Card>
       )}
 
-      {(project.status === "filled" || project.status === "ongoing") && (isAssignedProfessor || myApplicationHere?.confirmed) && (
-        <Card>
+      {(project.status === "open" || project.status === "ongoing" || project.status === "complete") &&
+        (isAssignedProfessor || myApplicationHere?.confirmed) && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Progress check-ins (FR-14)</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-3">
+              {checkIns.length === 0 && <p className="text-sm text-muted-foreground">No check-ins yet.</p>}
+              {checkIns.map((c) => (
+                <div key={c.id} className="border-b pb-2 text-sm last:border-0">
+                  <p>{c.note}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {c.author.name} · {new Date(c.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
+              {canCheckIn && (
+                <div className="flex flex-col gap-2">
+                  <Textarea
+                    rows={2}
+                    placeholder="Short update…"
+                    value={checkInNote}
+                    onChange={(e) => setCheckInNote(e.target.value)}
+                  />
+                  <Button
+                    size="sm"
+                    className="w-fit"
+                    onClick={() => checkInMutation.mutate()}
+                    disabled={checkInMutation.isPending || !checkInNote}
+                  >
+                    Add check-in
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+      {canMarkComplete && (
+        <Card className="border-l-4 border-l-primary">
           <CardHeader>
-            <CardTitle className="text-base">Progress check-ins (FR-14)</CardTitle>
+            <CardTitle className="text-base">Mark project complete</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            {checkIns.length === 0 && <p className="text-sm text-muted-foreground">No check-ins yet.</p>}
-            {checkIns.map((c) => (
-              <div key={c.id} className="border-b pb-2 text-sm last:border-0">
-                <p>{c.note}</p>
-                <p className="text-xs text-muted-foreground">
-                  {c.author.name} · {new Date(c.created_at).toLocaleDateString()}
-                </p>
-              </div>
-            ))}
-            {canCheckIn && (
-              <div className="flex flex-col gap-2">
-                <Textarea
-                  rows={2}
-                  placeholder="Short update…"
-                  value={checkInNote}
-                  onChange={(e) => setCheckInNote(e.target.value)}
-                />
-                <Button
-                  size="sm"
-                  className="w-fit"
-                  onClick={() => checkInMutation.mutate()}
-                  disabled={checkInMutation.isPending || !checkInNote}
-                >
-                  Add check-in
-                </Button>
-              </div>
-            )}
+            <p className="text-sm text-muted-foreground">Once the final deliverable has been submitted, mark this project complete.</p>
+            <Button className="w-fit" onClick={() => completeMutation.mutate()} disabled={completeMutation.isPending}>
+              Mark as complete
+            </Button>
           </CardContent>
         </Card>
       )}

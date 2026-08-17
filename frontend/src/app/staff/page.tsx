@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { RotateCcw } from "lucide-react";
 import { api, ApiError } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { ProjectCard } from "@/components/project-card";
@@ -11,6 +13,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
 import { useLanguage, roleLabel } from "@/lib/i18n";
 import { isNotYetSupervised } from "@/lib/types";
@@ -19,8 +31,9 @@ const MONITOR_TABS = [
   { value: "pending", label: "Pending" },
   { value: "approved", label: "Approved" },
   { value: "not_yet_supervised", label: "Not yet supervised" },
+  { value: "open", label: "Open" },
   { value: "ongoing", label: "Ongoing" },
-  { value: "filled", label: "Filled" },
+  { value: "complete", label: "Complete" },
 ] as const;
 
 export default function StaffPage() {
@@ -29,6 +42,7 @@ export default function StaffPage() {
   const queryClient = useQueryClient();
   const enabled = currentUser?.role === "staff";
   const [q, setQ] = useState("");
+  const [resetOpen, setResetOpen] = useState(false);
 
   // FR-17: monitor all project studies by status.
   const { data: allProjects = [] } = useQuery({
@@ -61,13 +75,24 @@ export default function StaffPage() {
     onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to verify company"),
   });
 
+  const resetMutation = useMutation({
+    mutationFn: () => api.resetDatabase(currentUser!.id),
+    onSuccess: () => {
+      toast.success("Database reset to seed data");
+      setResetOpen(false);
+      queryClient.invalidateQueries();
+    },
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to reset database"),
+  });
+
   const byBucket = useMemo(() => {
     const pending = allProjects.filter((p) => p.status === "pending");
     const approved = allProjects.filter((p) => p.status === "approved" && !isNotYetSupervised(p));
     const notYetSupervised = allProjects.filter(isNotYetSupervised);
+    const open = allProjects.filter((p) => p.status === "open");
     const ongoing = allProjects.filter((p) => p.status === "ongoing");
-    const filled = allProjects.filter((p) => p.status === "filled");
-    return { pending, approved, not_yet_supervised: notYetSupervised, ongoing, filled };
+    const complete = allProjects.filter((p) => p.status === "complete");
+    return { pending, approved, not_yet_supervised: notYetSupervised, open, ongoing, complete };
   }, [allProjects]);
 
   if (!currentUser || currentUser.role !== "staff") {
@@ -75,10 +100,38 @@ export default function StaffPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">{t("page.staff.title")}</h1>
-        <p className="mt-1 text-muted-foreground">{t("page.staff.description")}</p>
+    <div className="flex flex-col gap-6" data-role="staff">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
+          <h1 className="text-2xl font-semibold tracking-tight">{t("page.staff.title")}</h1>
+          <p className="mt-1 text-muted-foreground">{t("page.staff.description")}</p>
+        </div>
+
+        <Dialog open={resetOpen} onOpenChange={setResetOpen}>
+          <DialogTrigger
+            render={
+              <Button variant="destructive" size="sm" className="gap-1.5">
+                <RotateCcw className="size-4" />
+                Reset database
+              </Button>
+            }
+          />
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Reset the database?</DialogTitle>
+              <DialogDescription>
+                This wipes every project, application, company, guide edit and audit log entry back to the seed
+                demo data. Everyone using this browser loses their changes. This can&apos;t be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <DialogClose render={<Button variant="outline">Cancel</Button>} />
+              <Button variant="destructive" onClick={() => resetMutation.mutate()} disabled={resetMutation.isPending}>
+                {resetMutation.isPending ? "Resetting…" : "Reset database"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <Tabs defaultValue="pending">
@@ -114,7 +167,9 @@ export default function StaffPage() {
               {companies.map((company) => (
                 <div key={company.id} className="flex items-center justify-between border-b py-2 text-sm last:border-0">
                   <span>
-                    {company.name}{" "}
+                    <Link href={`/profile/detail?id=${company.user_id}`} className="hover:underline">
+                      {company.name}
+                    </Link>{" "}
                     <span className="text-muted-foreground">
                       ({company.contact_name}, {company.contact_email})
                     </span>
@@ -148,11 +203,15 @@ export default function StaffPage() {
               {users.map((user) => (
                 <div key={user.id} className="flex items-center justify-between border-b py-2 text-sm last:border-0">
                   <span>
-                    {user.name} <span className="text-muted-foreground">({user.email})</span>
+                    <Link href={`/profile/detail?id=${user.id}`} className="hover:underline">
+                      {user.name}
+                    </Link>{" "}
+                    <span className="text-muted-foreground">({user.email})</span>
                   </span>
                   <div className="flex gap-2">
                     <Badge variant="secondary">{roleLabel(user.role, t)}</Badge>
                     {user.department && <Badge variant="outline">{user.department}</Badge>}
+                    {user.expertise && <Badge variant="outline">{user.expertise}</Badge>}
                     {user.program && <Badge variant="outline">{user.program}</Badge>}
                   </div>
                 </div>

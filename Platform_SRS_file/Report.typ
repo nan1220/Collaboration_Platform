@@ -803,7 +803,7 @@ Source: C2 (directly suggested this feature), C5, S12
 Professor profiles will display their chair and area of expertise, sourced from institution logins. When logged in, professors will see project entries matched to their expertise.  \
 Source: P3, P4, U1, U2  
 === FR-6, Professor Supervision Take-on (Must)  
-To take on a project — either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) — the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
+To take on a project - either submitted by a company (FR-2) or a student topic accepted by a company (FR-4) - the professor provides chair contact information, application deadlines, and required documents. Once submitted, the project will be visible to students.\
 Source: Process Documentation 
 
 
@@ -847,9 +847,14 @@ If a student is accepted to multiple projects, they will manually confirm one an
 Source: Process Documentation 
 
 == Administrative Staff Features
-=== FR-17, Staff Master Dashboard (Should)  
-Staff will be able to view all project studies across every status: pending, approved, not yet supervised, ongoing, and filled.  \
-Source: U1, U2  
+=== FR-17, Staff Master Dashboard (Should)
+Staff will be able to view all project studies across every status: Pending, Approved, Open, Ongoing, and Complete.  \
+- *Pending:* submitted by companies but not yet approved by staff.
+- *Approved:* passed staff review and visible to professors for a supervision decision.
+- *Open:* taken on by a supervisor and available for students to view and apply to.
+- *Ongoing:* has a student team currently working on it.
+- *Complete:* completed and the final deliverable submitted.  \
+Source: U1, U2
 === FR-18, Filter Incoming Submissions (Should)  
 Staff will have the ability to filter and search incoming company submissions during reviews. The volume of submissions will scale with FR-3. Filtering will ensure that manual reviews do not become bottlenecks.  \
 Source: Process Documentation  

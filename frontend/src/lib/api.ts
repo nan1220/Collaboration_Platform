@@ -15,13 +15,13 @@ async function run<T>(fn: () => T): Promise<T> {
 export const api = {
   demoUsers: () => run(() => store.demoUsers()),
   users: (userId: number) => run(() => store.users(userId)),
+  updateProfile: (
+    userId: number,
+    body: Partial<{ bio: string; department: string; expertise: string; program: string }>
+  ) => run(() => store.updateProfile(userId, userId, body)),
 
-  signInInstitutional: (body: {
-    name: string;
-    role: "student" | "professor" | "staff";
-    department: string;
-    program: string;
-  }) => run(() => store.signInInstitutional(body)),
+  signInInstitutional: (body: { name: string; role: "student" | "professor" | "staff" }) =>
+    run(() => store.signInInstitutional(body)),
   registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
     run(() => store.registerCompany(body)),
   signInCompany: (contactEmail: string) => run(() => store.signInCompany(contactEmail)),
@@ -67,6 +67,8 @@ export const api = {
     body: { chair_contact_info: string; application_deadline: string; required_documents: string }
   ) => run(() => store.takeOnSupervision(userId, id, body)),
 
+  completeProject: (userId: number, id: number) => run(() => store.completeProject(userId, id)),
+
   guides: () => run(() => store.guides()),
   guide: (slug: string) => run(() => store.guide(slug)),
   createGuide: (
@@ -105,7 +107,10 @@ export const api = {
 
   companies: (userId: number) => run(() => store.companies(userId)),
   myCompany: (userId: number) => run(() => store.myCompany(userId)),
+  companyByUserId: (userId: number) => run(() => store.companyByUserId(userId)),
   verifyCompany: (userId: number, companyId: number) => run(() => store.verifyCompany(userId, companyId)),
 
   auditLog: (userId: number, projectId?: number) => run(() => store.auditLog(userId, projectId)),
+
+  resetDatabase: (userId: number) => run(() => store.resetDatabase(userId)),
 };

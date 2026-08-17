@@ -4,15 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
 import { cn } from "@/lib/utils";
 import { stripMarkdown } from "@/components/markdown";
-import { isNotYetSupervised, type Project, type ProjectStatus } from "@/lib/types";
-
-const ACCENT_BORDER: Record<ProjectStatus, string> = {
-  pending: "border-l-border",
-  approved: "border-l-accent",
-  ongoing: "border-l-primary",
-  filled: "border-l-success",
-  rejected: "border-l-destructive",
-};
+import { isNotYetSupervised, type Project } from "@/lib/types";
+import { STATUS_BORDER_CLASS } from "@/lib/status-colors";
 
 const SOURCE_LABELS: Record<Project["source"], string> = {
   company: "Company",
@@ -25,7 +18,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <Card
         className={cn(
           "h-full border-l-4 transition-all hover:-translate-y-0.5 hover:shadow-md",
-          ACCENT_BORDER[project.status]
+          STATUS_BORDER_CLASS[project.status]
         )}
       >
         <CardHeader>

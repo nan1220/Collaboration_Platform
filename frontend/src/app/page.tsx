@@ -1,49 +1,28 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import { Database, BookOpenCheck, Users, Building2, type LucideIcon } from "lucide-react";
+import { api } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { useLanguage } from "@/lib/i18n";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 type TKey = Parameters<ReturnType<typeof useLanguage>["t"]>[0];
 
-const ROLE_COPY: Record<string, { titleKey: TKey; descriptionKey: TKey; links: { href: string; labelKey: TKey }[] }> = {
-  staff: {
-    titleKey: "home.role.staff.title",
-    descriptionKey: "home.role.staff.description",
-    links: [
-      { href: "/staff", labelKey: "home.role.staff.link1" },
-      { href: "/projects", labelKey: "home.role.staff.link2" },
-    ],
-  },
-  professor: {
-    titleKey: "home.role.professor.title",
-    descriptionKey: "home.role.professor.description",
-    links: [
-      { href: "/professor", labelKey: "home.role.professor.link1" },
-      { href: "/students", labelKey: "home.role.professor.link2" },
-    ],
-  },
-  company: {
-    titleKey: "home.role.company.title",
-    descriptionKey: "home.role.company.description",
-    links: [
-      { href: "/company", labelKey: "home.role.company.link1" },
-      { href: "/students", labelKey: "home.role.company.link2" },
-    ],
-  },
-  student: {
-    titleKey: "home.role.student.title",
-    descriptionKey: "home.role.student.description",
-    links: [
-      { href: "/projects", labelKey: "home.role.student.link1" },
-      { href: "/student", labelKey: "home.role.student.link2" },
-      { href: "/guides", labelKey: "home.role.student.link3" },
-    ],
-  },
+// Signed-in users don't need the pitch for the platform they're already
+// using - drop them straight into what they'd actually do next. Students go
+// to their active (confirmed) project if they have one, since that's the
+// single most relevant thing to see; everyone else goes to their dashboard.
+const ROLE_HOME: Record<"staff" | "professor" | "company", string> = {
+  staff: "/staff",
+  professor: "/professor",
+  company: "/company",
 };
 
 const FEATURES: { icon: LucideIcon; titleKey: TKey; descriptionKey: TKey; href: string }[] = [
@@ -76,7 +55,29 @@ const FEATURES: { icon: LucideIcon; titleKey: TKey; descriptionKey: TKey; href: 
 export default function Home() {
   const { currentUser } = useCurrentUser();
   const { t } = useLanguage();
-  const copy = currentUser ? ROLE_COPY[currentUser.role] : null;
+  const router = useRouter();
+  const isStudent = currentUser?.role === "student";
+
+  const { data: applications, isLoading: applicationsLoading } = useQuery({
+    queryKey: ["applications", "mine", currentUser?.id],
+    queryFn: () => api.applications(currentUser!.id),
+    enabled: isStudent,
+  });
+
+  useEffect(() => {
+    if (!currentUser) return;
+    if (currentUser.role !== "student") {
+      router.replace(ROLE_HOME[currentUser.role]);
+      return;
+    }
+    if (applicationsLoading) return;
+    const active = applications?.find((a) => a.confirmed);
+    router.replace(active ? `/projects/detail?id=${active.project.id}` : "/student");
+  }, [currentUser, applicationsLoading, applications, router]);
+
+  if (currentUser) {
+    return <p className="text-muted-foreground">{t("common.loading")}</p>;
+  }
 
   return (
     <div className="flex flex-col gap-10">
@@ -90,7 +91,11 @@ export default function Home() {
           className="pointer-events-none absolute -bottom-20 left-1/4 size-72 rounded-full bg-white/5 blur-3xl"
         />
         <div className="relative flex max-w-2xl flex-col gap-4">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Collaboration Platform</h1>
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
+            <img src={withBasePath("/logo-mark.svg")} alt="" aria-hidden="true" className="size-10 sm:size-12" />
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Collaboration Platform</h1>
+          </div>
           <p className="text-primary-foreground/85 sm:text-lg">{t("home.heroSubtitle")}</p>
           <div className="mt-2 flex flex-wrap gap-3">
             <Link href="/projects" className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}>
@@ -106,35 +111,17 @@ export default function Home() {
         </div>
       </section>
 
-      {!currentUser && (
-        <Card className="border-l-4 border-l-accent">
-          <CardHeader>
-            <CardTitle>{t("home.notSignedInTitle")}</CardTitle>
-            <CardDescription>{t("home.notSignedInDesc")}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link href="/login" className={cn(buttonVariants({ variant: "default" }))}>
-              {t("nav.signIn")}
-            </Link>
-          </CardContent>
-        </Card>
-      )}
-
-      {copy && (
-        <Card className="border-l-4 border-l-primary">
-          <CardHeader>
-            <CardTitle>{t(copy.titleKey)}</CardTitle>
-            <CardDescription>{t(copy.descriptionKey)}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {copy.links.map((link) => (
-              <Link key={link.href} href={link.href} className={cn(buttonVariants({ variant: "default" }))}>
-                {t(link.labelKey)}
-              </Link>
-            ))}
-          </CardContent>
-        </Card>
-      )}
+      <Card className="border-l-4 border-l-accent">
+        <CardHeader>
+          <CardTitle>{t("home.notSignedInTitle")}</CardTitle>
+          <CardDescription>{t("home.notSignedInDesc")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Link href="/login" className={cn(buttonVariants({ variant: "default" }))}>
+            {t("nav.signIn")}
+          </Link>
+        </CardContent>
+      </Card>
 
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold tracking-tight">{t("home.whatThisReplaces")}</h2>

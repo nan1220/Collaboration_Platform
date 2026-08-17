@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/i18n";
 /**
  * Wraps a demo/testing-only shortcut (e.g. instant account switching that
  * bypasses the "real" mocked login flow) so it reads as clearly separate
- * from the interface a real deployment would have — not just another
+ * from the interface a real deployment would have - not just another
  * feature of the product.
  */
 export function DevShortcut({ title, children }: { title: string; children: React.ReactNode }) {
