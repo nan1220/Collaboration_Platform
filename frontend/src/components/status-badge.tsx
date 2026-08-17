@@ -4,8 +4,9 @@ import { STATUS_LABELS, type ProjectStatus } from "@/lib/types";
 const VARIANTS: Record<ProjectStatus, "default" | "secondary" | "success" | "destructive" | "outline"> = {
   pending: "outline",
   approved: "secondary",
+  open: "secondary",
   ongoing: "default",
-  filled: "success",
+  complete: "success",
   rejected: "destructive",
 };
 

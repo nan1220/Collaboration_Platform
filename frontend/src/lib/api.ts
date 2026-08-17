@@ -69,6 +69,8 @@ export const api = {
     body: { chair_contact_info: string; application_deadline: string; required_documents: string }
   ) => run(() => store.takeOnSupervision(userId, id, body)),
 
+  completeProject: (userId: number, id: number) => run(() => store.completeProject(userId, id)),
+
   guides: () => run(() => store.guides()),
   guide: (slug: string) => run(() => store.guide(slug)),
   createGuide: (

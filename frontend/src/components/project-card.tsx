@@ -9,8 +9,9 @@ import { isNotYetSupervised, type Project, type ProjectStatus } from "@/lib/type
 const ACCENT_BORDER: Record<ProjectStatus, string> = {
   pending: "border-l-border",
   approved: "border-l-accent",
+  open: "border-l-accent",
   ongoing: "border-l-primary",
-  filled: "border-l-success",
+  complete: "border-l-success",
   rejected: "border-l-destructive",
 };
 

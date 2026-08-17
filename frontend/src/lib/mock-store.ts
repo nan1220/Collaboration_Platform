@@ -333,7 +333,7 @@ export const store = {
   },
 
   // FR-11/FR-17: role-based visibility. Students/companies only ever see
-  // published listings (ongoing/filled); staff sees everything; professors
+  // published listings (open/ongoing/complete); staff sees everything; professors
   // see published listings plus approved-but-unclaimed ones to consider
   // taking on (FR-5).
   projects(
@@ -354,7 +354,7 @@ export const store = {
     }
 
     const user = userId ? findUser(userId) : undefined;
-    const PUBLISHED: ProjectStatus[] = ["ongoing", "filled"];
+    const PUBLISHED: ProjectStatus[] = ["open", "ongoing", "complete"];
     if (!user || user.role === "student" || user.role === "company") {
       // companies additionally get their own projects at any status via companyId param above
       if (!params.companyId) list = list.filter((p) => PUBLISHED.includes(p.status));
@@ -439,7 +439,7 @@ export const store = {
       company_resources: "",
       required_skills: body.required_skills,
       group_size: body.group_size || 1,
-      status: "ongoing",
+      status: "open",
       source: "professor_direct",
       company_id: null,
       assigned_professor_id: user.id,
@@ -488,12 +488,29 @@ export const store = {
       throw new ApiError(400, "Chair contact info and an application deadline are required");
     }
     project.assigned_professor_id = user.id;
-    project.status = "ongoing";
+    project.status = "open";
     project.chair_contact_info = body.chair_contact_info;
     project.application_deadline = body.application_deadline;
     project.required_documents = body.required_documents;
     project.updated_at = now();
     recordAudit(user.id, "project", String(project.id), "took on supervision and published listing");
+    persist();
+    return toProject(project);
+  },
+
+  // Professor marks the project complete once the final deliverable has been submitted.
+  completeProject(userId: number | null, id: number): Project {
+    const user = requireRole(userId, "professor");
+    const project = requireRawProject(id);
+    if (project.assigned_professor_id !== user.id) {
+      throw new ApiError(403, "You do not supervise this project");
+    }
+    if (project.status !== "ongoing") {
+      throw new ApiError(400, "Only a project with a team currently working on it can be marked complete");
+    }
+    project.status = "complete";
+    project.updated_at = now();
+    recordAudit(user.id, "project", String(project.id), "marked complete");
     persist();
     return toProject(project);
   },
@@ -584,7 +601,7 @@ export const store = {
   applyToProject(userId: number | null, projectId: number, documentsNote: string): Application {
     const user = requireRole(userId, "student");
     const project = requireRawProject(projectId);
-    if (project.status !== "ongoing") {
+    if (project.status !== "open") {
       throw new ApiError(400, "This project is not currently open for applications");
     }
     const db = getState();
@@ -653,7 +670,7 @@ export const store = {
     }
 
     application.confirmed = true;
-    project.status = "filled";
+    project.status = "ongoing";
     project.updated_at = now();
 
     // withdraw the student's other pending/accepted applications

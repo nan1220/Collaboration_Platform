@@ -30,8 +30,9 @@ const MONITOR_TABS = [
   { value: "pending", label: "Pending" },
   { value: "approved", label: "Approved" },
   { value: "not_yet_supervised", label: "Not yet supervised" },
+  { value: "open", label: "Open" },
   { value: "ongoing", label: "Ongoing" },
-  { value: "filled", label: "Filled" },
+  { value: "complete", label: "Complete" },
 ] as const;
 
 export default function StaffPage() {
@@ -87,9 +88,10 @@ export default function StaffPage() {
     const pending = allProjects.filter((p) => p.status === "pending");
     const approved = allProjects.filter((p) => p.status === "approved" && !isNotYetSupervised(p));
     const notYetSupervised = allProjects.filter(isNotYetSupervised);
+    const open = allProjects.filter((p) => p.status === "open");
     const ongoing = allProjects.filter((p) => p.status === "ongoing");
-    const filled = allProjects.filter((p) => p.status === "filled");
-    return { pending, approved, not_yet_supervised: notYetSupervised, ongoing, filled };
+    const complete = allProjects.filter((p) => p.status === "complete");
+    return { pending, approved, not_yet_supervised: notYetSupervised, open, ongoing, complete };
   }, [allProjects]);
 
   if (!currentUser || currentUser.role !== "staff") {
