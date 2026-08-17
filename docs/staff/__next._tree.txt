@@ -1,5 +1,4 @@
-:HL["/Collaboration_Platform/_next/static/chunks/1bn78zx9g38d8.css","style"]
+:HL["/Collaboration_Platform/_next/static/chunks/1yi3dx0xmk3pi.css","style"]
 :HL["/Collaboration_Platform/_next/static/media/797e433ab948586e-s.p.0r6juujl39pe6.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/Collaboration_Platform/_next/static/media/caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/Collaboration_Platform/tum-logo.svg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"staff","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"E4_UbcK44qmLKhtrxxB5s"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"staff","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"N6MvX1H6RUte9FHA3Jz3N"}

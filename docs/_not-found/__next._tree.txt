@@ -1,3 +1,2 @@
-:HL["/Collaboration_Platform/_next/static/chunks/1bn78zx9g38d8.css","style"]
-:HL["/Collaboration_Platform/tum-logo.svg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"E4_UbcK44qmLKhtrxxB5s"}
+:HL["/Collaboration_Platform/_next/static/chunks/1yi3dx0xmk3pi.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"N6MvX1H6RUte9FHA3Jz3N"}
