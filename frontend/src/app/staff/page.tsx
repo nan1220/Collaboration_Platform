@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { RotateCcw } from "lucide-react";
@@ -164,7 +165,9 @@ export default function StaffPage() {
               {companies.map((company) => (
                 <div key={company.id} className="flex items-center justify-between border-b py-2 text-sm last:border-0">
                   <span>
-                    {company.name}{" "}
+                    <Link href={`/profile/detail?id=${company.user_id}`} className="hover:underline">
+                      {company.name}
+                    </Link>{" "}
                     <span className="text-muted-foreground">
                       ({company.contact_name}, {company.contact_email})
                     </span>
@@ -198,7 +201,10 @@ export default function StaffPage() {
               {users.map((user) => (
                 <div key={user.id} className="flex items-center justify-between border-b py-2 text-sm last:border-0">
                   <span>
-                    {user.name} <span className="text-muted-foreground">({user.email})</span>
+                    <Link href={`/profile/detail?id=${user.id}`} className="hover:underline">
+                      {user.name}
+                    </Link>{" "}
+                    <span className="text-muted-foreground">({user.email})</span>
                   </span>
                   <div className="flex gap-2">
                     <Badge variant="secondary">{roleLabel(user.role, t)}</Badge>

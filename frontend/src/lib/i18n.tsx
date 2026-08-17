@@ -136,6 +136,11 @@ const en = {
   "page.profile.myTopicDescription":
     "Visible to professors/supervisors and companies browsing the student directory. Optionally flag yourself as looking for a team so other students can find you.",
 
+  "page.profileDetail.notFound": "This user could not be found.",
+  "page.profileDetail.isYou": "This is your profile.",
+  "page.profileDetail.editLink": "Edit it",
+  "page.profileDetail.noBio": "No bio set yet.",
+
   "page.staff.title": "Staff dashboard",
   "page.staff.description":
     "Review incoming submissions and monitor every project study by status (FR-17) - the visibility the shared Excel sheet never had.",
@@ -292,6 +297,11 @@ const de: Record<keyof typeof en, string> = {
   "page.profile.myTopicTitle": "Mein Thema und Profil (FR-8/FR-9/FR-10)",
   "page.profile.myTopicDescription":
     "Sichtbar für Professor:innen/Betreuer:innen und Unternehmen im Studierendenverzeichnis. Markieren Sie sich optional als teamsuchend, damit andere Studierende Sie finden können.",
+
+  "page.profileDetail.notFound": "Dieser Nutzer konnte nicht gefunden werden.",
+  "page.profileDetail.isYou": "Dies ist Ihr Profil.",
+  "page.profileDetail.editLink": "Bearbeiten",
+  "page.profileDetail.noBio": "Noch kein Kurzprofil hinterlegt.",
 
   "page.staff.title": "Mitarbeiter-Dashboard",
   "page.staff.description":

@@ -206,7 +206,10 @@ function ProjectDetail() {
             {project.company && (
               <div>
                 <span className="font-medium text-foreground">Company: </span>
-                {project.company.name} ({project.company.contact_name})
+                <Link href={`/profile/detail?id=${project.company.user_id}`} className="hover:underline">
+                  {project.company.name}
+                </Link>{" "}
+                ({project.company.contact_name})
                 {!project.company.verified && (
                   <Badge variant="outline" className="ml-2">
                     Unverified
@@ -217,7 +220,9 @@ function ProjectDetail() {
             {project.assigned_professor && (
               <div>
                 <span className="font-medium text-foreground">Supervisor: </span>
-                {project.assigned_professor.name}
+                <Link href={`/profile/detail?id=${project.assigned_professor.id}`} className="hover:underline">
+                  {project.assigned_professor.name}
+                </Link>
               </div>
             )}
             {project.application_deadline && (
@@ -353,7 +358,9 @@ function ProjectDetail() {
               return (
                 <div key={a.id} className="flex flex-col gap-2 border-b pb-3 last:border-0 last:pb-0">
                   <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-                    <span className="font-medium">{a.student.name}</span>
+                    <Link href={`/profile/detail?id=${a.student.id}`} className="font-medium hover:underline">
+                      {a.student.name}
+                    </Link>
                     <Badge variant="outline">{APPLICATION_STATUS_LABELS[overall]}</Badge>
                   </div>
                   {(isAssignedProfessor || isOwningCompany || isStaff) && (

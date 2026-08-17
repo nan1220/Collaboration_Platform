@@ -774,6 +774,13 @@ export const store = {
     return companyForUser(user.id);
   },
 
+  // Unrestricted lookup for viewing a company's public profile - the same
+  // name/contact/verified info is already visible to anyone browsing a
+  // project this company submitted.
+  companyByUserId(targetUserId: number): Company | null {
+    return getState().companies.find((c) => c.user_id === targetUserId) ?? null;
+  },
+
   auditLog(userId: number | null, projectId?: number): AuditLogEntry[] {
     requireRole(userId, "staff");
     let list = getState().auditLog.slice();

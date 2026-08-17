@@ -105,6 +105,7 @@ export const api = {
 
   companies: (userId: number) => run(() => store.companies(userId)),
   myCompany: (userId: number) => run(() => store.myCompany(userId)),
+  companyByUserId: (userId: number) => run(() => store.companyByUserId(userId)),
   verifyCompany: (userId: number, companyId: number) => run(() => store.verifyCompany(userId, companyId)),
 
   auditLog: (userId: number, projectId?: number) => run(() => store.auditLog(userId, projectId)),

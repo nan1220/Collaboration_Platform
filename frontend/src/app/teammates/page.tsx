@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +35,11 @@ export default function TeammatesPage() {
         {profiles.map((profile) => (
           <Card key={profile.student.id}>
             <CardHeader>
-              <CardTitle>{profile.student.name}</CardTitle>
+              <CardTitle>
+                <Link href={`/profile/detail?id=${profile.student.id}`} className="hover:underline">
+                  {profile.student.name}
+                </Link>
+              </CardTitle>
               <CardDescription>{profile.research_interests || "No research interests listed"}</CardDescription>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">{profile.team_message}</CardContent>
