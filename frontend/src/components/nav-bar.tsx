@@ -104,7 +104,7 @@ export function NavBar() {
             <span
               aria-current={mainPageActive ? "page" : undefined}
               className={cn(
-                "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-semibold transition-colors",
+                "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
                 mainPageActive
                   ? "bg-primary-foreground/15 text-primary-foreground shadow-inner"
                   : "text-primary-foreground/90 hover:bg-primary-foreground/10"
