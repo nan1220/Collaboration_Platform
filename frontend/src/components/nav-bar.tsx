@@ -134,6 +134,14 @@ export function NavBar() {
               <Badge variant="secondary" className="w-fit">
                 {roleLabel(currentUser.role, t)}
               </Badge>
+              <Link
+                href="/profile"
+                onClick={() => setMenuOpen(false)}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "justify-start gap-1.5")}
+              >
+                <UserRound className="size-4" />
+                {t("nav.profile")}
+              </Link>
               <Button
                 variant="outline"
                 size="sm"

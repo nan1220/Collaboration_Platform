@@ -21,6 +21,7 @@ const en = {
   "nav.mySupervision": "My supervision",
   "nav.myCompany": "My company",
   "nav.myApplications": "My applications",
+  "nav.profile": "My profile",
   "nav.signIn": "Sign in",
   "nav.signOut": "Sign out",
   "nav.signedInSession": "Signed in for this demo session.",
@@ -104,6 +105,7 @@ const en = {
   "toast.companyRegistered": "Company registered - pending staff verification",
   "toast.signInFailed": "Sign-in failed",
   "toast.registrationFailed": "Registration failed",
+  "toast.profileUpdated": "Profile updated",
 
   "register.title": "Company access",
   "register.description":
@@ -123,6 +125,19 @@ const en = {
   "prompt.student": "Sign in with a student account to see this page.",
   "prompt.company": "Sign in with a company account (or register one) to see this dashboard.",
   "prompt.studentDirectory": "Sign in as a professor/supervisor, company or staff account to browse student topics and profiles.",
+  "prompt.profile": "Sign in to view and edit your profile.",
+
+  "page.profile.title": "My profile",
+  "page.profile.description": "Your identity on the platform - visible to others who browse projects and directories.",
+  "page.profile.bioLabel": "Bio",
+  "page.profile.bioPlaceholder": "A short line or two about yourself…",
+  "page.profile.saveBio": "Save bio",
+  "page.profile.program": "Program",
+  "page.profile.company": "Company",
+  "page.profile.contact": "Contact",
+  "page.profile.myTopicTitle": "My topic and profile (FR-8/FR-9/FR-10)",
+  "page.profile.myTopicDescription":
+    "Visible to professors/supervisors and companies browsing the student directory. Optionally flag yourself as looking for a team so other students can find you.",
 
   "page.staff.title": "Staff dashboard",
   "page.staff.description":
@@ -164,6 +179,7 @@ const de: Record<keyof typeof en, string> = {
   "nav.mySupervision": "Meine Betreuung",
   "nav.myCompany": "Mein Unternehmen",
   "nav.myApplications": "Meine Bewerbungen",
+  "nav.profile": "Mein Profil",
   "nav.signIn": "Anmelden",
   "nav.signOut": "Abmelden",
   "nav.signedInSession": "Für diese Demo-Sitzung angemeldet.",
@@ -248,6 +264,7 @@ const de: Record<keyof typeof en, string> = {
   "toast.companyRegistered": "Unternehmen registriert - Bestätigung durch Mitarbeitende steht aus",
   "toast.signInFailed": "Anmeldung fehlgeschlagen",
   "toast.registrationFailed": "Registrierung fehlgeschlagen",
+  "toast.profileUpdated": "Profil aktualisiert",
 
   "register.title": "Unternehmenszugang",
   "register.description":
@@ -268,6 +285,19 @@ const de: Record<keyof typeof en, string> = {
   "prompt.company": "Melden Sie sich mit einem Unternehmenskonto an (oder registrieren Sie eines), um dieses Dashboard zu sehen.",
   "prompt.studentDirectory":
     "Melden Sie sich als Professor:in/Betreuer:in, Unternehmen oder Mitarbeiter:in an, um Themen und Profile von Studierenden zu durchsuchen.",
+  "prompt.profile": "Melden Sie sich an, um Ihr Profil anzusehen und zu bearbeiten.",
+
+  "page.profile.title": "Mein Profil",
+  "page.profile.description": "Ihre Identität auf der Plattform - sichtbar für andere, die Projekte und Verzeichnisse durchsuchen.",
+  "page.profile.bioLabel": "Kurzprofil",
+  "page.profile.bioPlaceholder": "Ein bis zwei Sätze über Sie…",
+  "page.profile.saveBio": "Kurzprofil speichern",
+  "page.profile.program": "Studiengang",
+  "page.profile.company": "Unternehmen",
+  "page.profile.contact": "Kontakt",
+  "page.profile.myTopicTitle": "Mein Thema und Profil (FR-8/FR-9/FR-10)",
+  "page.profile.myTopicDescription":
+    "Sichtbar für Professor:innen/Betreuer:innen und Unternehmen im Studierendenverzeichnis. Markieren Sie sich optional als teamsuchend, damit andere Studierende Sie finden können.",
 
   "page.staff.title": "Mitarbeiter-Dashboard",
   "page.staff.description":

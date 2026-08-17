@@ -15,6 +15,7 @@ async function run<T>(fn: () => T): Promise<T> {
 export const api = {
   demoUsers: () => run(() => store.demoUsers()),
   users: (userId: number) => run(() => store.users(userId)),
+  updateProfile: (userId: number, body: { bio: string }) => run(() => store.updateProfile(userId, userId, body)),
 
   signInInstitutional: (body: {
     name: string;

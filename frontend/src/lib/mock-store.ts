@@ -252,6 +252,16 @@ export const store = {
     return getState().users.slice();
   },
 
+  // Every role has a profile now, not just professors - anyone can edit their
+  // own bio, regardless of role.
+  updateProfile(userId: number | null, targetId: number, body: { bio: string }): UserSummary {
+    const user = requireUser(userId);
+    if (user.id !== targetId) throw new ApiError(403, "Cannot edit another user's profile");
+    user.bio = body.bio;
+    persist();
+    return toUserSummary(user);
+  },
+
   // Access use case (FR-1/NFR-1): TUM members authenticate via Shibboleth,
   // which we can't actually call from a static site - this simulates the
   // round trip. The account is created just-in-time on first "login"
