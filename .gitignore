@@ -1,4 +1,4 @@
-# dependencies / build artifacts
+# dependencies / build artifacts 
 **/node_modules/
 **/__pycache__/
 **/*.pyc
