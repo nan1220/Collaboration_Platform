@@ -6,6 +6,7 @@ export interface UserSummary {
   name: string;
   department: string; // professor: chair; company/student/staff: unused
   program: string; // student: degree program (FR-9); unused otherwise
+  expertise: string; // FR-5: professor/supervisor profile "chair/expertise", sourced at login
 }
 
 export interface User extends UserSummary {

@@ -21,6 +21,7 @@ export const api = {
     role: "student" | "professor" | "staff";
     department: string;
     program: string;
+    expertise: string;
   }) => run(() => store.signInInstitutional(body)),
   registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
     run(() => store.registerCompany(body)),

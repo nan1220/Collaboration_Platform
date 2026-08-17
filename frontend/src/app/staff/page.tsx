@@ -153,6 +153,7 @@ export default function StaffPage() {
                   <div className="flex gap-2">
                     <Badge variant="secondary">{roleLabel(user.role, t)}</Badge>
                     {user.department && <Badge variant="outline">{user.department}</Badge>}
+                    {user.expertise && <Badge variant="outline">{user.expertise}</Badge>}
                     {user.program && <Badge variant="outline">{user.program}</Badge>}
                   </div>
                 </div>

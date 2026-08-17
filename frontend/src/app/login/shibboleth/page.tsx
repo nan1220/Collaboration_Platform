@@ -39,9 +39,10 @@ export default function ShibbolethLoginPage() {
   const [role, setRole] = useState<"student" | "professor" | "staff">("student");
   const [department, setDepartment] = useState("");
   const [program, setProgram] = useState("");
+  const [expertise, setExpertise] = useState("");
 
   const signInMutation = useMutation({
-    mutationFn: () => api.signInInstitutional({ name, role, department, program }),
+    mutationFn: () => api.signInInstitutional({ name, role, department, program, expertise }),
     onSuccess: (user) => {
       toast.success(`Account created and signed in as ${user.name}`);
       queryClient.invalidateQueries({ queryKey: ["demo-users"] });
@@ -94,15 +95,26 @@ export default function ShibbolethLoginPage() {
               </Select>
             </div>
             {role === "professor" && (
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="department">{t("shibboleth.chairDepartment")}</Label>
-                <Input
-                  id="department"
-                  placeholder="e.g. School of Management"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                />
-              </div>
+              <>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="department">{t("shibboleth.chairDepartment")}</Label>
+                  <Input
+                    id="department"
+                    placeholder="e.g. Chair of Digital Business"
+                    value={department}
+                    onChange={(e) => setDepartment(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="expertise">{t("shibboleth.expertise")}</Label>
+                  <Input
+                    id="expertise"
+                    placeholder="e.g. School of Management"
+                    value={expertise}
+                    onChange={(e) => setExpertise(e.target.value)}
+                  />
+                </div>
+              </>
             )}
             {role === "student" && (
               <div className="flex flex-col gap-1.5">

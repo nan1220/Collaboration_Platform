@@ -148,7 +148,7 @@ function ProjectDetail() {
   const canTakeOn =
     currentUser?.role === "professor" &&
     project.status === "approved" &&
-    (!project.required_expertise || project.required_expertise === currentUser.department);
+    (!project.required_expertise || project.required_expertise === currentUser.expertise);
 
   const myApplicationHere = myApplications.find((a) => a.project.id === projectId);
   const canApply = currentUser?.role === "student" && project.status === "ongoing" && !myApplicationHere;

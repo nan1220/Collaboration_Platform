@@ -77,22 +77,24 @@ export interface RawAuditLogEntry {
 }
 
 export const SEED_USERS: User[] = [
-  { id: 1, role: "staff", name: "Staff U1", email: "u1@tum.de", department: "", program: "" },
+  { id: 1, role: "staff", name: "Staff U1", email: "u1@tum.de", department: "", program: "", expertise: "" },
   {
     id: 2,
     role: "professor",
     name: "Professor P1",
     email: "p1@tum.de",
-    department: "School of Management",
+    department: "Chair of Digital Business",
     program: "",
+    expertise: "School of Management",
   },
   {
     id: 3,
     role: "professor",
     name: "Professor P2",
     email: "p2@tum.de",
-    department: "Informatics",
+    department: "Chair of Software Engineering",
     program: "",
+    expertise: "Informatics",
   },
   {
     id: 4,
@@ -101,6 +103,7 @@ export const SEED_USERS: User[] = [
     email: "s1@tum.de",
     department: "",
     program: "B.Sc. Management and Data Science",
+    expertise: "",
   },
   {
     id: 5,
@@ -109,6 +112,7 @@ export const SEED_USERS: User[] = [
     email: "s2@tum.de",
     department: "",
     program: "B.Sc. Informatics",
+    expertise: "",
   },
   {
     id: 6,
@@ -117,6 +121,7 @@ export const SEED_USERS: User[] = [
     email: "contact@companyc1.example",
     department: "",
     program: "",
+    expertise: "",
   },
   {
     id: 7,
@@ -125,6 +130,7 @@ export const SEED_USERS: User[] = [
     email: "contact@companyc2.example",
     department: "",
     program: "",
+    expertise: "",
   },
 ];
 

@@ -59,7 +59,7 @@ interface DbState {
 // Bumped whenever seed data shape or content changes meaningfully, so
 // anyone with older cached demo data (e.g. pre-anonymization names) gets a
 // fresh reseed instead of a stale localStorage copy.
-const STORAGE_KEY = "collab-platform-mock-db-v5";
+const STORAGE_KEY = "collab-platform-mock-db-v6";
 
 function freshState(): DbState {
   return {
@@ -113,8 +113,17 @@ function findUser(id: number): User | undefined {
 }
 
 function toUserSummary(user: User): UserSummary {
-  return { id: user.id, role: user.role, name: user.name, department: user.department, program: user.program };
+  return {
+    id: user.id,
+    role: user.role,
+    name: user.name,
+    department: user.department,
+    program: user.program,
+    expertise: user.expertise,
+  };
 }
+
+const UNKNOWN_USER_SUMMARY = { department: "", program: "", expertise: "" };
 
 function requireUser(userId: number | null | undefined): User {
   const user = userId ? findUser(userId) : undefined;
@@ -173,7 +182,9 @@ function toApplication(raw: RawApplication): Application {
   const project = getState().projects.find((p) => p.id === raw.project_id);
   return {
     id: raw.id,
-    student: student ? toUserSummary(student) : { id: raw.student_id, role: "student", name: "Unknown", department: "", program: "" },
+    student: student
+      ? toUserSummary(student)
+      : { id: raw.student_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     project: project ? toProject(project) : (undefined as never),
     professor_decision: raw.professor_decision,
     company_decision: raw.company_decision,
@@ -187,7 +198,9 @@ function toApplication(raw: RawApplication): Application {
 function toStudentProfile(raw: RawStudentProfile): StudentProfile {
   const student = findUser(raw.student_id);
   return {
-    student: student ? toUserSummary(student) : { id: raw.student_id, role: "student", name: "Unknown", department: "", program: "" },
+    student: student
+      ? toUserSummary(student)
+      : { id: raw.student_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     areas_of_expertise: raw.areas_of_expertise,
     research_interests: raw.research_interests,
     skills: raw.skills,
@@ -203,7 +216,9 @@ function toCheckIn(raw: RawCheckIn): CheckIn {
   return {
     id: raw.id,
     project_id: raw.project_id,
-    author: author ? toUserSummary(author) : { id: raw.author_id, role: "student", name: "Unknown", department: "", program: "" },
+    author: author
+      ? toUserSummary(author)
+      : { id: raw.author_id, role: "student", name: "Unknown", ...UNKNOWN_USER_SUMMARY },
     note: raw.note,
     created_at: raw.created_at,
   };
@@ -246,6 +261,7 @@ export const store = {
     role: "student" | "professor" | "staff";
     department: string;
     program: string;
+    expertise: string;
   }): User {
     if (!body.name.trim()) throw new ApiError(400, "Name is required");
     const db = getState();
@@ -256,6 +272,7 @@ export const store = {
       email: "",
       department: body.role === "professor" ? body.department : "",
       program: body.role === "student" ? body.program : "",
+      expertise: body.role === "professor" ? body.expertise : "",
     };
     db.users.push(user);
     persist();
@@ -278,6 +295,7 @@ export const store = {
       email: body.contact_email.trim(),
       department: "",
       program: "",
+      expertise: "",
     };
     db.users.push(user);
     const company: Company = {
@@ -459,7 +477,7 @@ export const store = {
     if (project.status !== "approved") {
       throw new ApiError(400, "Only approved, unsupervised projects can be taken on");
     }
-    if (project.required_expertise && project.required_expertise !== user.department) {
+    if (project.required_expertise && project.required_expertise !== user.expertise) {
       throw new ApiError(403, `This topic requires expertise from ${project.required_expertise}`);
     }
     if (!body.chair_contact_info || !body.application_deadline) {

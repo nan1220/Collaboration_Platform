@@ -45,7 +45,7 @@ export default function ProfessorPage() {
   // FR-5: submissions matched to own expertise, ready to take on.
   const { data: matched = [] } = useQuery({
     queryKey: ["projects", "approved-matched", currentUser?.id],
-    queryFn: () => api.projects(currentUser!.id, { status: "approved", expertise: currentUser!.department }),
+    queryFn: () => api.projects(currentUser!.id, { status: "approved", expertise: currentUser!.expertise }),
     enabled,
   });
 
@@ -59,7 +59,7 @@ export default function ProfessorPage() {
     mutationFn: () =>
       api.submitDirectProject(currentUser!.id, {
         ...form,
-        required_expertise: form.required_expertise || currentUser!.department,
+        required_expertise: form.required_expertise || currentUser!.expertise,
       }),
     onSuccess: () => {
       toast.success("Project submitted and published");
@@ -83,10 +83,21 @@ export default function ProfessorPage() {
           <h1 className="text-2xl font-semibold tracking-tight">{t("page.professor.title")}</h1>
           <p className="mt-1 text-muted-foreground">
             {t("page.professor.description").replace(
-              "{department}",
-              currentUser.department || t("page.professor.noneSet")
+              "{expertise}",
+              currentUser.expertise || t("page.professor.noneSet")
             )}
           </p>
+          {/* FR-5: professor/supervisor profile — chair/expertise, sourced from institution login */}
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+            <span>
+              <span className="font-medium text-foreground">{t("page.professor.chair")}:</span>{" "}
+              {currentUser.department || t("page.professor.noneSet")}
+            </span>
+            <span>
+              <span className="font-medium text-foreground">{t("page.professor.expertise")}:</span>{" "}
+              {currentUser.expertise || t("page.professor.noneSet")}
+            </span>
+          </div>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button>Submit a directly agreed project (FR-7)</Button>} />
@@ -110,7 +121,7 @@ export default function ProfessorPage() {
                     <Label htmlFor="d-expertise">Required expertise</Label>
                     <Input
                       id="d-expertise"
-                      placeholder={currentUser.department}
+                      placeholder={currentUser.expertise}
                       value={form.required_expertise}
                       onChange={(e) => setForm((f) => ({ ...f, required_expertise: e.target.value }))}
                     />
