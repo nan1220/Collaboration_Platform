@@ -3,26 +3,26 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { Database, BookOpenCheck, Users, Building2, type LucideIcon } from "lucide-react";
-import { api } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
 import { useLanguage } from "@/lib/i18n";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
+import type { Role } from "@/lib/types";
 
 type TKey = Parameters<ReturnType<typeof useLanguage>["t"]>[0];
 
 // Signed-in users don't need the pitch for the platform they're already
-// using - drop them straight into what they'd actually do next. Students go
-// to their active (confirmed) project if they have one, since that's the
-// single most relevant thing to see; everyone else goes to their dashboard.
-const ROLE_HOME: Record<"staff" | "professor" | "company", string> = {
+// using - drop them straight into what they'd actually do next: their own
+// dashboard, or for students, the applications page where they can apply,
+// accept offers and track each application's decision progress.
+const ROLE_HOME: Record<Role, string> = {
   staff: "/staff",
   professor: "/professor",
   company: "/company",
+  student: "/student",
 };
 
 const FEATURES: { icon: LucideIcon; titleKey: TKey; descriptionKey: TKey; href: string }[] = [
@@ -56,24 +56,11 @@ export default function Home() {
   const { currentUser } = useCurrentUser();
   const { t } = useLanguage();
   const router = useRouter();
-  const isStudent = currentUser?.role === "student";
-
-  const { data: applications, isLoading: applicationsLoading } = useQuery({
-    queryKey: ["applications", "mine", currentUser?.id],
-    queryFn: () => api.applications(currentUser!.id),
-    enabled: isStudent,
-  });
 
   useEffect(() => {
     if (!currentUser) return;
-    if (currentUser.role !== "student") {
-      router.replace(ROLE_HOME[currentUser.role]);
-      return;
-    }
-    if (applicationsLoading) return;
-    const active = applications?.find((a) => a.confirmed);
-    router.replace(active ? `/projects/detail?id=${active.project.id}` : "/student");
-  }, [currentUser, applicationsLoading, applications, router]);
+    router.replace(ROLE_HOME[currentUser.role]);
+  }, [currentUser, router]);
 
   if (currentUser) {
     return <p className="text-muted-foreground">{t("common.loading")}</p>;
