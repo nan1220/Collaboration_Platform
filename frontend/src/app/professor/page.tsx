@@ -75,8 +75,8 @@ export default function ProfessorPage() {
   }
 
   const myProjects = allProjects.filter((p) => p.assigned_professor?.id === currentUser.id);
-  const supervisingCount = myProjects.filter((p) => p.status === "ongoing").length;
-  const filledCount = myProjects.filter((p) => p.status === "filled").length;
+  const supervisingCount = myProjects.filter((p) => p.status === "open" || p.status === "ongoing").length;
+  const completedCount = myProjects.filter((p) => p.status === "complete").length;
 
   return (
     <div className="flex flex-col gap-8" data-role="professor">
@@ -98,8 +98,8 @@ export default function ProfessorPage() {
               <div className="text-xs text-muted-foreground">{t("page.professor.statSupervising")}</div>
             </div>
             <div>
-              <div className="text-xl font-semibold tracking-tight text-accent">{filledCount}</div>
-              <div className="text-xs text-muted-foreground">{t("page.professor.statFilled")}</div>
+              <div className="text-xl font-semibold tracking-tight text-accent">{completedCount}</div>
+              <div className="text-xs text-muted-foreground">{t("page.professor.statCompleted")}</div>
             </div>
             <div>
               <div className="text-xl font-semibold tracking-tight text-accent">{matched.length}</div>

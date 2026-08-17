@@ -26,5 +26,5 @@ FR-14;Lightweight Progress Check-in;Simple, non-rigid check-in mechanism between
 FR-15;Dual Approval (Professor  / Supervisor + Company);A student application requires both professor / supervisor and company sign-off before being finalized;More say in student selection can increase company satisfaction with project studies;Team decision;Could;Adaptable;
 FR-16;Manual Multi-Offer Decision;If accepted to multiple projects, student manually confirms one and manually withdraws the others;Adapted from the current process documentation in TUM Campus Heilbronn;Process Documentation;Should;Generic;
 Staff Features;;;;;;;
-FR-17;Staff Master Dashboard;View all project studies across every status: pending, approved, not yet supervised, ongoing, filled;Contact and coordination burden;U1, U2;Should;TUM-specific;
+FR-17;Staff Master Dashboard;View all project studies across every status: pending, approved, open, ongoing, complete;Contact and coordination burden;U1, U2;Should;TUM-specific;
 FR-18;Filter Incoming Submissions;Staff can filter/search incoming company submissions during review;Adapted from the current process documentation in TUM Campus Heilbronn;Process Documentation;Should;TUM-specific;

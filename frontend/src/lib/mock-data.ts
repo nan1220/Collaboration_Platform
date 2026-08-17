@@ -178,7 +178,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "Access to two years of anonymized POS data, a technical contact for questions.",
     required_skills: "Python or R, basic time-series/statistics",
     group_size: 2,
-    status: "filled",
+    status: "ongoing",
     source: "company",
     company_id: 1,
     assigned_professor_id: 2,
@@ -227,7 +227,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "",
     required_skills: "TypeScript or Python, git/GitHub API familiarity",
     group_size: 2,
-    status: "ongoing",
+    status: "open",
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
@@ -252,7 +252,7 @@ export const SEED_PROJECTS: RawProject[] = [
     company_resources: "Sample sensor data, one technical point of contact.",
     required_skills: "Python, basic ML, dashboarding (e.g. Streamlit/Dash)",
     group_size: 2,
-    status: "ongoing",
+    status: "open",
     source: "professor_direct",
     company_id: null,
     assigned_professor_id: 3,
@@ -398,10 +398,11 @@ name - may not be a match for a School of Management topic.
     audience: "all",
     body: `Projects move through a fixed set of stages:
 
-- **Pending** - submitted, awaiting staff review
-- **Approved** - staff-approved, visible to professors/supervisors whose expertise matches
-- **Ongoing** - a professor/supervisor has taken on supervision and published the listing, now open for student applications
-- **Filled** - a student has confirmed the offer
+- **Pending** - submitted by a company, awaiting staff review
+- **Approved** - staff-approved, visible to professors/supervisors whose expertise matches for a supervision decision
+- **Open** - a professor/supervisor has taken on supervision and published the listing, now open for student applications
+- **Ongoing** - a student has confirmed the offer and is currently working on it
+- **Complete** - the final deliverable has been submitted
 
 Every change is logged, so staff, professors/supervisors and students can see the real state of a project
 instead of relying on a spreadsheet or word of mouth.`,
