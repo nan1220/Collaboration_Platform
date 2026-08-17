@@ -21,6 +21,7 @@ import {
   applicationStatus,
   APPLICATION_STATUS_LABELS,
   isNotYetSupervised,
+  SOURCE_LABELS,
 } from "@/lib/types";
 
 export default function ProjectDetailPage() {
@@ -174,7 +175,7 @@ function ProjectDetail() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2">
           {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
-          <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
+          <Badge variant="outline">{SOURCE_LABELS[project.source]}</Badge>
           {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">{project.title}</h1>
@@ -235,6 +236,12 @@ function ProjectDetail() {
                 <Link href={`/profile/detail?id=${project.assigned_professor.id}`} className="hover:underline">
                   {project.assigned_professor.name}
                 </Link>
+              </div>
+            )}
+            {!project.assigned_professor && project.requested_professor && (
+              <div>
+                <span className="font-medium text-foreground">Requested supervisor: </span>
+                {project.requested_professor.name}
               </div>
             )}
             {project.application_deadline && (

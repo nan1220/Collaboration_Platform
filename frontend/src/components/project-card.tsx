@@ -4,13 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
 import { cn } from "@/lib/utils";
 import { stripMarkdown } from "@/components/markdown";
-import { isNotYetSupervised, type Project } from "@/lib/types";
+import { isNotYetSupervised, SOURCE_LABELS, type Project } from "@/lib/types";
 import { STATUS_BORDER_CLASS } from "@/lib/status-colors";
-
-const SOURCE_LABELS: Record<Project["source"], string> = {
-  company: "Company",
-  professor_direct: "Professor/Supervisor-submitted",
-};
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
@@ -34,6 +29,9 @@ export function ProjectCard({ project }: { project: Project }) {
         <CardContent className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
           {project.company && <span>{project.company.name}</span>}
           {project.assigned_professor && <span>Supervisor: {project.assigned_professor.name}</span>}
+          {!project.assigned_professor && project.requested_professor && (
+            <span>Requested supervisor: {project.requested_professor.name}</span>
+          )}
         </CardContent>
       </Card>
     </Link>
