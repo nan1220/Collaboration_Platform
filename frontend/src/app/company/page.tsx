@@ -89,7 +89,7 @@ export default function CompanyPage() {
               <DialogTitle>Submit a project proposal</DialogTitle>
               <DialogDescription>
                 Mandatory fields adapted from the existing intake sheet (FR-2). Staff review this before
-                it becomes visible to professors.
+                it becomes visible to professors/supervisors.
               </DialogDescription>
             </DialogHeader>
             <div className="flex max-h-[70vh] flex-col gap-5 overflow-y-auto px-0.5">

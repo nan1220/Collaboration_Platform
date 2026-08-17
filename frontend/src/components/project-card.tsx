@@ -16,7 +16,7 @@ const ACCENT_BORDER: Record<ProjectStatus, string> = {
 
 const SOURCE_LABELS: Record<Project["source"], string> = {
   company: "Company",
-  professor_direct: "Professor-submitted",
+  professor_direct: "Professor/Supervisor-submitted",
 };
 
 export function ProjectCard({ project }: { project: Project }) {

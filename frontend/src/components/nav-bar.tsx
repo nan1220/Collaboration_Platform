@@ -16,7 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useCurrentUser } from "@/lib/current-user";
-import { useLanguage, type Locale } from "@/lib/i18n";
+import { useLanguage, roleLabel, type Locale } from "@/lib/i18n";
 import {
   Popover,
   PopoverContent,
@@ -129,8 +129,8 @@ export function NavBar() {
             <PopoverContent align="end">
               <PopoverTitle>{currentUser.name}</PopoverTitle>
               <PopoverDescription>{t("nav.signedInSession")}</PopoverDescription>
-              <Badge variant="secondary" className="w-fit capitalize">
-                {currentUser.role}
+              <Badge variant="secondary" className="w-fit">
+                {roleLabel(currentUser.role, t)}
               </Badge>
               <Button
                 variant="outline"

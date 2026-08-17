@@ -135,8 +135,8 @@ export default function StudentPage() {
         <CardHeader>
           <CardTitle>My topic and profile (FR-8/FR-9/FR-10)</CardTitle>
           <CardDescription>
-            Visible to professors and companies browsing the student directory. Optionally flag
-            yourself as looking for a team so other students can find you.
+            Visible to professors/supervisors and companies browsing the student directory. Optionally
+            flag yourself as looking for a team so other students can find you.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">

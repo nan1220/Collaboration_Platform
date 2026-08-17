@@ -20,8 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DevShortcut } from "@/components/dev-shortcut";
-import { useLanguage } from "@/lib/i18n";
-import type { Role } from "@/lib/types";
+import { useLanguage, roleLabel } from "@/lib/i18n";
 
 export default function ShibbolethLoginPage() {
   const router = useRouter();
@@ -31,9 +30,9 @@ export default function ShibbolethLoginPage() {
   const institutionalUsers = users.filter((u) => u.role !== "company");
 
   const ROLE_OPTIONS: { value: "student" | "professor" | "staff"; label: string }[] = [
-    { value: "student", label: t("shibboleth.roleStudent") },
-    { value: "professor", label: t("shibboleth.roleProfessor") },
-    { value: "staff", label: t("shibboleth.roleStaff") },
+    { value: "student", label: t("role.student") },
+    { value: "professor", label: t("role.professor") },
+    { value: "staff", label: t("role.staff") },
   ];
 
   const [name, setName] = useState("");
@@ -136,7 +135,7 @@ export default function ShibbolethLoginPage() {
                       className="flex items-center justify-between rounded-md border border-amber-500/30 bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
                     >
                       <span>{user.name}</span>
-                      <span className="capitalize text-muted-foreground">{roleLabel(user.role, t)}</span>
+                      <span className="text-muted-foreground">{roleLabel(user.role, t)}</span>
                     </button>
                   ))}
                 </div>
@@ -147,10 +146,4 @@ export default function ShibbolethLoginPage() {
       </Card>
     </div>
   );
-}
-
-function roleLabel(role: Role, t: ReturnType<typeof useLanguage>["t"]) {
-  if (role === "staff") return t("shibboleth.roleStaff");
-  if (role === "professor") return t("shibboleth.roleProfessor");
-  return t("shibboleth.roleStudent");
 }

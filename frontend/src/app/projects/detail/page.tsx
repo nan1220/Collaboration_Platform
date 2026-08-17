@@ -164,7 +164,7 @@ function ProjectDetail() {
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={project.status} />
             {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
-            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor-submitted"}</Badge>
+            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
             {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
           </div>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h1>
@@ -361,7 +361,7 @@ function ProjectDetail() {
                   )}
                   {isAssignedProfessor && !a.withdrawn && (
                     <div className="flex gap-2 text-xs">
-                      <span className="text-muted-foreground">Professor decision: {a.professor_decision}</span>
+                      <span className="text-muted-foreground">Professor/Supervisor decision: {a.professor_decision}</span>
                       {a.professor_decision === "pending" && (
                         <>
                           <button

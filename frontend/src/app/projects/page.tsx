@@ -34,7 +34,7 @@ export default function ProjectsPage() {
         <p className="mt-1 text-muted-foreground">
           Published project studies, open for student applications.
           {currentUser?.role === "professor" &&
-            " As a professor you also see approved topics here, ready to take on."}
+            " As a professor/supervisor you also see approved topics here, ready to take on."}
           {currentUser?.role === "staff" && " As staff you see every project regardless of status here."}
         </p>
       </div>

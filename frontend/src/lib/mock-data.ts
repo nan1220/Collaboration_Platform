@@ -348,34 +348,34 @@ export const SEED_CHECKINS: RawCheckIn[] = [
 export const SEED_GUIDES: Guide[] = [
   {
     slug: "finding-a-supervisor-for-company-topics",
-    title: "Finding a supervisor for a company-submitted topic",
+    title: "Finding a professor/supervisor for a company-submitted topic",
     category: "Company projects",
     audience: "student",
-    body: `Company-submitted topics still need a professor to take on supervision before you can apply.
+    body: `Company-submitted topics still need a professor/supervisor to take on supervision before you can apply.
 
-Not every professor can supervise every topic: professors see submissions matched to their own area of
-expertise (the **required expertise** tag on the project), and only take on projects that fit their chair.
-A professor who has taught you in an unrelated area — even a familiar name — may not be a match for a
-School of Management topic.
+Not every professor/supervisor can supervise every topic: professors/supervisors see submissions matched
+to their own area of expertise (the **required expertise** tag on the project), and only take on projects
+that fit their chair. A professor/supervisor who has taught you in an unrelated area — even a familiar
+name — may not be a match for a School of Management topic.
 
 ## Steps
 
 1. Check the *required expertise* tag on the project page. A project only becomes visible to students
-   once a matching professor has taken it on and published the listing.
-2. If you know a professor whose chair fits, feel free to mention the topic to them directly — professors
-   can also submit a project they've agreed on directly with a company (no company portal step needed).
+   once a matching professor/supervisor has taken it on and published the listing.
+2. If you know a professor/supervisor whose chair fits, feel free to mention the topic to them directly —
+   they can also submit a project they've agreed on directly with a company (no company portal step needed).
 3. If you're unsure who to contact, ask staff directly rather than guessing.
 
 ## Quick reference
 
 | Situation | What to do |
 | --- | --- |
-| Topic approved, no professor yet | Wait, or mention it to a matching professor yourself |
+| Topic approved, no professor/supervisor yet | Wait, or mention it to a matching professor/supervisor yourself |
 | Topic still "pending" | Nothing to do yet — staff hasn't reviewed it |
 | Not sure who supervises your area | Ask staff, don't guess |
 
-> A professor who taught you in an unrelated department may **not** be eligible to supervise — expertise
-> match matters more than familiarity.`,
+> A professor/supervisor who taught you in an unrelated department may **not** be eligible to supervise —
+> expertise match matters more than familiarity.`,
     updated_by: 1,
     updated_at: "2026-05-01T09:00:00.000Z",
   },
@@ -387,12 +387,12 @@ School of Management topic.
     body: `Projects move through a fixed set of stages:
 
 - **Pending** — submitted, awaiting staff review
-- **Approved** — staff-approved, visible to professors whose expertise matches
-- **Ongoing** — a professor has taken on supervision and published the listing, now open for student applications
+- **Approved** — staff-approved, visible to professors/supervisors whose expertise matches
+- **Ongoing** — a professor/supervisor has taken on supervision and published the listing, now open for student applications
 - **Filled** — a student has confirmed the offer
 
-Every change is logged, so staff, professors and students can see the real state of a project instead of
-relying on a spreadsheet or word of mouth.`,
+Every change is logged, so staff, professors/supervisors and students can see the real state of a project
+instead of relying on a spreadsheet or word of mouth.`,
     updated_by: 1,
     updated_at: "2026-02-15T09:00:00.000Z",
   },

@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignInPrompt } from "@/components/sign-in-prompt";
-import { useLanguage } from "@/lib/i18n";
+import { useLanguage, roleLabel } from "@/lib/i18n";
 import { isNotYetSupervised } from "@/lib/types";
 
 const MONITOR_TABS = [
@@ -151,9 +151,7 @@ export default function StaffPage() {
                     {user.name} <span className="text-muted-foreground">({user.email})</span>
                   </span>
                   <div className="flex gap-2">
-                    <Badge variant="secondary" className="capitalize">
-                      {user.role}
-                    </Badge>
+                    <Badge variant="secondary">{roleLabel(user.role, t)}</Badge>
                     {user.department && <Badge variant="outline">{user.department}</Badge>}
                     {user.program && <Badge variant="outline">{user.program}</Badge>}
                   </div>

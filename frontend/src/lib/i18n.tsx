@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import type { Role } from "./types";
 
 export type Locale = "en" | "de";
 
@@ -29,7 +30,7 @@ const en = {
   "footer.submitProject": "Submit a project",
 
   "home.heroSubtitle":
-    "One consistent database for company and professor-submitted project topics — shared by staff, professors, students and companies, instead of a spreadsheet nobody else can see.",
+    "One consistent database for company and professor/supervisor-submitted project topics — shared by staff, professors/supervisors, students and companies, instead of a spreadsheet nobody else can see.",
   "home.browseProjects": "Browse projects",
   "home.submitProjectCompany": "Submit a project (company)",
   "home.notSignedInTitle": "You're not signed in",
@@ -57,21 +58,21 @@ const en = {
 
   "home.feature.database.title": "One shared database",
   "home.feature.database.description":
-    "Staff, professors, students and companies all see the same project data and status history — not a spreadsheet only two people can read.",
+    "Staff, professors/supervisors, students and companies all see the same project data and status history — not a spreadsheet only two people can read.",
   "home.feature.companySubmissions.title": "Company submissions",
   "home.feature.companySubmissions.description":
-    "Companies submit a topic through a portal (FR-2). Staff approve it, a matching professor takes it on and publishes it (FR-6).",
+    "Companies submit a topic through a portal (FR-2). Staff approve it, a matching professor/supervisor takes it on and publishes it (FR-6).",
   "home.feature.studentTopics.title": "Student topics & teammates",
   "home.feature.studentTopics.description":
-    "Students submit a topic and profile that professors and companies can browse (FR-4/FR-8/FR-9), and can flag themselves as looking for a team (FR-10).",
+    "Students submit a topic and profile that professors/supervisors and companies can browse (FR-4/FR-8/FR-9), and can flag themselves as looking for a team (FR-10).",
   "home.feature.guides.title": "Guides that actually help",
   "home.feature.guides.description":
-    "Concrete, TUM-specific guidance — like finding a professor whose expertise matches a topic — instead of word of mouth.",
+    "Concrete, TUM-specific guidance — like finding a professor/supervisor whose expertise matches a topic — instead of word of mouth.",
 
   "signIn.title": "Sign in",
   "signIn.subtitle": "How you get in depends on who you are (FR-1/NFR-1).",
   "signIn.tumMembers.title": "TUM members",
-  "signIn.tumMembers.description": "Students, professors and staff sign in with their TUM institutional account.",
+  "signIn.tumMembers.description": "Students, professors/supervisors and staff sign in with their TUM institutional account.",
   "signIn.tumMembers.action": "Continue with Shibboleth",
   "signIn.companies.title": "Companies",
   "signIn.companies.description":
@@ -90,9 +91,10 @@ const en = {
   "shibboleth.chairDepartment": "Chair / department",
   "shibboleth.degreeProgram": "Degree program",
   "shibboleth.signInAction": "Sign in via Shibboleth",
-  "shibboleth.roleStudent": "Student",
-  "shibboleth.roleProfessor": "Professor",
-  "shibboleth.roleStaff": "University staff",
+  "role.student": "Student",
+  "role.professor": "Professor / Supervisor",
+  "role.staff": "University staff",
+  "role.company": "Company",
   "shibboleth.quickSignIn": "Mock sign-in for testing",
   "shibboleth.quickSignInDesc": "Testing shortcut for this prototype only — would not exist in a real deployment.",
 
@@ -115,10 +117,10 @@ const en = {
   "signOutMenu.title": "Account",
 
   "prompt.staff": "Sign in with a staff account to see this dashboard.",
-  "prompt.professor": "Sign in with a professor account to see this dashboard.",
+  "prompt.professor": "Sign in with a professor/supervisor account to see this dashboard.",
   "prompt.student": "Sign in with a student account to see this page.",
   "prompt.company": "Sign in with a company account (or register one) to see this dashboard.",
-  "prompt.studentDirectory": "Sign in as a professor, company or staff account to browse student topics and profiles.",
+  "prompt.studentDirectory": "Sign in as a professor/supervisor, company or staff account to browse student topics and profiles.",
 
   "page.staff.title": "Staff dashboard",
   "page.staff.description":
@@ -140,7 +142,7 @@ const en = {
   "page.teammates.title": "Find teammates",
   "page.students.title": "Student directory",
   "page.students.description":
-    "Topics and profile data submitted by students (FR-4/FR-8), filterable by program (FR-9) — so companies and professors can scout ahead instead of waiting for applications.",
+    "Topics and profile data submitted by students (FR-4/FR-8), filterable by program (FR-9) — so companies and professors/supervisors can scout ahead instead of waiting for applications.",
 
   "common.loading": "Loading…",
 } as const;
@@ -163,7 +165,7 @@ const de: Record<keyof typeof en, string> = {
   "footer.submitProject": "Projekt einreichen",
 
   "home.heroSubtitle":
-    "Eine einheitliche Datenbank für von Unternehmen und Professoren eingereichte Projektthemen — gemeinsam genutzt von Mitarbeitenden, Professor:innen, Studierenden und Unternehmen, statt einer Tabelle, die sonst niemand einsehen kann.",
+    "Eine einheitliche Datenbank für von Unternehmen und Professor:innen/Betreuer:innen eingereichte Projektthemen — gemeinsam genutzt von Mitarbeitenden, Professor:innen/Betreuer:innen, Studierenden und Unternehmen, statt einer Tabelle, die sonst niemand einsehen kann.",
   "home.browseProjects": "Projekte durchsuchen",
   "home.submitProjectCompany": "Projekt einreichen (Unternehmen)",
   "home.notSignedInTitle": "Sie sind nicht angemeldet",
@@ -192,13 +194,13 @@ const de: Record<keyof typeof en, string> = {
 
   "home.feature.database.title": "Eine gemeinsame Datenbank",
   "home.feature.database.description":
-    "Mitarbeitende, Professor:innen, Studierende und Unternehmen sehen alle dieselben Projektdaten und den Statusverlauf — keine Tabelle, die nur zwei Personen lesen können.",
+    "Mitarbeitende, Professor:innen/Betreuer:innen, Studierende und Unternehmen sehen alle dieselben Projektdaten und den Statusverlauf — keine Tabelle, die nur zwei Personen lesen können.",
   "home.feature.companySubmissions.title": "Unternehmenseinreichungen",
   "home.feature.companySubmissions.description":
-    "Unternehmen reichen ein Thema über ein Portal ein (FR-2). Mitarbeitende genehmigen es, ein passender Professor übernimmt und veröffentlicht es (FR-6).",
+    "Unternehmen reichen ein Thema über ein Portal ein (FR-2). Mitarbeitende genehmigen es, ein passender Professor / Betreuer übernimmt und veröffentlicht es (FR-6).",
   "home.feature.studentTopics.title": "Studierendenthemen & Teampartner",
   "home.feature.studentTopics.description":
-    "Studierende reichen ein Thema und Profil ein, das Professor:innen und Unternehmen durchsuchen können (FR-4/FR-8/FR-9), und können sich als teamsuchend markieren (FR-10).",
+    "Studierende reichen ein Thema und Profil ein, das Professor:innen/Betreuer:innen und Unternehmen durchsuchen können (FR-4/FR-8/FR-9), und können sich als teamsuchend markieren (FR-10).",
   "home.feature.guides.title": "Leitfäden, die wirklich helfen",
   "home.feature.guides.description":
     "Konkrete, TUM-spezifische Hinweise — etwa wie man eine passende Betreuung findet — statt Mundpropaganda.",
@@ -206,7 +208,7 @@ const de: Record<keyof typeof en, string> = {
   "signIn.title": "Anmelden",
   "signIn.subtitle": "Wie Sie sich anmelden, hängt davon ab, wer Sie sind (FR-1/NFR-1).",
   "signIn.tumMembers.title": "TUM-Angehörige",
-  "signIn.tumMembers.description": "Studierende, Professor:innen und Mitarbeitende melden sich mit ihrem TUM-Institutionskonto an.",
+  "signIn.tumMembers.description": "Studierende, Professor:innen/Betreuer:innen und Mitarbeitende melden sich mit ihrem TUM-Institutionskonto an.",
   "signIn.tumMembers.action": "Weiter mit Shibboleth",
   "signIn.companies.title": "Unternehmen",
   "signIn.companies.description":
@@ -225,9 +227,10 @@ const de: Record<keyof typeof en, string> = {
   "shibboleth.chairDepartment": "Lehrstuhl / Fachbereich",
   "shibboleth.degreeProgram": "Studiengang",
   "shibboleth.signInAction": "Mit Shibboleth anmelden",
-  "shibboleth.roleStudent": "Studierende:r",
-  "shibboleth.roleProfessor": "Professor:in",
-  "shibboleth.roleStaff": "Universitätsmitarbeiter:in",
+  "role.student": "Studierende:r",
+  "role.professor": "Professor:in / Betreuer:in",
+  "role.staff": "Universitätsmitarbeiter:in",
+  "role.company": "Unternehmen",
   "shibboleth.quickSignIn": "Mock-Anmeldung zu Testzwecken",
   "shibboleth.quickSignInDesc": "Nur ein Testkürzel für diesen Prototyp — würde in einer echten Umgebung nicht existieren.",
 
@@ -250,11 +253,11 @@ const de: Record<keyof typeof en, string> = {
   "signOutMenu.title": "Konto",
 
   "prompt.staff": "Melden Sie sich mit einem Mitarbeiterkonto an, um dieses Dashboard zu sehen.",
-  "prompt.professor": "Melden Sie sich mit einem Professor:innenkonto an, um dieses Dashboard zu sehen.",
+  "prompt.professor": "Melden Sie sich mit einem Professor:innen-/Betreuer:innenkonto an, um dieses Dashboard zu sehen.",
   "prompt.student": "Melden Sie sich mit einem Studierendenkonto an, um diese Seite zu sehen.",
   "prompt.company": "Melden Sie sich mit einem Unternehmenskonto an (oder registrieren Sie eines), um dieses Dashboard zu sehen.",
   "prompt.studentDirectory":
-    "Melden Sie sich als Professor:in, Unternehmen oder Mitarbeiter:in an, um Themen und Profile von Studierenden zu durchsuchen.",
+    "Melden Sie sich als Professor:in/Betreuer:in, Unternehmen oder Mitarbeiter:in an, um Themen und Profile von Studierenden zu durchsuchen.",
 
   "page.staff.title": "Mitarbeiter-Dashboard",
   "page.staff.description":
@@ -276,7 +279,7 @@ const de: Record<keyof typeof en, string> = {
   "page.teammates.title": "Teampartner finden",
   "page.students.title": "Studierendenverzeichnis",
   "page.students.description":
-    "Von Studierenden eingereichte Themen und Profildaten (FR-4/FR-8), filterbar nach Studiengang (FR-9) — damit Unternehmen und Professor:innen vorab sichten können, statt auf Bewerbungen zu warten.",
+    "Von Studierenden eingereichte Themen und Profildaten (FR-4/FR-8), filterbar nach Studiengang (FR-9) — damit Unternehmen und Professor:innen/Betreuer:innen vorab sichten können, statt auf Bewerbungen zu warten.",
 
   "common.loading": "Wird geladen…",
 };
@@ -317,4 +320,14 @@ export function useLanguage() {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
   return ctx;
+}
+
+// Shared role -> display label mapping (e.g. "professor" -> "Professor / Supervisor"),
+// so every badge/picker shows the same terminology instead of just capitalizing the
+// raw role value.
+export function roleLabel(role: Role, t: (key: keyof typeof en) => string) {
+  if (role === "staff") return t("role.staff");
+  if (role === "professor") return t("role.professor");
+  if (role === "company") return t("role.company");
+  return t("role.student");
 }
