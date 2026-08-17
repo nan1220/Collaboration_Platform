@@ -10,6 +10,7 @@ import { useCurrentUser } from "@/lib/current-user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -40,9 +41,10 @@ export default function ShibbolethLoginPage() {
   const [department, setDepartment] = useState("");
   const [program, setProgram] = useState("");
   const [expertise, setExpertise] = useState("");
+  const [bio, setBio] = useState("");
 
   const signInMutation = useMutation({
-    mutationFn: () => api.signInInstitutional({ name, role, department, program, expertise }),
+    mutationFn: () => api.signInInstitutional({ name, role, department, program, expertise, bio }),
     onSuccess: (user) => {
       toast.success(`Account created and signed in as ${user.name}`);
       queryClient.invalidateQueries({ queryKey: ["demo-users"] });
@@ -112,6 +114,16 @@ export default function ShibbolethLoginPage() {
                     placeholder="e.g. School of Management"
                     value={expertise}
                     onChange={(e) => setExpertise(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="bio">{t("shibboleth.bio")}</Label>
+                  <Textarea
+                    id="bio"
+                    rows={3}
+                    placeholder="A short line or two about your research and supervision interests…"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
                   />
                 </div>
               </>

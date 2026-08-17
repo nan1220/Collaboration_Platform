@@ -59,7 +59,7 @@ interface DbState {
 // Bumped whenever seed data shape or content changes meaningfully, so
 // anyone with older cached demo data (e.g. pre-anonymization names) gets a
 // fresh reseed instead of a stale localStorage copy.
-const STORAGE_KEY = "collab-platform-mock-db-v6";
+const STORAGE_KEY = "collab-platform-mock-db-v7";
 
 function freshState(): DbState {
   return {
@@ -120,10 +120,11 @@ function toUserSummary(user: User): UserSummary {
     department: user.department,
     program: user.program,
     expertise: user.expertise,
+    bio: user.bio,
   };
 }
 
-const UNKNOWN_USER_SUMMARY = { department: "", program: "", expertise: "" };
+const UNKNOWN_USER_SUMMARY = { department: "", program: "", expertise: "", bio: "" };
 
 function requireUser(userId: number | null | undefined): User {
   const user = userId ? findUser(userId) : undefined;
@@ -262,6 +263,7 @@ export const store = {
     department: string;
     program: string;
     expertise: string;
+    bio: string;
   }): User {
     if (!body.name.trim()) throw new ApiError(400, "Name is required");
     const db = getState();
@@ -273,6 +275,7 @@ export const store = {
       department: body.role === "professor" ? body.department : "",
       program: body.role === "student" ? body.program : "",
       expertise: body.role === "professor" ? body.expertise : "",
+      bio: body.role === "professor" ? body.bio : "",
     };
     db.users.push(user);
     persist();
@@ -296,6 +299,7 @@ export const store = {
       department: "",
       program: "",
       expertise: "",
+      bio: "",
     };
     db.users.push(user);
     const company: Company = {
