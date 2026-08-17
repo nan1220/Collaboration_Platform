@@ -62,10 +62,7 @@ export function NavBar() {
   return (
     <header
       data-role={currentUser?.role}
-      className={cn(
-        "sticky top-0 z-40 border-b-4 bg-primary text-primary-foreground shadow-md shadow-black/10",
-        currentUser ? "border-b-accent" : "border-b-primary"
-      )}
+      className="sticky top-0 z-40 bg-primary text-primary-foreground shadow-md shadow-black/10"
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-3 shrink-0">

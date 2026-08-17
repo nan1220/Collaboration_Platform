@@ -188,3 +188,13 @@
 .dark [data-role] {
   --accent-foreground: #072140;
 }
+
+/*
+ * The navbar paints itself with --primary/--primary-foreground rather than
+ * --accent, so it needs its own swap: when signed in, its whole background
+ * (not just a stripe) becomes the current role's color.
+ */
+header[data-role] {
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+}
