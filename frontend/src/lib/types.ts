@@ -111,7 +111,7 @@ export interface CheckIn {
 export interface AuditLogEntry {
   id: number;
   actor: UserSummary | null;
-  entity: "project" | "guide" | "application" | "company";
+  entity: "project" | "guide" | "application" | "company" | "database";
   entity_id: string;
   action: string;
   timestamp: string;

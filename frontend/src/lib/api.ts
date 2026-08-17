@@ -109,4 +109,6 @@ export const api = {
   verifyCompany: (userId: number, companyId: number) => run(() => store.verifyCompany(userId, companyId)),
 
   auditLog: (userId: number, projectId?: number) => run(() => store.auditLog(userId, projectId)),
+
+  resetDatabase: (userId: number) => run(() => store.resetDatabase(userId)),
 };

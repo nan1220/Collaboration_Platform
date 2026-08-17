@@ -766,4 +766,14 @@ export const store = {
     if (projectId) list = list.filter((e) => e.entity_id === String(projectId));
     return list.reverse().map(toAuditLogEntry);
   },
+
+  // Wipes all local demo data back to the seed dataset in mock-data.ts. Only
+  // meaningful because this whole "database" is a localStorage stand-in
+  // (see the module comment above) — there's nothing server-side to reset.
+  resetDatabase(userId: number | null): void {
+    const user = requireRole(userId, "staff");
+    state = freshState();
+    recordAudit(user.id, "database", "all", "reset");
+    persist();
+  },
 };

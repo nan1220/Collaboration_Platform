@@ -70,7 +70,7 @@ export interface RawCheckIn {
 export interface RawAuditLogEntry {
   id: number;
   actor_id: number | null;
-  entity: "project" | "guide" | "application" | "company";
+  entity: "project" | "guide" | "application" | "company" | "database";
   entity_id: string;
   action: string;
   timestamp: string;
