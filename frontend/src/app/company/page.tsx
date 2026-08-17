@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { useLanguage } from "@/lib/i18n";
 
 const EMPTY_FORM = {
   title: "",
@@ -32,6 +33,7 @@ const EMPTY_FORM = {
 
 export default function CompanyPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const enabled = currentUser?.role === "company";
   const [open, setOpen] = useState(false);
@@ -61,7 +63,7 @@ export default function CompanyPage() {
   });
 
   if (!currentUser || currentUser.role !== "company") {
-    return <SignInPrompt>Sign in with a company account (or register one) to see this dashboard.</SignInPrompt>;
+    return <SignInPrompt>{t("prompt.company")}</SignInPrompt>;
   }
 
   return (
@@ -72,17 +74,11 @@ export default function CompanyPage() {
             <h1 className="text-2xl font-semibold tracking-tight">{myCompany?.name}</h1>
             {myCompany && (
               <Badge variant={myCompany.verified ? "success" : "outline"}>
-                {myCompany.verified ? "Verified" : "Awaiting staff verification"}
+                {myCompany.verified ? t("page.company.verified") : t("page.company.awaitingVerification")}
               </Badge>
             )}
           </div>
-          <p className="mt-1 text-muted-foreground">
-            Submit project proposals (FR-2) and track their status. Browse the{" "}
-            <a href="/students" className="underline">
-              student directory
-            </a>{" "}
-            (FR-4) to scout ahead of applications.
-          </p>
+          <p className="mt-1 text-muted-foreground">{t("page.company.description")}</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button>Submit a project proposal</Button>} />

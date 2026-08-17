@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { useLanguage } from "@/lib/i18n";
 import { applicationStatus, APPLICATION_STATUS_LABELS } from "@/lib/types";
 
 const EMPTY_PROFILE = {
@@ -28,6 +29,7 @@ const EMPTY_PROFILE = {
 
 export default function StudentPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const enabled = currentUser?.role === "student";
 
@@ -70,7 +72,7 @@ export default function StudentPage() {
   });
 
   if (!currentUser || currentUser.role !== "student") {
-    return <SignInPrompt>Sign in with a student account to see this page.</SignInPrompt>;
+    return <SignInPrompt>{t("prompt.student")}</SignInPrompt>;
   }
 
   const acceptedOffers = applications.filter(
@@ -80,8 +82,8 @@ export default function StudentPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">My applications</h1>
-        <p className="mt-1 text-muted-foreground">Projects you've applied to and their decision status.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("page.student.title")}</h1>
+        <p className="mt-1 text-muted-foreground">{t("page.student.description")}</p>
       </div>
 
       {acceptedOffers.length > 1 && (

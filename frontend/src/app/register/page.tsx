@@ -12,11 +12,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { DevShortcut } from "@/components/dev-shortcut";
+import { useLanguage } from "@/lib/i18n";
 
 export default function CompanyAccessPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { users, setCurrentUserId } = useCurrentUser();
+  const { t } = useLanguage();
   const existingCompanies = users.filter((u) => u.role === "company");
 
   const [loginEmail, setLoginEmail] = useState("");
@@ -36,24 +38,21 @@ export default function CompanyAccessPage() {
 
   const loginMutation = useMutation({
     mutationFn: () => api.signInCompany(loginEmail),
-    onSuccess: onSignedIn("Signed in"),
-    onError: (err) => toast.error(err instanceof ApiError ? err.message : "Sign-in failed"),
+    onSuccess: onSignedIn(t("toast.signedIn")),
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : t("toast.signInFailed")),
   });
 
   const registerMutation = useMutation({
     mutationFn: () => api.registerCompany(form),
-    onSuccess: onSignedIn("Company registered — pending staff verification"),
-    onError: (err) => toast.error(err instanceof ApiError ? err.message : "Registration failed"),
+    onSuccess: onSignedIn(t("toast.companyRegistered")),
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : t("toast.registrationFailed")),
   });
 
   return (
     <Card className="mx-auto max-w-lg">
       <CardHeader>
-        <CardTitle>Company access</CardTitle>
-        <CardDescription>
-          No TUM account needed. Already registered? Sign in below. New here? Register your company
-          — staff confirm new companies before they can submit a project (NFR-1).
-        </CardDescription>
+        <CardTitle>{t("register.title")}</CardTitle>
+        <CardDescription>{t("register.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <form
@@ -63,9 +62,9 @@ export default function CompanyAccessPage() {
             loginMutation.mutate();
           }}
         >
-          <p className="text-sm font-medium">Already registered</p>
+          <p className="text-sm font-medium">{t("register.alreadyRegistered")}</p>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="login_email">Work email</Label>
+            <Label htmlFor="login_email">{t("register.workEmail")}</Label>
             <Input
               id="login_email"
               type="email"
@@ -75,7 +74,7 @@ export default function CompanyAccessPage() {
             />
           </div>
           <Button type="submit" variant="secondary" disabled={loginMutation.isPending}>
-            Log in
+            {t("register.logIn")}
           </Button>
         </form>
 
@@ -88,9 +87,9 @@ export default function CompanyAccessPage() {
             registerMutation.mutate();
           }}
         >
-          <p className="text-sm font-medium">New company</p>
+          <p className="text-sm font-medium">{t("register.newCompany")}</p>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="name">Company name</Label>
+            <Label htmlFor="name">{t("register.companyName")}</Label>
             <Input
               id="name"
               value={form.name}
@@ -99,7 +98,7 @@ export default function CompanyAccessPage() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact_name">Contact person</Label>
+            <Label htmlFor="contact_name">{t("register.contactPerson")}</Label>
             <Input
               id="contact_name"
               value={form.contact_name}
@@ -108,7 +107,7 @@ export default function CompanyAccessPage() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="contact_email">Work email</Label>
+            <Label htmlFor="contact_email">{t("register.workEmail")}</Label>
             <Input
               id="contact_email"
               type="email"
@@ -118,12 +117,12 @@ export default function CompanyAccessPage() {
             />
           </div>
           <Button type="submit" disabled={registerMutation.isPending}>
-            Register
+            {t("register.registerAction")}
           </Button>
         </form>
 
         {existingCompanies.length > 0 && (
-          <DevShortcut title="Mock sign-in for testing">
+          <DevShortcut title={t("shibboleth.quickSignIn")}>
             <div className="flex flex-col gap-1.5">
               {existingCompanies.map((company) => (
                 <button

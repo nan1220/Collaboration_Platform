@@ -3,8 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLanguage } from "@/lib/i18n";
 
 export default function TeammatesPage() {
+  const { t } = useLanguage();
   const { data: profiles = [], isLoading } = useQuery({
     queryKey: ["students-looking-for-team"],
     queryFn: api.studentsLookingForTeam,
@@ -13,7 +15,7 @@ export default function TeammatesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Find teammates</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("page.teammates.title")}</h1>
         <p className="mt-1 max-w-2xl text-muted-foreground">
           Students who've opted in to being found by others looking to form a project group.
           Manage your own listing from{" "}

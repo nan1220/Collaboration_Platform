@@ -20,19 +20,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DevShortcut } from "@/components/dev-shortcut";
+import { useLanguage } from "@/lib/i18n";
 import type { Role } from "@/lib/types";
-
-const ROLE_OPTIONS: { value: "student" | "professor" | "staff"; label: string }[] = [
-  { value: "student", label: "Student" },
-  { value: "professor", label: "Professor" },
-  { value: "staff", label: "University staff" },
-];
 
 export default function ShibbolethLoginPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { users, setCurrentUserId } = useCurrentUser();
+  const { t } = useLanguage();
   const institutionalUsers = users.filter((u) => u.role !== "company");
+
+  const ROLE_OPTIONS: { value: "student" | "professor" | "staff"; label: string }[] = [
+    { value: "student", label: t("shibboleth.roleStudent") },
+    { value: "professor", label: t("shibboleth.roleProfessor") },
+    { value: "staff", label: t("shibboleth.roleStaff") },
+  ];
 
   const [name, setName] = useState("");
   const [role, setRole] = useState<"student" | "professor" | "staff">("student");
@@ -61,28 +63,20 @@ export default function ShibbolethLoginPage() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-5 text-muted-foreground" />
-            <CardTitle>TUM Shibboleth Login (simulated)</CardTitle>
+            <CardTitle>{t("shibboleth.title")}</CardTitle>
           </div>
-          <CardDescription>
-            In production this would redirect to TUM&apos;s real Shibboleth identity provider
-            (NFR-1). This prototype has no institutional backend to redirect to, so it simulates
-            the round trip here instead.
-          </CardDescription>
+          <CardDescription>{t("shibboleth.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-3">
-            <p className="text-sm font-medium">First time signing in</p>
-            <p className="text-xs text-muted-foreground">
-              A real Shibboleth login releases your identity attributes (name, affiliation) to the
-              platform, which creates your account automatically the first time it sees them —
-              simulated here by just asking for that information directly.
-            </p>
+            <p className="text-sm font-medium">{t("shibboleth.firstTime")}</p>
+            <p className="text-xs text-muted-foreground">{t("shibboleth.firstTimeDesc")}</p>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="name">Full name</Label>
+              <Label htmlFor="name">{t("shibboleth.fullName")}</Label>
               <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="role">Affiliation</Label>
+              <Label htmlFor="role">{t("shibboleth.affiliation")}</Label>
               <Select
                 items={ROLE_OPTIONS}
                 value={role}
@@ -102,7 +96,7 @@ export default function ShibbolethLoginPage() {
             </div>
             {role === "professor" && (
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="department">Chair / department</Label>
+                <Label htmlFor="department">{t("shibboleth.chairDepartment")}</Label>
                 <Input
                   id="department"
                   placeholder="e.g. School of Management"
@@ -113,7 +107,7 @@ export default function ShibbolethLoginPage() {
             )}
             {role === "student" && (
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="program">Degree program</Label>
+                <Label htmlFor="program">{t("shibboleth.degreeProgram")}</Label>
                 <Input
                   id="program"
                   placeholder="e.g. B.Sc. Management and Data Science"
@@ -126,14 +120,14 @@ export default function ShibbolethLoginPage() {
               onClick={() => signInMutation.mutate()}
               disabled={signInMutation.isPending || !name.trim()}
             >
-              Sign in via Shibboleth
+              {t("shibboleth.signInAction")}
             </Button>
           </div>
 
           {institutionalUsers.length > 0 && (
             <>
               <Separator />
-              <DevShortcut title="Mock sign-in for testing">
+              <DevShortcut title={t("shibboleth.quickSignIn")}>
                 <div className="flex flex-col gap-1.5">
                   {institutionalUsers.map((user) => (
                     <button
@@ -142,7 +136,7 @@ export default function ShibbolethLoginPage() {
                       className="flex items-center justify-between rounded-md border border-amber-500/30 bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
                     >
                       <span>{user.name}</span>
-                      <span className="capitalize text-muted-foreground">{roleLabel(user.role)}</span>
+                      <span className="capitalize text-muted-foreground">{roleLabel(user.role, t)}</span>
                     </button>
                   ))}
                 </div>
@@ -155,7 +149,8 @@ export default function ShibbolethLoginPage() {
   );
 }
 
-function roleLabel(role: Role) {
-  if (role === "staff") return "University staff";
-  return role;
+function roleLabel(role: Role, t: ReturnType<typeof useLanguage>["t"]) {
+  if (role === "staff") return t("shibboleth.roleStaff");
+  if (role === "professor") return t("shibboleth.roleProfessor");
+  return t("shibboleth.roleStudent");
 }

@@ -13,10 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useLanguage } from "@/lib/i18n";
 import { STATUS_LABELS, type ProjectStatus } from "@/lib/types";
 
 export default function ProjectsPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<string>("");
 
@@ -28,7 +30,7 @@ export default function ProjectsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("page.projects.title")}</h1>
         <p className="mt-1 text-muted-foreground">
           Published project studies, open for student applications.
           {currentUser?.role === "professor" &&

@@ -19,9 +19,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/lib/i18n";
 
 export default function GuidesPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ title: "", category: "General", body: "" });
@@ -58,11 +60,8 @@ export default function GuidesPage() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Guides</h1>
-          <p className="mt-1 max-w-2xl text-muted-foreground">
-            Practical, TUM-specific guidance — like how to find an eligible supervisor for a
-            company-submitted topic — instead of figuring it out through word of mouth.
-          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("page.guides.title")}</h1>
+          <p className="mt-1 max-w-2xl text-muted-foreground">{t("page.guides.description")}</p>
         </div>
         {currentUser?.role === "staff" && (
           <Dialog open={open} onOpenChange={setOpen}>

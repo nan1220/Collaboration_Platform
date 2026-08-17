@@ -8,9 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { useLanguage } from "@/lib/i18n";
 
 export default function StudentDirectoryPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const [program, setProgram] = useState("");
   const [q, setQ] = useState("");
 
@@ -22,21 +24,14 @@ export default function StudentDirectoryPage() {
   const allowed = currentUser && ["professor", "company", "staff"].includes(currentUser.role);
 
   if (!allowed) {
-    return (
-      <SignInPrompt>
-        Sign in as a professor, company or staff account to browse student topics and profiles.
-      </SignInPrompt>
-    );
+    return <SignInPrompt>{t("prompt.studentDirectory")}</SignInPrompt>;
   }
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Student directory</h1>
-        <p className="mt-1 max-w-2xl text-muted-foreground">
-          Topics and profile data submitted by students (FR-4/FR-8), filterable by program (FR-9) —
-          so companies and professors can scout ahead instead of waiting for applications.
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t("page.students.title")}</h1>
+        <p className="mt-1 max-w-2xl text-muted-foreground">{t("page.students.description")}</p>
       </div>
 
       <div className="flex flex-wrap gap-3">

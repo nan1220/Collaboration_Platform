@@ -18,6 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
+import { useLanguage } from "@/lib/i18n";
 
 const EMPTY_DIRECT_FORM = {
   title: "",
@@ -33,6 +34,7 @@ const EMPTY_DIRECT_FORM = {
 
 export default function ProfessorPage() {
   const { currentUser } = useCurrentUser();
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const enabled = currentUser?.role === "professor";
   const [open, setOpen] = useState(false);
@@ -67,7 +69,7 @@ export default function ProfessorPage() {
   });
 
   if (!currentUser || currentUser.role !== "professor") {
-    return <SignInPrompt>Sign in with a professor account to see this dashboard.</SignInPrompt>;
+    return <SignInPrompt>{t("prompt.professor")}</SignInPrompt>;
   }
 
   const myProjects = allProjects.filter((p) => p.assigned_professor?.id === currentUser.id);
@@ -76,10 +78,12 @@ export default function ProfessorPage() {
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">My supervision</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t("page.professor.title")}</h1>
           <p className="mt-1 text-muted-foreground">
-            Topics matched to your expertise ({currentUser.department || "none set"}), the projects you
-            supervise, and direct submissions for projects already agreed with a company.
+            {t("page.professor.description").replace(
+              "{department}",
+              currentUser.department || t("page.professor.noneSet")
+            )}
           </p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
