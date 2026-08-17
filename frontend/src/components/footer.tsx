@@ -14,6 +14,8 @@ export function Footer() {
             {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
             <img src={withBasePath("/tum-logo.svg")} alt="Technical University of Munich" className="h-4 w-auto" />
           </span>
+          {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
+          <img src={withBasePath("/logo-mark.svg")} alt="" aria-hidden="true" className="h-5 w-5" />
           <span>{t("footer.tagline")}</span>
         </div>
         <div className="flex flex-wrap gap-4">

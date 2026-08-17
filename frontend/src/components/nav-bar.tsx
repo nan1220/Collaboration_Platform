@@ -68,7 +68,7 @@ export function NavBar() {
             <img src={withBasePath("/tum-logo.svg")} alt="Technical University of Munich" className="h-5 w-auto" />
           </span>
           {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
-          <img src={withBasePath("/logo-mark-white.svg")} alt="" aria-hidden="true" className="h-6 w-6" />
+          <img src={withBasePath("/logo-mark.svg")} alt="" aria-hidden="true" className="h-6 w-6" />
           <span className="text-sm font-semibold tracking-tight">Collaboration Platform</span>
         </Link>
 

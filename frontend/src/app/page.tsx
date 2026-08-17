@@ -6,6 +6,7 @@ import { useCurrentUser } from "@/lib/current-user";
 import { useLanguage } from "@/lib/i18n";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 type TKey = Parameters<ReturnType<typeof useLanguage>["t"]>[0];
@@ -90,7 +91,11 @@ export default function Home() {
           className="pointer-events-none absolute -bottom-20 left-1/4 size-72 rounded-full bg-white/5 blur-3xl"
         />
         <div className="relative flex max-w-2xl flex-col gap-4">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Collaboration Platform</h1>
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static SVG, no next/image benefit */}
+            <img src={withBasePath("/logo-mark.svg")} alt="" aria-hidden="true" className="size-10 sm:size-12" />
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Collaboration Platform</h1>
+          </div>
           <p className="text-primary-foreground/85 sm:text-lg">{t("home.heroSubtitle")}</p>
           <div className="mt-2 flex flex-wrap gap-3">
             <Link href="/projects" className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}>
