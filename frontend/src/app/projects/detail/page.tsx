@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import { Markdown } from "@/components/markdown";
 import {
   ALLOWED_TRANSITIONS,
   applicationStatus,
@@ -174,11 +175,15 @@ function ProjectDetail() {
         <CardContent className="flex flex-col gap-3 pt-6">
           <div>
             <span className="font-medium">Background and objective</span>
-            <p className="mt-1 text-muted-foreground">{project.background_objective}</p>
+            <Markdown content={project.background_objective} className="mt-1" />
           </div>
           <div>
             <span className="font-medium">Deliverable</span>
-            <p className="mt-1 text-muted-foreground">{project.deliverable || "Not specified"}</p>
+            {project.deliverable ? (
+              <Markdown content={project.deliverable} className="mt-1" />
+            ) : (
+              <p className="mt-1 text-muted-foreground">Not specified</p>
+            )}
           </div>
           <div className="grid gap-1 text-sm text-muted-foreground sm:grid-cols-2">
             <div>

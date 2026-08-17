@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { Markdown } from "@/components/markdown";
 
 export default function GuideDetailPage() {
   return (
@@ -70,9 +71,12 @@ function GuideDetail() {
       <Card>
         <CardContent className="pt-6">
           {editing ? (
-            <Textarea rows={12} value={body} onChange={(e) => setBody(e.target.value)} />
+            <div className="flex flex-col gap-1.5">
+              <Textarea rows={12} value={body} onChange={(e) => setBody(e.target.value)} className="font-mono text-sm" />
+              <p className="text-xs text-muted-foreground">Markdown supported (headings, lists, bold, links, tables).</p>
+            </div>
           ) : (
-            <div className="whitespace-pre-line text-sm leading-relaxed">{guide.body}</div>
+            <Markdown content={guide.body} />
           )}
         </CardContent>
       </Card>

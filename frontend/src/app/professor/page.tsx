@@ -111,9 +111,11 @@ export default function ProfessorPage() {
                 <Textarea
                   id="d-bg"
                   rows={3}
+                  className="font-mono text-sm"
                   value={form.background_objective}
                   onChange={(e) => setForm((f) => ({ ...f, background_objective: e.target.value }))}
                 />
+                <p className="text-xs text-muted-foreground">Markdown supported.</p>
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="d-deliverable">Deliverable</Label>

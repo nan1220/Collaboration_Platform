@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/status-badge";
 import { cn } from "@/lib/utils";
+import { stripMarkdown } from "@/components/markdown";
 import { isNotYetSupervised, type Project, type ProjectStatus } from "@/lib/types";
 
 const ACCENT_BORDER: Record<ProjectStatus, string> = {
@@ -35,7 +36,7 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
           </div>
           <CardTitle className="mt-1">{project.title}</CardTitle>
-          <CardDescription className="line-clamp-2">{project.background_objective}</CardDescription>
+          <CardDescription className="line-clamp-2">{stripMarkdown(project.background_objective)}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
           {project.company && <span>{project.company.name}</span>}

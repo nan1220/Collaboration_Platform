@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/lib/i18n";
+import { stripMarkdown } from "@/components/markdown";
 
 export default function GuidesPage() {
   const { currentUser } = useCurrentUser();
@@ -92,9 +93,11 @@ export default function GuidesPage() {
                   <Textarea
                     id="body"
                     rows={8}
+                    className="font-mono text-sm"
                     value={form.body}
                     onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
                   />
+                  <p className="text-xs text-muted-foreground">Markdown supported (headings, lists, bold, links, tables).</p>
                 </div>
                 <Button
                   onClick={() => createMutation.mutate()}
@@ -118,7 +121,7 @@ export default function GuidesPage() {
                   {guide.category}
                 </Badge>
                 <CardTitle className="mt-1">{guide.title}</CardTitle>
-                <CardDescription className="line-clamp-3">{guide.body}</CardDescription>
+                <CardDescription className="line-clamp-3">{stripMarkdown(guide.body)}</CardDescription>
               </CardHeader>
             </Card>
           </Link>
