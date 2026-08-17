@@ -7,7 +7,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api, ApiError } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
-import { StatusBadge } from "@/components/status-badge";
+import { StatusProgress } from "@/components/status-progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -171,15 +171,15 @@ function ProjectDetail() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <StatusBadge status={project.status} />
-            {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
-            <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
-            {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
-          </div>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h1>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {isNotYetSupervised(project) && <Badge variant="outline">Not yet supervised</Badge>}
+          <Badge variant="outline">{project.source === "company" ? "Company" : "Professor/Supervisor-submitted"}</Badge>
+          {project.required_expertise && <Badge variant="outline">{project.required_expertise}</Badge>}
+        </div>
+        <h1 className="text-2xl font-semibold tracking-tight">{project.title}</h1>
+        <div className="max-w-xl">
+          <StatusProgress status={project.status} />
         </div>
       </div>
 

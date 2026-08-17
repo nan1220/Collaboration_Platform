@@ -1,15 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { STATUS_LABELS, type ProjectStatus } from "@/lib/types";
-
-const VARIANTS: Record<ProjectStatus, "default" | "secondary" | "success" | "destructive" | "outline"> = {
-  pending: "outline",
-  approved: "secondary",
-  open: "secondary",
-  ongoing: "default",
-  complete: "success",
-  rejected: "destructive",
-};
+import { STATUS_BADGE_CLASS } from "@/lib/status-colors";
 
 export function StatusBadge({ status }: { status: ProjectStatus }) {
-  return <Badge variant={VARIANTS[status]}>{STATUS_LABELS[status]}</Badge>;
+  return <Badge className={STATUS_BADGE_CLASS[status]}>{STATUS_LABELS[status]}</Badge>;
 }
