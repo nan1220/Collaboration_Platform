@@ -42,6 +42,10 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-role-staff: var(--role-staff);
+  --color-role-professor: var(--role-professor);
+  --color-role-company: var(--role-company);
+  --color-role-student: var(--role-student);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -57,6 +61,14 @@
  * TUM Blue #0065BD (primary brand blue, Pantone 300C), TUM Blue Dark
  * #072140/#0A2D57, TUM Blue Light #5E94D4 / #9ABCE4 / #F0F5FA, TUM Green
  * accent #9FBA36, neutrals #20252A (dark) / #FBF9FA (near-white).
+ *
+ * The logo (logo-mark.svg) is a hub-and-spoke: one central node (staff,
+ * TUM green - the organizers this platform gives oversight to) connected to
+ * three satellite nodes for the other roles that feed it data (professor,
+ * company, student), each in its own TUM-palette hue. --role-* below reuses
+ * those exact hues but desaturated/muted for use as everyday UI accents -
+ * full logo saturation is for four small dots sitting next to each other,
+ * not for whole dashboards.
  */
 :root {
   --background: oklch(1 0 0);
@@ -93,6 +105,10 @@
   --sidebar-accent-foreground: #0a2d57;
   --sidebar-border: #e2e5e8;
   --sidebar-ring: #5e94d4;
+  --role-staff: #7c9a4a;
+  --role-professor: #35608f;
+  --role-company: #c97a3d;
+  --role-student: #4e9690;
 }
 
 .dark {
@@ -129,6 +145,10 @@
   --sidebar-accent-foreground: #9abce4;
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: #5e94d4;
+  --role-staff: #a8c378;
+  --role-professor: #6e93be;
+  --role-company: #e0995e;
+  --role-student: #7bc0ba;
 }
 
 @layer base {

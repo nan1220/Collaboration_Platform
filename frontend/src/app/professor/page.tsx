@@ -81,7 +81,7 @@ export default function ProfessorPage() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+        <div className="border-l-4 border-l-role-professor pl-4">
           <h1 className="text-2xl font-semibold tracking-tight">{t("page.professor.title")}</h1>
           <p className="mt-1 max-w-2xl text-muted-foreground">
             {t("page.professor.description").replace(
@@ -94,15 +94,15 @@ export default function ProfessorPage() {
         <div className="flex shrink-0 items-start gap-4">
           <div className="flex gap-4">
             <div>
-              <div className="text-xl font-semibold tracking-tight">{supervisingCount}</div>
+              <div className="text-xl font-semibold tracking-tight text-role-professor">{supervisingCount}</div>
               <div className="text-xs text-muted-foreground">{t("page.professor.statSupervising")}</div>
             </div>
             <div>
-              <div className="text-xl font-semibold tracking-tight">{filledCount}</div>
+              <div className="text-xl font-semibold tracking-tight text-role-professor">{filledCount}</div>
               <div className="text-xs text-muted-foreground">{t("page.professor.statFilled")}</div>
             </div>
             <div>
-              <div className="text-xl font-semibold tracking-tight">{matched.length}</div>
+              <div className="text-xl font-semibold tracking-tight text-role-professor">{matched.length}</div>
               <div className="text-xs text-muted-foreground">{t("page.professor.statMatched")}</div>
             </div>
           </div>
