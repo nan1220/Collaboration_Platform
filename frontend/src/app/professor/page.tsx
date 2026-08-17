@@ -125,7 +125,7 @@ export default function ProfessorPage() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
                       <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="d-expertise">Required expertise</Label>
+                        <Label htmlFor="d-expertise">Required expertise for supervision</Label>
                         <Input
                           id="d-expertise"
                           placeholder={currentUser.expertise}

@@ -101,7 +101,7 @@ export default function CompanyPage() {
                 </div>
                 <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
                   <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="c-expertise">Required area of expertise</Label>
+                    <Label htmlFor="c-expertise">Required expertise for supervision</Label>
                     <Input
                       id="c-expertise"
                       placeholder="e.g. School of Management, Informatics"
