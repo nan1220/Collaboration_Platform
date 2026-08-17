@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { toast } from "sonner";
 import { api, ApiError } from "@/lib/api";
 import { useCurrentUser } from "@/lib/current-user";
@@ -13,7 +13,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import {
   Select,
@@ -47,16 +46,6 @@ const EMPTY_TOPIC_FORM = {
   requested_professor_id: "",
 };
 
-const EMPTY_PROFILE = {
-  areas_of_expertise: "",
-  research_interests: "",
-  skills: "",
-  previous_projects: "",
-  availability: "",
-  looking_for_team: false,
-  team_message: "",
-};
-
 export default function StudentPage() {
   const { currentUser } = useCurrentUser();
   const { t } = useLanguage();
@@ -67,29 +56,6 @@ export default function StudentPage() {
     queryKey: ["applications", "mine", currentUser?.id],
     queryFn: () => api.applications(currentUser!.id),
     enabled,
-  });
-
-  const { data: directory = [] } = useQuery({
-    queryKey: ["student-directory", currentUser?.id],
-    queryFn: () => api.studentDirectory(),
-    enabled,
-  });
-  const myProfile = directory.find((p) => p.student.id === currentUser?.id);
-
-  const [profile, setProfile] = useState(EMPTY_PROFILE);
-
-  useEffect(() => {
-    if (myProfile) setProfile(myProfile);
-  }, [myProfile]);
-
-  const saveProfileMutation = useMutation({
-    mutationFn: (values: typeof profile) => api.updateStudentProfile(currentUser!.id, values),
-    onSuccess: () => {
-      toast.success("Profile saved");
-      queryClient.invalidateQueries({ queryKey: ["student-directory"] });
-      queryClient.invalidateQueries({ queryKey: ["students-looking-for-team"] });
-    },
-    onError: (err) => toast.error(err instanceof ApiError ? err.message : "Failed to save profile"),
   });
 
   const [topicOpen, setTopicOpen] = useState(false);
@@ -147,9 +113,9 @@ export default function StudentPage() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8" data-role="student">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
+        <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
           <h1 className="text-2xl font-semibold tracking-tight">{t("page.student.title")}</h1>
           <p className="mt-1 text-muted-foreground">{t("page.student.description")}</p>
         </div>
@@ -363,79 +329,13 @@ export default function StudentPage() {
         </div>
       </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>My profile (FR-9/FR-10)</CardTitle>
-          <CardDescription>
-            Visible to professors/supervisors and companies browsing the student directory. Optionally
-            flag yourself as looking for a team so other students can find you.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="expertise">Areas of expertise</Label>
-            <Input
-              id="expertise"
-              value={profile.areas_of_expertise}
-              onChange={(e) => setProfile((p) => ({ ...p, areas_of_expertise: e.target.value }))}
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="research">Research interests</Label>
-            <Input
-              id="research"
-              value={profile.research_interests}
-              onChange={(e) => setProfile((p) => ({ ...p, research_interests: e.target.value }))}
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="skills">Skills</Label>
-            <Input id="skills" value={profile.skills} onChange={(e) => setProfile((p) => ({ ...p, skills: e.target.value }))} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="previous">Previous projects</Label>
-            <Textarea
-              id="previous"
-              rows={2}
-              value={profile.previous_projects}
-              onChange={(e) => setProfile((p) => ({ ...p, previous_projects: e.target.value }))}
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="availability">Availability</Label>
-            <Input
-              id="availability"
-              value={profile.availability}
-              onChange={(e) => setProfile((p) => ({ ...p, availability: e.target.value }))}
-            />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="team-message">Message for teammates (shown only if flagged below)</Label>
-            <Textarea
-              id="team-message"
-              rows={2}
-              value={profile.team_message}
-              onChange={(e) => setProfile((p) => ({ ...p, team_message: e.target.value }))}
-            />
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={() => saveProfileMutation.mutate(profile)} disabled={saveProfileMutation.isPending}>
-              Save profile
-            </Button>
-            <Button
-              variant={profile.looking_for_team ? "destructive" : "secondary"}
-              onClick={() => {
-                const next = { ...profile, looking_for_team: !profile.looking_for_team };
-                setProfile(next);
-                saveProfileMutation.mutate(next);
-              }}
-              disabled={saveProfileMutation.isPending}
-            >
-              {profile.looking_for_team ? "Remove me from the teammate list" : "List me as looking for a team"}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <p className="text-sm text-muted-foreground">
+        Manage your topic, skills and teammate visibility on{" "}
+        <Link href="/profile" className="underline">
+          your profile
+        </Link>
+        .
+      </p>
     </div>
   );
 }

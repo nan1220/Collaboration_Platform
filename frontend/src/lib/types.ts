@@ -7,7 +7,7 @@ export interface UserSummary {
   department: string; // professor: chair; company/student/staff: unused
   program: string; // student: degree program (FR-9); unused otherwise
   expertise: string; // FR-5: professor/supervisor profile "chair/expertise", sourced at login
-  bio: string; // FR-5: professor/supervisor profile - short bio, sourced at login; unused otherwise
+  bio: string; // every role has a profile; sourced at login for professors, editable by anyone on /profile
 }
 
 export interface User extends UserSummary {

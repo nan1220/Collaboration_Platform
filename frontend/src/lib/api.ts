@@ -15,15 +15,13 @@ async function run<T>(fn: () => T): Promise<T> {
 export const api = {
   demoUsers: () => run(() => store.demoUsers()),
   users: (userId: number) => run(() => store.users(userId)),
+  updateProfile: (
+    userId: number,
+    body: Partial<{ bio: string; department: string; expertise: string; program: string }>
+  ) => run(() => store.updateProfile(userId, userId, body)),
 
-  signInInstitutional: (body: {
-    name: string;
-    role: "student" | "professor" | "staff";
-    department: string;
-    program: string;
-    expertise: string;
-    bio: string;
-  }) => run(() => store.signInInstitutional(body)),
+  signInInstitutional: (body: { name: string; role: "student" | "professor" | "staff" }) =>
+    run(() => store.signInInstitutional(body)),
   registerCompany: (body: { name: string; contact_name: string; contact_email: string }) =>
     run(() => store.registerCompany(body)),
   signInCompany: (contactEmail: string) => run(() => store.signInCompany(contactEmail)),
@@ -125,6 +123,7 @@ export const api = {
   companies: (userId: number) => run(() => store.companies(userId)),
   companyDirectory: () => run(() => store.companyDirectory()),
   myCompany: (userId: number) => run(() => store.myCompany(userId)),
+  companyByUserId: (userId: number) => run(() => store.companyByUserId(userId)),
   verifyCompany: (userId: number, companyId: number) => run(() => store.verifyCompany(userId, companyId)),
 
   auditLog: (userId: number, projectId?: number) => run(() => store.auditLog(userId, projectId)),

@@ -21,6 +21,8 @@ const en = {
   "nav.mySupervision": "My supervision",
   "nav.myCompany": "My company",
   "nav.myApplications": "My applications",
+  "nav.myCurrentProject": "My current project",
+  "nav.profile": "My profile",
   "nav.signIn": "Sign in",
   "nav.signOut": "Sign out",
   "nav.signedInSession": "Signed in for this demo session.",
@@ -36,25 +38,6 @@ const en = {
   "home.notSignedInTitle": "You're not signed in",
   "home.notSignedInDesc": "TUM members sign in with Shibboleth; companies register with a work email (FR-1/NFR-1).",
   "home.whatThisReplaces": "What this replaces",
-
-  "home.role.staff.title": "Staff dashboard",
-  "home.role.staff.description": "Review company submissions, monitor every project by status, and verify companies.",
-  "home.role.staff.link1": "Open staff dashboard",
-  "home.role.staff.link2": "Browse all projects",
-  "home.role.professor.title": "Supervision",
-  "home.role.professor.description":
-    "Take on topics matched to your expertise, or submit a project agreed directly with a company.",
-  "home.role.professor.link1": "Open my supervision",
-  "home.role.professor.link2": "Browse the student directory",
-  "home.role.company.title": "Company dashboard",
-  "home.role.company.description": "Submit project proposals and browse student topics and profiles.",
-  "home.role.company.link1": "Open my company dashboard",
-  "home.role.company.link2": "Browse the student directory",
-  "home.role.student.title": "Student home",
-  "home.role.student.description": "Browse published projects, submit your topic and profile, and track your applications.",
-  "home.role.student.link1": "Browse projects",
-  "home.role.student.link2": "My applications and profile",
-  "home.role.student.link3": "Read guides",
 
   "home.feature.database.title": "One shared database",
   "home.feature.database.description":
@@ -88,10 +71,7 @@ const en = {
     "A real Shibboleth login releases your identity attributes (name, affiliation) to the platform, which creates your account automatically the first time it sees them - simulated here by just asking for that information directly.",
   "shibboleth.fullName": "Full name",
   "shibboleth.affiliation": "Affiliation",
-  "shibboleth.chairDepartment": "Chair",
-  "shibboleth.expertise": "Expertise",
-  "shibboleth.bio": "Short bio (optional)",
-  "shibboleth.degreeProgram": "Degree program",
+  "shibboleth.profileHint": "You can add details like your chair, expertise, degree program and bio on your profile after signing in.",
   "shibboleth.signInAction": "Sign in via Shibboleth",
   "role.student": "Student",
   "role.professor": "Professor / Supervisor",
@@ -104,6 +84,7 @@ const en = {
   "toast.companyRegistered": "Company registered - pending staff verification",
   "toast.signInFailed": "Sign-in failed",
   "toast.registrationFailed": "Registration failed",
+  "toast.profileUpdated": "Profile updated",
 
   "register.title": "Company access",
   "register.description":
@@ -123,6 +104,24 @@ const en = {
   "prompt.student": "Sign in with a student account to see this page.",
   "prompt.company": "Sign in with a company account (or register one) to see this dashboard.",
   "prompt.studentDirectory": "Sign in as a professor/supervisor, company or staff account to browse student topics and profiles.",
+  "prompt.profile": "Sign in to view and edit your profile.",
+
+  "page.profile.title": "My profile",
+  "page.profile.description": "Your identity on the platform - visible to others who browse projects and directories.",
+  "page.profile.bioLabel": "Bio",
+  "page.profile.bioPlaceholder": "A short line or two about yourself…",
+  "page.profile.save": "Save profile",
+  "page.profile.program": "Program",
+  "page.profile.company": "Company",
+  "page.profile.contact": "Contact",
+  "page.profile.myTopicTitle": "My topic and profile (FR-8/FR-9/FR-10)",
+  "page.profile.myTopicDescription":
+    "Visible to professors/supervisors and companies browsing the student directory. Optionally flag yourself as looking for a team so other students can find you.",
+
+  "page.profileDetail.notFound": "This user could not be found.",
+  "page.profileDetail.isYou": "This is your profile.",
+  "page.profileDetail.editLink": "Edit it",
+  "page.profileDetail.noBio": "No bio set yet.",
 
   "page.staff.title": "Staff dashboard",
   "page.staff.description":
@@ -164,6 +163,8 @@ const de: Record<keyof typeof en, string> = {
   "nav.mySupervision": "Meine Betreuung",
   "nav.myCompany": "Mein Unternehmen",
   "nav.myApplications": "Meine Bewerbungen",
+  "nav.myCurrentProject": "Mein aktuelles Projekt",
+  "nav.profile": "Mein Profil",
   "nav.signIn": "Anmelden",
   "nav.signOut": "Abmelden",
   "nav.signedInSession": "Für diese Demo-Sitzung angemeldet.",
@@ -179,26 +180,6 @@ const de: Record<keyof typeof en, string> = {
   "home.notSignedInTitle": "Sie sind nicht angemeldet",
   "home.notSignedInDesc": "TUM-Angehörige melden sich mit Shibboleth an; Unternehmen registrieren sich mit einer geschäftlichen E-Mail-Adresse (FR-1/NFR-1).",
   "home.whatThisReplaces": "Was dies ersetzt",
-
-  "home.role.staff.title": "Mitarbeiter-Dashboard",
-  "home.role.staff.description": "Unternehmenseinreichungen prüfen, jedes Projekt nach Status verfolgen und Unternehmen verifizieren.",
-  "home.role.staff.link1": "Mitarbeiter-Dashboard öffnen",
-  "home.role.staff.link2": "Alle Projekte durchsuchen",
-  "home.role.professor.title": "Betreuung",
-  "home.role.professor.description":
-    "Themen übernehmen, die zu Ihrem Fachgebiet passen, oder ein direkt mit einem Unternehmen vereinbartes Projekt einreichen.",
-  "home.role.professor.link1": "Meine Betreuung öffnen",
-  "home.role.professor.link2": "Studierendenverzeichnis durchsuchen",
-  "home.role.company.title": "Unternehmens-Dashboard",
-  "home.role.company.description": "Projektvorschläge einreichen und Themen sowie Profile von Studierenden durchsuchen.",
-  "home.role.company.link1": "Unternehmens-Dashboard öffnen",
-  "home.role.company.link2": "Studierendenverzeichnis durchsuchen",
-  "home.role.student.title": "Startseite für Studierende",
-  "home.role.student.description":
-    "Veröffentlichte Projekte durchsuchen, eigenes Thema und Profil einreichen und Bewerbungen verfolgen.",
-  "home.role.student.link1": "Projekte durchsuchen",
-  "home.role.student.link2": "Meine Bewerbungen und Profil",
-  "home.role.student.link3": "Leitfäden lesen",
 
   "home.feature.database.title": "Eine gemeinsame Datenbank",
   "home.feature.database.description":
@@ -232,10 +213,7 @@ const de: Record<keyof typeof en, string> = {
     "Eine echte Shibboleth-Anmeldung gibt Ihre Identitätsattribute (Name, Zugehörigkeit) an die Plattform weiter, die daraus beim ersten Mal automatisch ein Konto anlegt - hier simuliert, indem diese Angaben direkt abgefragt werden.",
   "shibboleth.fullName": "Vollständiger Name",
   "shibboleth.affiliation": "Zugehörigkeit",
-  "shibboleth.chairDepartment": "Lehrstuhl",
-  "shibboleth.expertise": "Fachgebiet",
-  "shibboleth.bio": "Kurzprofil (optional)",
-  "shibboleth.degreeProgram": "Studiengang",
+  "shibboleth.profileHint": "Details wie Lehrstuhl, Fachgebiet, Studiengang und Kurzprofil können Sie nach der Anmeldung in Ihrem Profil ergänzen.",
   "shibboleth.signInAction": "Mit Shibboleth anmelden",
   "role.student": "Studierende:r",
   "role.professor": "Professor:in / Betreuer:in",
@@ -248,6 +226,7 @@ const de: Record<keyof typeof en, string> = {
   "toast.companyRegistered": "Unternehmen registriert - Bestätigung durch Mitarbeitende steht aus",
   "toast.signInFailed": "Anmeldung fehlgeschlagen",
   "toast.registrationFailed": "Registrierung fehlgeschlagen",
+  "toast.profileUpdated": "Profil aktualisiert",
 
   "register.title": "Unternehmenszugang",
   "register.description":
@@ -268,6 +247,24 @@ const de: Record<keyof typeof en, string> = {
   "prompt.company": "Melden Sie sich mit einem Unternehmenskonto an (oder registrieren Sie eines), um dieses Dashboard zu sehen.",
   "prompt.studentDirectory":
     "Melden Sie sich als Professor:in/Betreuer:in, Unternehmen oder Mitarbeiter:in an, um Themen und Profile von Studierenden zu durchsuchen.",
+  "prompt.profile": "Melden Sie sich an, um Ihr Profil anzusehen und zu bearbeiten.",
+
+  "page.profile.title": "Mein Profil",
+  "page.profile.description": "Ihre Identität auf der Plattform - sichtbar für andere, die Projekte und Verzeichnisse durchsuchen.",
+  "page.profile.bioLabel": "Kurzprofil",
+  "page.profile.bioPlaceholder": "Ein bis zwei Sätze über Sie…",
+  "page.profile.save": "Profil speichern",
+  "page.profile.program": "Studiengang",
+  "page.profile.company": "Unternehmen",
+  "page.profile.contact": "Kontakt",
+  "page.profile.myTopicTitle": "Mein Thema und Profil (FR-8/FR-9/FR-10)",
+  "page.profile.myTopicDescription":
+    "Sichtbar für Professor:innen/Betreuer:innen und Unternehmen im Studierendenverzeichnis. Markieren Sie sich optional als teamsuchend, damit andere Studierende Sie finden können.",
+
+  "page.profileDetail.notFound": "Dieser Nutzer konnte nicht gefunden werden.",
+  "page.profileDetail.isYou": "Dies ist Ihr Profil.",
+  "page.profileDetail.editLink": "Bearbeiten",
+  "page.profileDetail.noBio": "Noch kein Kurzprofil hinterlegt.",
 
   "page.staff.title": "Mitarbeiter-Dashboard",
   "page.staff.description":

@@ -10,9 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Dialog,
   DialogContent,
@@ -23,18 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { SignInPrompt } from "@/components/sign-in-prompt";
 import { MarkdownEditor } from "@/components/markdown-editor";
-import { Markdown } from "@/components/markdown";
 import { useLanguage } from "@/lib/i18n";
-
-function initials(name: string) {
-  const letters = name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase())
-    .join("");
-  return letters || "?";
-}
 
 const EMPTY_DIRECT_FORM = {
   title: "",
@@ -93,60 +79,36 @@ export default function ProfessorPage() {
   const completedCount = myProjects.filter((p) => p.status === "complete").length;
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* FR-5: professor/supervisor profile - chair/expertise, sourced from institution login */}
-      <Card>
-        <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-start sm:justify-between">
+    <div className="flex flex-col gap-8" data-role="professor">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
+          <h1 className="text-2xl font-semibold tracking-tight">{t("page.professor.title")}</h1>
+          <p className="mt-1 max-w-2xl text-muted-foreground">
+            {t("page.professor.description").replace(
+              "{expertise}",
+              currentUser.expertise || t("page.professor.noneSet")
+            )}
+          </p>
+        </div>
+
+        <div className="flex shrink-0 items-start gap-4">
           <div className="flex gap-4">
-            <Avatar size="lg" className="mt-0.5">
-              <AvatarFallback className="bg-primary/10 text-base font-semibold text-primary">
-                {initials(currentUser.name)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col gap-2">
-              <div>
-                <h1 className="text-2xl font-semibold tracking-tight">{currentUser.name}</h1>
-                <p className="text-sm text-muted-foreground">
-                  {t("page.professor.description").replace(
-                    "{expertise}",
-                    currentUser.expertise || t("page.professor.noneSet")
-                  )}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                <Badge variant="secondary">
-                  {t("page.professor.chair")}: {currentUser.department || t("page.professor.noneSet")}
-                </Badge>
-                <Badge variant="outline">
-                  {t("page.professor.expertise")}: {currentUser.expertise || t("page.professor.noneSet")}
-                </Badge>
-              </div>
-              {currentUser.bio ? (
-                <Markdown content={currentUser.bio} className="max-w-prose text-sm text-muted-foreground" />
-              ) : (
-                <p className="text-sm text-muted-foreground italic">{t("page.professor.noBio")}</p>
-              )}
+            <div>
+              <div className="text-xl font-semibold tracking-tight text-accent">{supervisingCount}</div>
+              <div className="text-xs text-muted-foreground">{t("page.professor.statSupervising")}</div>
+            </div>
+            <div>
+              <div className="text-xl font-semibold tracking-tight text-accent">{completedCount}</div>
+              <div className="text-xs text-muted-foreground">{t("page.professor.statCompleted")}</div>
+            </div>
+            <div>
+              <div className="text-xl font-semibold tracking-tight text-accent">{matched.length}</div>
+              <div className="text-xs text-muted-foreground">{t("page.professor.statMatched")}</div>
             </div>
           </div>
-
-          <div className="flex shrink-0 gap-4 sm:flex-col sm:items-end sm:text-right">
-            <div className="flex gap-4 sm:flex-col sm:gap-2">
-              <div>
-                <div className="text-xl font-semibold tracking-tight">{supervisingCount}</div>
-                <div className="text-xs text-muted-foreground">{t("page.professor.statSupervising")}</div>
-              </div>
-              <div>
-                <div className="text-xl font-semibold tracking-tight">{completedCount}</div>
-                <div className="text-xs text-muted-foreground">{t("page.professor.statCompleted")}</div>
-              </div>
-              <div>
-                <div className="text-xl font-semibold tracking-tight">{matched.length}</div>
-                <div className="text-xs text-muted-foreground">{t("page.professor.statMatched")}</div>
-              </div>
-            </div>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger render={<Button>Submit a directly agreed project (FR-7)</Button>} />
-              <DialogContent className="sm:max-w-2xl">
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger render={<Button>Submit a directly agreed project (FR-7)</Button>} />
+            <DialogContent className="sm:max-w-2xl">
                 <DialogHeader>
                   <DialogTitle>Submit a directly agreed project</DialogTitle>
                   <DialogDescription>
@@ -163,7 +125,7 @@ export default function ProfessorPage() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
                       <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="d-expertise">Required expertise</Label>
+                        <Label htmlFor="d-expertise">Required expertise for supervision</Label>
                         <Input
                           id="d-expertise"
                           placeholder={currentUser.expertise}
@@ -262,8 +224,7 @@ export default function ProfessorPage() {
               </DialogContent>
             </Dialog>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
       <section className="flex flex-col gap-3">
         <h2 className="font-medium">Matched to your expertise - ready to take on (FR-5/FR-6)</h2>

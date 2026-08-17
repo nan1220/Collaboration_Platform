@@ -10,7 +10,6 @@ import { useCurrentUser } from "@/lib/current-user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -38,13 +37,9 @@ export default function ShibbolethLoginPage() {
 
   const [name, setName] = useState("");
   const [role, setRole] = useState<"student" | "professor" | "staff">("student");
-  const [department, setDepartment] = useState("");
-  const [program, setProgram] = useState("");
-  const [expertise, setExpertise] = useState("");
-  const [bio, setBio] = useState("");
 
   const signInMutation = useMutation({
-    mutationFn: () => api.signInInstitutional({ name, role, department, program, expertise, bio }),
+    mutationFn: () => api.signInInstitutional({ name, role }),
     onSuccess: (user) => {
       toast.success(`Account created and signed in as ${user.name}`);
       queryClient.invalidateQueries({ queryKey: ["demo-users"] });
@@ -96,48 +91,8 @@ export default function ShibbolethLoginPage() {
                 </SelectContent>
               </Select>
             </div>
-            {role === "professor" && (
-              <>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="department">{t("shibboleth.chairDepartment")}</Label>
-                  <Input
-                    id="department"
-                    placeholder="e.g. Chair of Digital Business"
-                    value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="expertise">{t("shibboleth.expertise")}</Label>
-                  <Input
-                    id="expertise"
-                    placeholder="e.g. School of Management"
-                    value={expertise}
-                    onChange={(e) => setExpertise(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="bio">{t("shibboleth.bio")}</Label>
-                  <Textarea
-                    id="bio"
-                    rows={3}
-                    placeholder="A short line or two about your research and supervision interests…"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
-            {role === "student" && (
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="program">{t("shibboleth.degreeProgram")}</Label>
-                <Input
-                  id="program"
-                  placeholder="e.g. B.Sc. Management and Data Science"
-                  value={program}
-                  onChange={(e) => setProgram(e.target.value)}
-                />
-              </div>
+            {(role === "professor" || role === "student") && (
+              <p className="text-xs text-muted-foreground">{t("shibboleth.profileHint")}</p>
             )}
             <Button
               onClick={() => signInMutation.mutate()}
