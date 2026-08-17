@@ -24,7 +24,15 @@ export interface Company {
 }
 
 // FR-7: professor-submitted projects skip the company portal entirely.
-export type ProjectSource = "company" | "professor_direct";
+// FR-8: student-suggested topics name an existing company and a requested
+// supervisor, but still go through the normal staff review queue.
+export type ProjectSource = "company" | "professor_direct" | "student_suggested";
+
+export const SOURCE_LABELS: Record<ProjectSource, string> = {
+  company: "Company",
+  professor_direct: "Professor/Supervisor-submitted",
+  student_suggested: "Student-suggested",
+};
 
 // FR-17 (per the 2026 management update) lists five buckets - Pending,
 // Approved, Open, Ongoing, Complete - plus Rejected, which the dashboard
@@ -50,6 +58,8 @@ export interface Project {
   source: ProjectSource;
   company: Company | null;
   assigned_professor: UserSummary | null;
+  requested_professor: UserSummary | null; // FR-8: supervisor requested by the student who suggested this topic
+  suggested_by: UserSummary | null; // FR-8: the student who suggested this topic, if any
   chair_contact_info: string; // filled by professor on take-on (FR-6)
   application_deadline: string; // filled by professor on take-on (FR-6)
   required_documents: string; // filled by professor on take-on (FR-6)

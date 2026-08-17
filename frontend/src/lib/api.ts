@@ -60,6 +60,21 @@ export const api = {
     }
   ) => run(() => store.submitDirectProject(userId, body)),
 
+  submitStudentProject: (
+    userId: number,
+    body: {
+      title: string;
+      required_expertise: string;
+      background_objective: string;
+      deliverable: string;
+      company_resources: string;
+      required_skills: string;
+      group_size: number;
+      company_id: number;
+      requested_professor_id: number;
+    }
+  ) => run(() => store.submitStudentProject(userId, body)),
+
   transitionStatus: (userId: number, id: number, status: string) =>
     run(() => store.transitionStatus(userId, id, status as ProjectStatus)),
 
@@ -108,6 +123,7 @@ export const api = {
     run(() => store.addCheckIn(userId, projectId, note)),
 
   companies: (userId: number) => run(() => store.companies(userId)),
+  companyDirectory: () => run(() => store.companyDirectory()),
   myCompany: (userId: number) => run(() => store.myCompany(userId)),
   verifyCompany: (userId: number, companyId: number) => run(() => store.verifyCompany(userId, companyId)),
 
