@@ -28,7 +28,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
-import { ROLE_ACCENT_BORDER_B } from "@/lib/role-accent";
 
 const NAV_LINKS: { href: string; labelKey: Parameters<ReturnType<typeof useLanguage>["t"]>[0]; icon: LucideIcon; roles?: string[] }[] = [
   { href: "/projects", labelKey: "nav.projects", icon: FolderKanban },
@@ -62,9 +61,10 @@ export function NavBar() {
 
   return (
     <header
+      data-role={currentUser?.role}
       className={cn(
         "sticky top-0 z-40 border-b-4 bg-primary text-primary-foreground shadow-md shadow-black/10",
-        currentUser ? ROLE_ACCENT_BORDER_B[currentUser.role] : "border-b-primary"
+        currentUser ? "border-b-accent" : "border-b-primary"
       )}
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">

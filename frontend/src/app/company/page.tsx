@@ -69,9 +69,9 @@ export default function CompanyPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8" data-role="company">
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="rounded-lg border-l-8 border-l-role-company bg-role-company/8 py-3 pr-4 pl-4">
+        <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-semibold tracking-tight">{myCompany?.name}</h1>
             {myCompany && (

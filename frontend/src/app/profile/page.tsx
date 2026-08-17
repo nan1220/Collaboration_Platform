@@ -15,8 +15,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { MarkdownEditor } from "@/components/markdown-editor";
 import { SignInPrompt } from "@/components/sign-in-prompt";
 import { useLanguage, roleLabel } from "@/lib/i18n";
-import { ROLE_ACCENT_BORDER_L, ROLE_ACCENT_BG } from "@/lib/role-accent";
-import { cn } from "@/lib/utils";
 
 const EMPTY_STUDENT_PROFILE = {
   areas_of_expertise: "",
@@ -89,19 +87,13 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8" data-role={currentUser.role}>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">{t("page.profile.title")}</h1>
         <p className="mt-1 text-muted-foreground">{t("page.profile.description")}</p>
       </div>
 
-      <Card
-        className={cn(
-          "border-l-8",
-          ROLE_ACCENT_BORDER_L[currentUser.role],
-          ROLE_ACCENT_BG[currentUser.role]
-        )}
-      >
+      <Card className="border-l-8 border-l-accent bg-accent/8">
         <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-start">
           <UserAvatar name={currentUser.name} size="lg" className="mt-0.5 shrink-0" />
           <div className="flex flex-1 flex-col gap-3">

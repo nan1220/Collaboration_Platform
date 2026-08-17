@@ -43,8 +43,8 @@ export default function StudentPage() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="rounded-lg border-l-8 border-l-role-student bg-role-student/8 py-3 pr-4 pl-4">
+    <div className="flex flex-col gap-8" data-role="student">
+      <div className="rounded-lg border-l-8 border-l-accent bg-accent/8 py-3 pr-4 pl-4">
         <h1 className="text-2xl font-semibold tracking-tight">{t("page.student.title")}</h1>
         <p className="mt-1 text-muted-foreground">{t("page.student.description")}</p>
       </div>

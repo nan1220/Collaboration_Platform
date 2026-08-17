@@ -11,8 +11,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Markdown } from "@/components/markdown";
 import { useLanguage, roleLabel } from "@/lib/i18n";
-import { ROLE_ACCENT_BORDER_L, ROLE_ACCENT_BG } from "@/lib/role-accent";
-import { cn } from "@/lib/utils";
 
 export default function ProfileDetailPage() {
   return (
@@ -52,10 +50,8 @@ function ProfileDetail() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <Card
-        className={cn("border-l-8", ROLE_ACCENT_BORDER_L[user.role], ROLE_ACCENT_BG[user.role])}
-      >
+    <div className="flex flex-col gap-8" data-role={user.role}>
+      <Card className="border-l-8 border-l-accent bg-accent/8">
         <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-start">
           <UserAvatar name={user.name} size="lg" className="mt-0.5 shrink-0" />
           <div className="flex flex-1 flex-col gap-3">

@@ -42,10 +42,6 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-role-staff: var(--role-staff);
-  --color-role-professor: var(--role-professor);
-  --color-role-company: var(--role-company);
-  --color-role-student: var(--role-student);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -161,4 +157,34 @@
   html {
     @apply font-sans;
   }
+}
+
+/*
+ * Role theming: rather than hand-picking individual elements to recolor,
+ * a `data-role` attribute on a section's root overrides the semantic
+ * --accent/--ring tokens for its entire subtree - so every already-accented
+ * thing under it (borders, tinted washes, focus rings, even shared
+ * dropdown/select hover states) shifts to that role's hue for free.
+ */
+[data-role="staff"] {
+  --accent: var(--role-staff);
+  --ring: var(--role-staff);
+}
+[data-role="professor"] {
+  --accent: var(--role-professor);
+  --ring: var(--role-professor);
+}
+[data-role="company"] {
+  --accent: var(--role-company);
+  --ring: var(--role-company);
+}
+[data-role="student"] {
+  --accent: var(--role-student);
+  --ring: var(--role-student);
+}
+[data-role] {
+  --accent-foreground: #ffffff;
+}
+.dark [data-role] {
+  --accent-foreground: #072140;
 }
