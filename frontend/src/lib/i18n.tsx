@@ -38,25 +38,6 @@ const en = {
   "home.notSignedInDesc": "TUM members sign in with Shibboleth; companies register with a work email (FR-1/NFR-1).",
   "home.whatThisReplaces": "What this replaces",
 
-  "home.role.staff.title": "Staff dashboard",
-  "home.role.staff.description": "Review company submissions, monitor every project by status, and verify companies.",
-  "home.role.staff.link1": "Open staff dashboard",
-  "home.role.staff.link2": "Browse all projects",
-  "home.role.professor.title": "Supervision",
-  "home.role.professor.description":
-    "Take on topics matched to your expertise, or submit a project agreed directly with a company.",
-  "home.role.professor.link1": "Open my supervision",
-  "home.role.professor.link2": "Browse the student directory",
-  "home.role.company.title": "Company dashboard",
-  "home.role.company.description": "Submit project proposals and browse student topics and profiles.",
-  "home.role.company.link1": "Open my company dashboard",
-  "home.role.company.link2": "Browse the student directory",
-  "home.role.student.title": "Student home",
-  "home.role.student.description": "Browse published projects, submit your topic and profile, and track your applications.",
-  "home.role.student.link1": "Browse projects",
-  "home.role.student.link2": "My applications and profile",
-  "home.role.student.link3": "Read guides",
-
   "home.feature.database.title": "One shared database",
   "home.feature.database.description":
     "Staff, professors/supervisors, students and companies all see the same project data and status history - not a spreadsheet only two people can read.",
@@ -197,26 +178,6 @@ const de: Record<keyof typeof en, string> = {
   "home.notSignedInTitle": "Sie sind nicht angemeldet",
   "home.notSignedInDesc": "TUM-Angehörige melden sich mit Shibboleth an; Unternehmen registrieren sich mit einer geschäftlichen E-Mail-Adresse (FR-1/NFR-1).",
   "home.whatThisReplaces": "Was dies ersetzt",
-
-  "home.role.staff.title": "Mitarbeiter-Dashboard",
-  "home.role.staff.description": "Unternehmenseinreichungen prüfen, jedes Projekt nach Status verfolgen und Unternehmen verifizieren.",
-  "home.role.staff.link1": "Mitarbeiter-Dashboard öffnen",
-  "home.role.staff.link2": "Alle Projekte durchsuchen",
-  "home.role.professor.title": "Betreuung",
-  "home.role.professor.description":
-    "Themen übernehmen, die zu Ihrem Fachgebiet passen, oder ein direkt mit einem Unternehmen vereinbartes Projekt einreichen.",
-  "home.role.professor.link1": "Meine Betreuung öffnen",
-  "home.role.professor.link2": "Studierendenverzeichnis durchsuchen",
-  "home.role.company.title": "Unternehmens-Dashboard",
-  "home.role.company.description": "Projektvorschläge einreichen und Themen sowie Profile von Studierenden durchsuchen.",
-  "home.role.company.link1": "Unternehmens-Dashboard öffnen",
-  "home.role.company.link2": "Studierendenverzeichnis durchsuchen",
-  "home.role.student.title": "Startseite für Studierende",
-  "home.role.student.description":
-    "Veröffentlichte Projekte durchsuchen, eigenes Thema und Profil einreichen und Bewerbungen verfolgen.",
-  "home.role.student.link1": "Projekte durchsuchen",
-  "home.role.student.link2": "Meine Bewerbungen und Profil",
-  "home.role.student.link3": "Leitfäden lesen",
 
   "home.feature.database.title": "Eine gemeinsame Datenbank",
   "home.feature.database.description":
