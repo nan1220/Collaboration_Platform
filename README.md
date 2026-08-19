@@ -12,10 +12,14 @@ A platform for running the TUM Campus Heilbronn project-study process — studen
 
 https://github.com/user-attachments/assets/9137b877-a334-44d2-a657-0adf105fc62e
 
-A quick walkthrough of the prototype, including:
-- **Role-based access** — each role (company, professor, student, staff) only sees and can act on what its permissions allow.
-- **Dual approval** — staff and professor sign-off both required before a project moves from submitted to open.
-- **Lightweight check-in** — students track and update application status without heavyweight forms.
+This short demo provides a sample walkthrough of the platform. Features shown include, but are not limited to:
+
+- **Role-Based Access**
+- **Dual Approval**
+- **Lightweight Progress Check-in**
+- **Student Browse Available Projects and Apply**
+- **Application Status Visibility**
+- **Status-Change Notifications**
 
 ## Background
 
@@ -30,7 +34,51 @@ Four roles, one shared project pipeline:
 - **Students** browse open projects, apply with required documents, track application status, and optionally look for teammates.
 - **Staff** review and approve incoming company submissions and get a master dashboard across every project's status (`Pending → Approved → Open → Ongoing → Complete`).
 
-Requirements (FR-1 … FR-18, NFR-1 … NFR-3) were derived from 26 semi-structured interviews across all four stakeholder groups and are traced from pain point → requirement → prototype coverage in the SRS's traceability table ([new_tracibility_table.csv](new_tracibility_table.csv)).
+Requirements (FR-1 … FR-18, NFR-1 … NFR-3) were derived from 26 semi-structured interviews across all four stakeholder groups and are traced from pain point → requirement → prototype coverage in the SRS's traceability table (SRS: Appendix A.3: Full Requirements Traceability Matrix).
+
+### Implemented Requirements
+
+The prototype covers the following requirements marked as **Built** in the SRS traceability table (Appendix A.3: Full Requirements Traceability Matrix).
+
+#### Access
+
+- **FR-1 — Role-Based Access:** Tailored access and dashboards for students, companies, professors/supervisors, and staff.
+- **NFR-1 — Identity Verification:** Institutional authentication and company-domain verification.
+
+#### Company Features
+
+- **FR-2 — Company Project Submission Portal:** Structured project submission with mandatory project information.
+- **FR-3 — Submission Review and Approval:** New submissions receive a pending status and undergo staff review.
+
+#### Professor and Supervisor Features
+
+- **FR-5 — Profiles and Expertise Matching:** Professor profiles and project recommendations based on expertise.
+- **FR-6 — Supervision Take-on:** Professors can provide supervision details before making projects visible to students.
+- **FR-7 — Direct Project Submission:** Professors can submit projects already agreed upon with companies.
+
+#### Student Features
+
+- **FR-8 — Student Project Submission Portal:** Students can submit project proposals using structured fields.
+- **FR-9 — Student Profiles:** Profiles display students’ degree programs.
+- **FR-10 — Student Team Matching:** Students can indicate that they are seeking teammates and provide contact details.
+- **FR-11 — Project Browsing and Applications:** Students can browse available projects and apply.
+- **FR-12 — Application Status Visibility:** Students can view whether applications have been accepted or rejected.
+
+#### General Features
+
+- **NFR-3 — Language Support:** The platform is available in English and German.
+- **FR-13 — Status-Change Notifications:** Notifications are provided when application statuses change or listings close.
+- **FR-14 — Lightweight Progress Check-in:** Students and supervisors can record simple project progress updates.
+- **FR-15 — Dual Approval:** Student applications require approval from both the supervisor and company.
+- **FR-16 — Manual Multi-Offer Decision:** Students can accept one offer and withdraw their other applications.
+
+#### Staff Features
+
+- **FR-17 — Staff Master Dashboard:** Staff can view project studies across all workflow statuses.
+- **FR-18 — Submission Filtering:** Staff can search and filter incoming company submissions.
+
+
+
 
 ## Repo layout
 
