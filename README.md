@@ -34,9 +34,34 @@ The platform connects four roles in a shared project pipeline:
 - **Students** submit ideas, find teammates, browse projects, and apply.
 - **Administrative staff** review submissions and monitor the `Pending → Approved → Open → Ongoing → Complete` workflow.
 
+
+
 ## Research Basis and Scope
 
 The platform is scoped to the TUM Campus Heilbronn project-study process. Its SRS adapts ISO/IEC/IEEE 29148:2018 and draws on 26 interviews and written responses across four stakeholder groups. The data was consolidated into a response matrix and translated into evidence-based requirements, each traced from its source to its prototype coverage.
+
+## Use Case Diagrams
+
+Nan modeled the following use cases based on the requirements documented in the SRS.
+
+### Platform Access
+
+<!-- ![Platform Access use case diagram](docs/use-cases/uc_access.png) -->
+[uc_access.drawio.pdf](https://github.com/user-attachments/files/31238477/uc_access.drawio.pdf)
+
+### Project Intake
+
+![Project Intake use case diagram](docs/use-cases/uc_intake.png)
+
+### Profiles and Topics
+
+![Profiles and Topics use case diagram](docs/use-cases/uc_profiles.png)
+
+### Application and Selection
+
+![Application and Selection use case diagram](docs/use-cases/uc_application.png)
+
+
 
 ## Implemented Requirements
 
@@ -149,7 +174,7 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 - **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main live interviews, while Ahmet provided additional written responses collected by email.
 - **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
 <!-- - **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results. -->
-- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements, then modeled the system use cases and created the use case diagrams.
+- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements and modeled the four use case diagrams based on the SRS.
 
 ### Final Deliverables
 
