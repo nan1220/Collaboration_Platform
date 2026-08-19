@@ -5,6 +5,15 @@ A platform for running the TUM Campus Heilbronn project-study process — studen
 **Live prototype:** https://nan1220.github.io/Collaboration_Platform/ /
 **Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) (source in [Platform_SRS_file/Report.typ](Platform_SRS_file/Report.typ))
 
+## Demo video
+
+<!-- TODO: replace with the actual video link (e.g. YouTube, or a committed file in demo/) -->
+**[Watch the demo](#)** — a quick walkthrough of the prototype, including:
+
+- **Role-based access** — each role (company, professor, student, staff) only sees and can act on what its permissions allow.
+- **Dual approval** — staff and professor sign-off both required before a project moves from submitted to open.
+- **Lightweight check-in** — students track and update application status without heavyweight forms.
+
 ## Background
 
 This repo is the project study our team did with the partner company BirdVision, as part of the TUM Campus Heilbronn project-study process. The assignment was to design and prototype a three-party collaboration platform — university, companies, and students — to replace the email/Excel-based coordination described above.
@@ -84,7 +93,8 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 - **Research approach:** Nan developed the literature and methodological basis for the requirements engineering process; Jasmin reviewed and refined the interview methodology.
 - **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main live interviews, while Ahmet provided additional written responses collected by email.
 - **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
-- **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results.
+<!-- - **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results. -->
+- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements, then modeled the system use cases and created the use case diagrams.
 
 ### Final Deliverables
 
