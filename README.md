@@ -5,6 +5,10 @@ A platform for running the TUM Campus Heilbronn project-study process — studen
 **Live prototype:** https://nan1220.github.io/Collaboration_Platform/ /
 **Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) (source in [Platform_SRS_file/Report.typ](Platform_SRS_file/Report.typ))
 
+## Background
+
+This repo is the project study our team did with the partner company BirdVision, as part of the TUM Campus Heilbronn project-study process. The assignment was to design and prototype a three-party collaboration platform — university, companies, and students — to replace the email/Excel-based coordination described above.
+
 ## What it does
 
 Four roles, one shared project pipeline:
@@ -43,3 +47,51 @@ The `backend/` Django project (`uv run manage.py runserver` from `backend/`) is 
 ## Deployment
 
 The frontend builds as a static export (`next build`, `output: "export"`) and is published to GitHub Pages at the base path `/Collaboration_Platform`.
+
+<!-- ## Team & Contributions
+
+**Team members:** Nan Jiang, Jasmin Yalçın, and Ahmet Akpunar  
+
+**Authors and developers of the final deliverables:**
+- Nan Jiang
+- Jasmin Yalçın
+
+The project produced three deliverables: an SRS, a prototype, and presentation slides.
+- **Research approach:** Nan developed the literature and methodological basis for the requirements engineering process; Jasmin reviewed and refined the interview methodology.
+- **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main in-person interviews, while Ahmet provided additional written inputs collected by email.
+- **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
+- **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results.
+- **SRS:** Written exclusively by Nan and Jasmin.
+- **Prototype:**  Designed and developed by Nan based on the SRS requirements, with feedback from Jasmin.
+- **Presentation slides:** Prepared by Nan and Jasmin.
+
+Ahmet was not directly involved in writing the SRS, preparing the presentation slides, or implementing the prototype. -->
+
+
+## Team & Contributions
+
+- **Team members:** Nan Jiang, Jasmin Yalçın, and Ahmet Akpunar
+- **Final-deliverable authors and developers:** Nan Jiang and Jasmin Yalçın
+
+The project produced three deliverables: an SRS, a prototype, and presentation slides.
+<!-- 
+**Final-deliverable authors and developers:**
+- Nan Jiang
+- Jasmin Yalçın -->
+
+### Research Process
+
+- **Research approach:** Nan developed the literature and methodological basis for the requirements engineering process; Jasmin reviewed and refined the interview methodology.
+- **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main live interviews, while Ahmet provided additional written responses collected by email.
+- **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
+- **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results.
+
+### Final Deliverables
+
+| Deliverable | Contribution |
+|---|---|
+| **SRS** | Written exclusively by Nan and Jasmin |
+| **Prototype** | Designed and developed by Nan based on the SRS requirements, with feedback from Jasmin |
+| **Presentation slides** | Designed mainly by Jasmin; prepared by Nan and Jasmin |
+
+Ahmet contributed to raw data collection but was not directly involved in authoring or developing the three final deliverables.
