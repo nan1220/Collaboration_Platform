@@ -13,18 +13,8 @@ An SRS and interactive frontend prototype for the project-study process at TUM C
 https://github.com/user-attachments/assets/9137b877-a334-44d2-a657-0adf105fc62e
 
 This short demo provides a sample walkthrough of the platform. Features shown include, but are not limited to: <br>
-Role-Based Access, Dual Approval, Lightweight Progress Check-in, Student Browse Available Projects and Apply, Application Status Visibility, Status-Change Notifications.
-
-<!-- ## What it does
-
-Four roles, one shared project pipeline:
-
-- **Companies** submit project topics, or browse and accept student-submitted topics.
-- **Professors** take on supervision of a submitted project (setting deadlines and required documents) or submit a project themselves, then review student applications.
-- **Students** browse open projects, apply with required documents, track application status, and optionally look for teammates.
-- **Staff** review and approve incoming company submissions and get a master dashboard across every project's status (`Pending → Approved → Open → Ongoing → Complete`).
-
-Requirements (FR-1 … FR-18, NFR-1 … NFR-3) were derived from 26 semi-structured interviews across all four stakeholder groups and are traced from pain point → requirement → prototype coverage in the SRS's traceability table (SRS: Appendix A.3: Full Requirements Traceability Matrix). -->
+Role-Based Access, Dual Approval, Lightweight Progress Check-in, Student Browse Available Projects and Apply, Application Status Visibility, Status-Change Notifications.<br>
+_(sorry for a small typo in the video)_
 
 ## Platform Workflow
 
@@ -124,6 +114,7 @@ The `backend/` Django project (`uv run manage.py runserver` from `backend/`) is 
 
 The frontend builds as a static export (`next build`, `output: "export"`) and is published to GitHub Pages at the base path `/Collaboration_Platform`.
 
+
 <!-- ## Team & Contributions
 
 **Team members:** Nan Jiang, Jasmin Yalçın, and Ahmet Akpunar  
@@ -158,7 +149,7 @@ Ahmet was not directly involved in writing the SRS, preparing the presentation s
 
 <!-- [Nan Jiang](https://www.linkedin.com/in/nan-jiang-tum) -->
 
-The project produced three deliverables: an SRS, a prototype, and presentation slides.
+<!-- The project produced three deliverables: an SRS, a prototype, and presentation slides. -->
 <!-- 
 **Final-deliverable authors and developers:**
 - Nan Jiang
@@ -170,7 +161,7 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 - **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main live interviews, while Ahmet provided additional written responses collected by email.
 - **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
 <!-- - **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results. -->
-- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements and modeled the four use case diagrams based on the SRS. -->
+<!-- - **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements and modeled the four use case diagrams based on the SRS. --> 
 
 <!-- ### Final Deliverables
 
