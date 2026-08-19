@@ -96,7 +96,7 @@ The prototype covers the following requirements marked as **Built** in the SRS t
 
 
 
-## Repo layout
+<!-- ## Repo layout
 
 ```
 Platform_SRS_file/   SRS source (Typst) and rendered PDF
@@ -104,7 +104,7 @@ frontend/             Next.js prototype (App Router, TypeScript, Tailwind, shadc
 backend/              Django + DRF scaffold (models for the same domain; not wired to the prototype)
 architecture.md        Early architecture/tech-stack sketch
 requirements.md        Raw notes from the initial stakeholder conversation
-```
+``` -->
 
 ## Running the prototype
 
@@ -144,7 +144,14 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 Ahmet was not directly involved in writing the SRS, preparing the presentation slides, or implementing the prototype. -->
 
 
-## Team & Contributions
+
+
+
+
+
+
+
+<!-- ## Team & Contributions
 
 - **Team members:** Nan Jiang, Jasmin Yalçın, and Ahmet Akpunar
 - **Final-deliverable authors:** Nan Jiang and Jasmin Yalçın
@@ -155,17 +162,17 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 <!-- 
 **Final-deliverable authors and developers:**
 - Nan Jiang
-- Jasmin Yalçın -->
+- Jasmin Yalçın --> -->
 
-### Research Process
+<!-- ### Research Process
 
 - **Research approach:** Nan developed the literature and methodological basis for the requirements engineering process; Jasmin reviewed and refined the interview methodology.
 - **Data collection:** All three team members contributed stakeholder data. Nan and Jasmin conducted and documented the main live interviews, while Ahmet provided additional written responses collected by email.
 - **Response matrix and analysis:** Nan designed the response matrix and its classification structure (SRS Section 3.1). Nan analyzed one-third of the data, while Jasmin analyzed the remaining two-thirds, including Ahmet's raw inputs.
 <!-- - **Requirements analysis:** Jasmin led the synthesis of interview data into requirements; Nan reviewed and refined the results. -->
-- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements and modeled the four use case diagrams based on the SRS.
+- **Requirements analysis and system modeling:** Jasmin led the synthesis of interview data into requirements. Nan reviewed and refined the requirements and modeled the four use case diagrams based on the SRS. -->
 
-### Final Deliverables
+<!-- ### Final Deliverables
 
 | Deliverable | Contribution |
 |---|---|
@@ -173,4 +180,4 @@ The project produced three deliverables: an SRS, a prototype, and presentation s
 | **Prototype** | Designed and developed by Nan based on the SRS requirements, with feedback from Jasmin |
 | **Presentation slides** | Designed mainly by Jasmin; prepared by Nan and Jasmin |
 
-Ahmet contributed to raw data collection but was not directly involved in authoring or developing the three final deliverables.
+Ahmet contributed to raw data collection but was not directly involved in authoring or developing the three final deliverables. -->
