@@ -46,19 +46,19 @@ The platform is scoped to the TUM Campus Heilbronn project-study process. Its SR
 We modeled the following use cases based on the requirements documented in the SRS.
 
 ### Platform Access
-![Platform Access use case diagram](<img width="759" height="401" alt="Image" src="https://github.com/user-attachments/assets/8d5c8993-3029-456b-a893-cb4ccb350e7b" />)
+![Platform Access use case diagram](./Platform_SRS_file/diagrams/uc_access.svg)
 
 ### Project Intake
 
-![Project Intake use case diagram](docs/use-cases/uc_intake.svg)
+![Project Intake use case diagram](./Platform_SRS_file/diagrams/uc_intake.svg)
 
 ### Profiles and Topics
 
-![Profiles and Topics use case diagram](docs/use-cases/uc_profiles.svg)
+![Profiles and Topics use case diagram](./Platform_SRS_file/diagrams/uc_profiles.svg)
 
 ### Application and Selection
 
-![Application and Selection use case diagram](docs/use-cases/uc_application.svg)
+![Application and Selection use case diagram](./Platform_SRS_file/diagrams/uc_application.svg)
 
 
 
