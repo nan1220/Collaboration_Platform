@@ -1,10 +1,9 @@
 # Project Studies Platform (BirdVision × TUM Campus Heilbronn)
 
-A platform for running the TUM Campus Heilbronn project-study process — students, companies, professors, and administrative staff currently coordinate this by email and a shared Excel sheet. This repo contains the Software Requirements Specification (SRS) and a working prototype built from it.
+An SRS and interactive frontend prototype for the project-study process at TUM Campus Heilbronn, developed as a bachelor’s Project Study in collaboration with BirdVision. The platform brings the decentralized coordination between students, companies, supervising professorships, and administrative staff into one role-based workflow.
 
-**Live prototype:** https://nan1220.github.io/Collaboration_Platform/ /
-**Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) (source in [Platform_SRS_file/Report.typ](Platform_SRS_file/Report.typ))
-
+**Live interactive prototype:** https://nan1220.github.io/Collaboration_Platform/ <br>
+**Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) 
 ## Demo video
 
 <!-- TODO: replace with the actual video link (e.g. YouTube, or a committed file in demo/) -->
@@ -12,20 +11,10 @@ A platform for running the TUM Campus Heilbronn project-study process — studen
 
 https://github.com/user-attachments/assets/9137b877-a334-44d2-a657-0adf105fc62e
 
-This short demo provides a sample walkthrough of the platform. Features shown include, but are not limited to:
+This short demo provides a sample walkthrough of the platform. Features shown include, but are not limited to: <br>
+Role-Based Access, Dual Approval, Lightweight Progress Check-in, Student Browse Available Projects and Apply, Application Status Visibility, Status-Change Notifications.
 
-- **Role-Based Access**
-- **Dual Approval**
-- **Lightweight Progress Check-in**
-- **Student Browse Available Projects and Apply**
-- **Application Status Visibility**
-- **Status-Change Notifications**
-
-## Background
-
-This repo is the project study our team did with the partner company BirdVision, as part of the TUM Campus Heilbronn project-study process. The assignment was to design and prototype a three-party collaboration platform — university, companies, and students — to replace the email/Excel-based coordination described above.
-
-## What it does
+<!-- ## What it does
 
 Four roles, one shared project pipeline:
 
@@ -34,9 +23,22 @@ Four roles, one shared project pipeline:
 - **Students** browse open projects, apply with required documents, track application status, and optionally look for teammates.
 - **Staff** review and approve incoming company submissions and get a master dashboard across every project's status (`Pending → Approved → Open → Ongoing → Complete`).
 
-Requirements (FR-1 … FR-18, NFR-1 … NFR-3) were derived from 26 semi-structured interviews across all four stakeholder groups and are traced from pain point → requirement → prototype coverage in the SRS's traceability table (SRS: Appendix A.3: Full Requirements Traceability Matrix).
+Requirements (FR-1 … FR-18, NFR-1 … NFR-3) were derived from 26 semi-structured interviews across all four stakeholder groups and are traced from pain point → requirement → prototype coverage in the SRS's traceability table (SRS: Appendix A.3: Full Requirements Traceability Matrix). -->
 
-### Implemented Requirements
+## Platform Workflow
+
+The platform connects four roles in a shared project pipeline:
+
+- **Companies** submit projects or browse student proposals.
+- **Professors and supervisors** supervise projects and review applications.
+- **Students** submit ideas, find teammates, browse projects, and apply.
+- **Administrative staff** review submissions and monitor the `Pending → Approved → Open → Ongoing → Complete` workflow.
+
+## Research Basis and Scope
+
+The platform is scoped to the TUM Campus Heilbronn project-study process. Its SRS adapts ISO/IEC/IEEE 29148:2018 and draws on 26 interviews and written responses across four stakeholder groups. The data was consolidated into a response matrix and translated into evidence-based requirements, each traced from its source to its prototype coverage.
+
+## Implemented Requirements
 
 The prototype covers the following requirements marked as **Built** in the SRS traceability table (Appendix A.3: Full Requirements Traceability Matrix).
 
