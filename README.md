@@ -3,7 +3,8 @@
 An SRS and interactive frontend prototype for the project-study process at TUM Campus Heilbronn, developed as a bachelor’s Project Study in collaboration with BirdVision. The platform brings the decentralized coordination between students, companies, supervising professorships, and administrative staff into one role-based workflow.
 
 **Live interactive prototype:** https://nan1220.github.io/Collaboration_Platform/ <br>
-**Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) 
+**Full SRS:** [`Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf`](<Software Requirements Specification for Prototype - Nan Jiang, Jasmin Yalçın_submitted version.pdf>) <br>
+**Final-deliverable authors:** Nan Jiang and Jasmin Yalçın
 ## Demo video
 
 <!-- TODO: replace with the actual video link (e.g. YouTube, or a committed file in demo/) -->
@@ -42,24 +43,23 @@ The platform is scoped to the TUM Campus Heilbronn project-study process. Its SR
 
 ## Use Case Diagrams
 
-Nan modeled the following use cases based on the requirements documented in the SRS.
+We modeled the following use cases based on the requirements documented in the SRS.
 
 ### Platform Access
 
-<!-- ![Platform Access use case diagram](docs/use-cases/uc_access.png) -->
-[uc_access.drawio.pdf](https://github.com/user-attachments/files/31238477/uc_access.drawio.pdf)
+![Platform Access use case diagram](Platform_SRS_file\diagrams\uc_access.drawio.svg)
 
 ### Project Intake
 
-![Project Intake use case diagram](docs/use-cases/uc_intake.png)
+![Project Intake use case diagram](Platform_SRS_file\diagrams\uc_intake.drawio.svg)
 
 ### Profiles and Topics
 
-![Profiles and Topics use case diagram](docs/use-cases/uc_profiles.png)
+![Profiles and Topics use case diagram](Platform_SRS_file\diagrams\uc_profiles.drawio.svg)
 
 ### Application and Selection
 
-![Application and Selection use case diagram](docs/use-cases/uc_application.png)
+![Application and Selection use case diagram](Platform_SRS_file\diagrams\uc_application.drawio.svg)
 
 
 
@@ -158,7 +158,7 @@ Ahmet was not directly involved in writing the SRS, preparing the presentation s
 ## Team & Contributions
 
 - **Team members:** Nan Jiang, Jasmin Yalçın, and Ahmet Akpunar
-- **Final-deliverable authors and developers:** Nan Jiang and Jasmin Yalçın
+- **Final-deliverable authors:** Nan Jiang and Jasmin Yalçın
 
 <!-- [Nan Jiang](https://www.linkedin.com/in/nan-jiang-tum) -->
 
