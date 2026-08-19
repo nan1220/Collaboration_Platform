@@ -153,7 +153,7 @@ Ahmet was not directly involved in writing the SRS, preparing the presentation s
 <!-- 
 **Final-deliverable authors and developers:**
 - Nan Jiang
-- Jasmin Yalçın --> -->
+- Jasmin Yalçın --> 
 
 <!-- ### Research Process
 
