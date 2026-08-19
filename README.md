@@ -8,7 +8,7 @@ A platform for running the TUM Campus Heilbronn project-study process — studen
 ## Demo video
 
 <!-- TODO: replace with the actual video link (e.g. YouTube, or a committed file in demo/) -->
-**[Watch the demo](#)** — a quick walkthrough of the prototype, including:
+**[`Watch the demo`](<demo\demo role-based access and dual approval.mp4>)** — a quick walkthrough of the prototype, including:
 
 - **Role-based access** — each role (company, professor, student, staff) only sees and can act on what its permissions allow.
 - **Dual approval** — staff and professor sign-off both required before a project moves from submitted to open.
